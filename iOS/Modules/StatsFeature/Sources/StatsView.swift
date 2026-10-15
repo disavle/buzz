@@ -142,7 +142,7 @@ public struct StatsView: View {
                 .chartBackground { _ in
                     VStack(spacing: 0) {
                         Text(model.snapshot.totalCans.formatted()).font(.buzzMetric)
-                        Text("stats.cans \(model.snapshot.totalCans)", bundle: .module)
+                        Text("stats.cans.total", bundle: .module)
                             .font(.caption).foregroundStyle(.secondary)
                     }
                 }

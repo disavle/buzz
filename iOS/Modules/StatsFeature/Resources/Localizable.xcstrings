@@ -188,55 +188,19 @@
         }
       }
     },
-    "stats.cans %lld": {
+    "stats.cans.total": {
       "extractionState": "manual",
       "localizations": {
         "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "can"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "cans"
-                }
-              }
-            }
+          "stringUnit": {
+            "state": "translated",
+            "value": "cans in total"
           }
         },
         "ru": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "банка"
-                }
-              },
-              "few": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "банки"
-                }
-              },
-              "many": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "банок"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "банки"
-                }
-              }
-            }
+          "stringUnit": {
+            "state": "translated",
+            "value": "банок всего"
           }
         }
       }

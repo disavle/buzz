@@ -67,7 +67,8 @@ run = [
 [tasks."lint:imports"]
 description = "Find imports of modules that are not declared as dependencies"
 dir = "iOS"
-run = "tuist inspect implicit-imports"
+# The graph needs resolved SPM dependencies, so install them first (fast when cached).
+run = ["tuist install", "tuist inspect implicit-imports"]
 
 [tasks.test]
 description = "Run all iOS unit tests via fastlane"
