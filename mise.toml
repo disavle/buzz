@@ -6,14 +6,14 @@
 # a git hook, and then generates Buzz.xcworkspace.
 #
 # Use `mise run generate`, not `mise generate`: `generate` is a built-in mise command.
-# To pin exact versions: `mise use tuist@latest ruby@3.3 swiftlint@latest`.
+# Versions are pinned; Renovate opens a PR when a new one comes out.
 
 min_version = "2025.1.0"
 
 [tools]
-tuist = "4"
-ruby = "3.3"          # for fastlane via Bundler
-swiftlint = "latest"
+tuist = "4.212.0"
+ruby = "3.3.12"          # for fastlane via Bundler
+swiftlint = "0.65.1"
 
 [env]
 # Put secrets and your Team ID in mise.local.toml (it is in .gitignore), for example:

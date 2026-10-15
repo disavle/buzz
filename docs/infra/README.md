@@ -40,8 +40,7 @@ buzz/
 ├── renovate.json                автообновление версий
 ├── .gitignore                   без *.xcodeproj / *.xcworkspace
 ├── .github/workflows/
-│   ├── ios.yml                  тесты на PR, TestFlight по тегу
-│   └── backend.yml              swift test для Vapor на Linux
+│   └── ci.yml                   линт и тесты iOS и бэкенда на PR, TestFlight по тегу
 ├── Shared/                      SPM-пакет DTO (переезжает из backend/skeleton/Shared)
 ├── Backend/                     Vapor (Vapor-сервер), путь к Shared: "../Shared"
 └── iOS/
@@ -179,7 +178,7 @@ mise run generate
 
 ## 6. CI на GitHub Actions
 
-[ios.yml](../../.github/workflows/ios.yml) и [backend.yml](../../.github/workflows/backend.yml).
+[ci.yml](../../.github/workflows/ci.yml): один workflow на весь монорепо. Job `Changes` смотрит, какие папки затронуты, а job-ы `iOS` и `Backend` запускаются только при нужных изменениях. Пропущенный job считается пройденным, поэтому `iOS` и `Backend` можно сделать обязательными проверками на `main`, и PR с одной документацией не зависнет.
 
 - **iOS, job `test`:** на PR, если менялись `iOS/`, `Shared/` или `mise.toml`. Раннер `macos-26`, Xcode `latest-stable`, `jdx/mise-action` ставит инструменты из `mise.toml` и кэширует их, дальше `mise run lint`, `mise run lint:imports` и `mise run test`, то есть те же команды, что и локально. При падении выгружается результат тестов.
 - **iOS, job `beta`:** только на тег `ios-v*` после зелёных тестов.
@@ -198,6 +197,6 @@ mise run generate
 1. Создать репозиторий с этой структурой, перенести `Shared` и `Backend`, поправить путь к `Shared` в `Backend/Package.swift`.
 2. `mise use tuist@latest ruby@3.3 swiftlint@latest` для точных версий.
 3. Положить манифесты, создать папки модулей с одним файлом в каждом, `mise run generate`. Первая цель: пустое приложение с `SceneDelegate` и четырьмя вкладками собирается.
-4. Включить `ios.yml` и `backend.yml` с job-ами тестов, добиться зелёного CI на пустом проекте.
+4. Включить `ci.yml`, добиться зелёного CI на пустом проекте.
 5. Дальше разработка по шагам из [architecture.md](../client/architecture.md).
 6. Когда появится Apple Developer Program: `fastlane certs`, секреты, тег `ios-v0.1.0`, первая сборка в TestFlight.
