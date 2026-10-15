@@ -131,11 +131,14 @@ mise run generate
 | Задача | Что делает |
 |---|---|
 | `open` | открыть `Buzz.xcworkspace` в Xcode |
+| `ios` | generate, сборка и запуск в симуляторе (`tuist run Buzz`) |
 | `format` / `lint` | swift-format из тулчейна Xcode и SwiftLint |
 | `lint:imports` | `tuist inspect implicit-imports`, ловит нарушение границ модулей |
 | `test` | generate и все тесты iOS через fastlane |
 | `graph`, `clean` | граф модулей, пересборка с нуля |
 | `backend:run`, `backend:test` | Vapor локально и его тесты |
+
+Короткие алиасы для zsh (`buzz-ios`, `buzz-api`, `buzz-dev` и другие) лежат в `scripts/buzz.zsh`, подключение описано в [SETUP.md](SETUP.md).
 
 Ещё про mise:
 - **Почему не brew:** brew ставит одну глобальную версию, а mise ставит версию из файла в репозитории, одинаковую у тебя и в CI. Tuist сам рекомендует ставить себя через mise.

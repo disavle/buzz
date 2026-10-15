@@ -82,11 +82,14 @@ mise run open        # открывает проект в Xcode
 
 | Задача | Что делает |
 |---|---|
+| `mise run ios` | собирает приложение и запускает в симуляторе |
 | `mise run test` | все юнит-тесты iOS через fastlane |
 | `mise run lint` | swift-format и SwiftLint |
 | `mise run backend:run` | запускает Vapor на `http://localhost:8080` |
 | `mise run backend:test` | тесты бэкенда |
 | `mise run graph` | рисует граф модулей |
+
+**Алиасы для zsh:** добавь `source /путь/к/buzz/scripts/buzz.zsh` в `~/.zshrc`, и появятся `buzz-ios`, `buzz-api`, `buzz-dev` (бэкенд в фоне и приложение) и другие. Подробнее в [docs/infra/SETUP.md](docs/infra/SETUP.md).
 
 **Без бэкенда:** в Xcode Edit Scheme → Run → Environment Variables добавь `BUZZ_MOCK_API = 1`. Тогда приложение работает с фейковым сервером в памяти. А без входа в аккаунт приложение и так полностью работает офлайн.
 
