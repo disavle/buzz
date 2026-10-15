@@ -11,12 +11,14 @@
 3. **Настройки PR в репозитории.** Settings → General → раздел Pull Requests:
    - включи **Allow auto-merge**: без этого Renovate не сможет сам вливать мелкие обновления;
    - включи **Automatically delete head branches**, чтобы ветки удалялись после мержа.
+   - оставь включённым только **Allow squash merging**: в `main` будет один коммит на задачу (процесс описан в [CONTRIBUTING.md](../../CONTRIBUTING.md)).
 
 4. **Защита `main`.** Settings → Rules → Rulesets → New branch ruleset:
    - Enforcement status: Active, Target branches: Include default branch;
    - **Require status checks to pass**: добавь `iOS` и `Backend` (они появятся в поиске после первого прогона `ci.yml`);
    - **Block force pushes**;
-   - в Bypass list добавь **Repository admin**, чтобы ты (и Claude от твоего имени) мог пушить прямо в `main`. Без этого каждое изменение придётся проводить через PR.
+   - **Require a pull request before merging** с 0 обязательных апрувов: так работает GitHub Flow, изменения попадают в `main` только через PR;
+   - в Bypass list добавь **Repository admin** с режимом «For pull requests only» или «Always». Первый вариант строже: напрямую в `main` не запушить даже тебе. Второй оставляет запасной выход для срочной правки.
 
 5. **Mac для разработки** (один раз):
    ```bash
