@@ -1,6 +1,6 @@
-import Vapor
 import Fluent
 import Shared
+import Vapor
 
 final class User: Model, Authenticatable, @unchecked Sendable {
     static let schema = "users"
@@ -26,7 +26,8 @@ final class User: Model, Authenticatable, @unchecked Sendable {
 
     init() {}
 
-    init(id: UUID? = nil, email: String, passwordHash: String, dailyCaffeineLimitMg: Int = 400, locale: AppLocale = .ru) {
+    init(id: UUID? = nil, email: String, passwordHash: String, dailyCaffeineLimitMg: Int = 400, locale: AppLocale = .ru)
+    {
         self.id = id
         self.email = email
         self.passwordHash = passwordHash

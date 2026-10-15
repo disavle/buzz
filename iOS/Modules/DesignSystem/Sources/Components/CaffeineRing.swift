@@ -24,9 +24,11 @@ public struct CaffeineRing: View {
             Circle()
                 .trim(from: 0, to: progress)
                 // `.tint` is the user's accent color (see BuzzTheme).
-                .stroke(isOver ? AnyShapeStyle(Color.buzzOver) : AnyShapeStyle(.tint),
-                        style: StrokeStyle(lineWidth: BuzzMetrics.ringLine, lineCap: .round))
-                .rotationEffect(.degrees(-90))   // start at 12 o'clock, not 3 o'clock
+                .stroke(
+                    isOver ? AnyShapeStyle(Color.buzzOver) : AnyShapeStyle(.tint),
+                    style: StrokeStyle(lineWidth: BuzzMetrics.ringLine, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))  // start at 12 o'clock, not 3 o'clock
                 .animation(.spring(duration: 0.6), value: progress)
 
             VStack(spacing: 2) {
@@ -45,7 +47,9 @@ public struct CaffeineRing: View {
         .sensoryFeedback(.warning, trigger: isOver) { _, new in new }
         // VoiceOver reads one sentence instead of separate numbers.
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("ring.a11y \(BuzzFormat.caffeine(valueMg)) \(BuzzFormat.caffeine(limitMg))", bundle: .module))
+        .accessibilityLabel(
+            Text("ring.a11y \(BuzzFormat.caffeine(valueMg)) \(BuzzFormat.caffeine(limitMg))", bundle: .module)
+        )
     }
 }
 

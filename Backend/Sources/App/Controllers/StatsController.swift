@@ -1,6 +1,6 @@
-import Vapor
 import Fluent
 import Shared
+import Vapor
 
 struct StatsController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {
@@ -28,7 +28,7 @@ struct StatsController: RouteCollection {
 
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = query.tz.flatMap(TimeZone.init(identifier:)) ?? .gmt
-        calendar.firstWeekday = 2 // weeks start on Monday
+        calendar.firstWeekday = 2  // weeks start on Monday
 
         let today = calendar.startOfDay(for: Date())
         let days = (0..<period.days).reversed().compactMap {
@@ -69,7 +69,7 @@ struct StatsController: RouteCollection {
         var weekTotals: [Date: Int] = [:]
         for entry in entries {
             guard let price = entry.priceMinor,
-                  let week = calendar.dateInterval(of: .weekOfYear, for: entry.consumedAt)?.start
+                let week = calendar.dateInterval(of: .weekOfYear, for: entry.consumedAt)?.start
             else { continue }
             weekTotals[week, default: 0] += price
         }
@@ -80,7 +80,8 @@ struct StatsController: RouteCollection {
             byDay: days.compactMap { dayTotals[$0] },
             byHour: hourCounts.enumerated().map { HourStat(hour: $0.offset, count: $0.element) },
             byBrand: brandCounts,
-            spendByWeek: weekTotals
+            spendByWeek:
+                weekTotals
                 .sorted { $0.key < $1.key }
                 .map { WeekSpend(weekStart: $0.key, total: Money.fromMinor($0.value)) }
         )

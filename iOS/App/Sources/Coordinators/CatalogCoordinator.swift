@@ -43,7 +43,7 @@ final class CatalogCoordinator: Coordinator {
     private func showCustomForm() {
         let view = CustomDrinkForm(repository: deps.drinks) { [weak self] in
             self?.navigation.dismiss(animated: true)
-            Task { await self?.catalogModel?.load() }   // show the new drink in the grid
+            Task { await self?.catalogModel?.load() }  // show the new drink in the grid
         }
         navigation.present(deps.host(view), animated: true)
     }

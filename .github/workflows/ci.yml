@@ -1,0 +1,101 @@
+# One workflow for the whole monorepo.
+# The `changes` job decides which parts were touched; the iOS and Backend jobs run only when needed.
+# A skipped job counts as passed, so "iOS" and "Backend" can be required checks on main
+# without blocking PRs that only change docs.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["ios-v*"]        # a tag like ios-v0.1.0 sends a build to TestFlight
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Changes
+    runs-on: ubuntu-latest
+    outputs:
+      ios: ${{ steps.filter.outputs.ios }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            ios:
+              - 'iOS/**'
+              - 'Shared/**'
+              - 'Backend/Sources/**'      # the iOS job also lints backend code
+              - 'mise.toml'
+              - '.swift-format'
+              - '.swiftlint.yml'
+              - '.github/workflows/ci.yml'
+            backend:
+              - 'Backend/**'
+              - 'Shared/**'
+              - '.github/workflows/ci.yml'
+
+  ios:
+    name: iOS
+    needs: changes
+    # On main and on tags everything runs; on a PR only what was touched.
+    if: needs.changes.outputs.ios == 'true' || github.event_name != 'pull_request'
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: jdx/mise-action@v3     # installs tuist, ruby and swiftlint from mise.toml and caches them
+      - name: Linters
+        run: mise run lint && mise run lint:imports
+      - name: Tests
+        # Run tests even when the linters fail, so one push shows both results.
+        if: success() || failure()
+        run: mise run test
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: test-results
+          path: iOS/fastlane/test_output
+
+  backend:
+    name: Backend
+    needs: changes
+    if: needs.changes.outputs.backend == 'true' || github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    container: swift:6.2
+    steps:
+      - uses: actions/checkout@v5
+      - name: Vapor tests
+        run: swift test --package-path Backend
+
+  beta:
+    name: TestFlight
+    needs: ios
+    if: startsWith(github.ref, 'refs/tags/ios-v')
+    runs-on: macos-26
+    env:
+      TUIST_TEAM_ID: ${{ secrets.TEAM_ID }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: jdx/mise-action@v3
+      - name: TestFlight
+        run: |
+          mise run setup:gems
+          cd iOS && bundle exec fastlane beta

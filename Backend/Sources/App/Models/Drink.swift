@@ -39,9 +39,14 @@ final class Drink: Model, @unchecked Sendable {
     init() {}
 
     init(
-        id: UUID? = nil, brand: String, name: String, volumeMl: Int,
-        caffeinePer100ml: Double, sugarPer100ml: Double,
-        imageURL: String? = nil, ownerID: User.IDValue? = nil
+        id: UUID? = nil,
+        brand: String,
+        name: String,
+        volumeMl: Int,
+        caffeinePer100ml: Double,
+        sugarPer100ml: Double,
+        imageURL: String? = nil,
+        ownerID: User.IDValue? = nil
     ) {
         self.id = id
         self.brand = brand

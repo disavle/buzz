@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import FluentSQLiteDriver
 import Shared
+import Vapor
 
 public func configure(_ app: Application) async throws {
     // Database: in memory for tests, otherwise a db.sqlite file next to the project.
@@ -26,8 +26,10 @@ public func configure(_ app: Application) async throws {
     app.migrations.add(CreateUser())
     app.migrations.add(CreateUserToken())
     app.migrations.add(CreateDrink())
-    app.migrations.add(CreateEntry())
+    // The seed goes before CreateEntry: migrations are reverted in reverse order, so the entries
+    // table is dropped first and deleting the seeded drinks does not hit the foreign key.
     app.migrations.add(SeedDrinks())
+    app.migrations.add(CreateEntry())
 
     // For convenience during development, migrations run on startup.
     if app.environment == .development {

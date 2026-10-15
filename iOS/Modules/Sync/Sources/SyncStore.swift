@@ -63,7 +63,9 @@ public actor SyncStore: ModelActor {
 
     public func pendingCount() throws -> Int {
         let synced = SyncState.synced.rawValue
-        return try modelContext.fetchCount(FetchDescriptor<EntryModel>(predicate: #Predicate { $0.syncStateRaw != synced }))
+        return try modelContext.fetchCount(
+            FetchDescriptor<EntryModel>(predicate: #Predicate { $0.syncStateRaw != synced })
+        )
     }
 
     /// Mark as synced only if nobody changed the entry while the request was in flight.
@@ -72,7 +74,7 @@ public actor SyncStore: ModelActor {
         guard let model = try entry(id), model.updatedAt == updatedAt else { return }
         model.syncState = .synced
         try modelContext.save()
-        changes.yield()   // the "not synced" icon disappears
+        changes.yield()  // the "not synced" icon disappears
     }
 
     /// The server confirmed the delete, now we can remove the row for real.
@@ -106,19 +108,25 @@ public actor SyncStore: ModelActor {
         for remote in delta.entries {
             let remoteUpdatedAt = remote.updatedAt ?? delta.serverTime
             if let local = try entry(remote.id) {
-                guard local.syncState == .synced else { continue }    // pending wins, see the rule above
-                guard remoteUpdatedAt > local.updatedAt else { continue } // conflict: newer updatedAt wins
+                guard local.syncState == .synced else { continue }  // pending wins, see the rule above
+                guard remoteUpdatedAt > local.updatedAt else { continue }  // conflict: newer updatedAt wins
                 if remote.deletedAt != nil {
-                    modelContext.delete(local)                         // deleted on another device
+                    modelContext.delete(local)  // deleted on another device
                 } else {
                     let drink = drinks.first { $0.id == remote.drinkId }
-                    let updated = EntryModel(Entry(remote, drink: drink), syncState: .synced, updatedAt: remoteUpdatedAt)
+                    let updated = EntryModel(
+                        Entry(remote, drink: drink),
+                        syncState: .synced,
+                        updatedAt: remoteUpdatedAt
+                    )
                     modelContext.delete(local)
                     modelContext.insert(updated)
                 }
             } else if remote.deletedAt == nil {
                 let drink = drinks.first { $0.id == remote.drinkId }
-                modelContext.insert(EntryModel(Entry(remote, drink: drink), syncState: .synced, updatedAt: remoteUpdatedAt))
+                modelContext.insert(
+                    EntryModel(Entry(remote, drink: drink), syncState: .synced, updatedAt: remoteUpdatedAt)
+                )
             }
         }
         try modelContext.save()

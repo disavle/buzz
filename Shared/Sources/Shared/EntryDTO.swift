@@ -15,8 +15,15 @@ public struct EntryDTO: Codable, Sendable, Hashable, Identifiable {
     public var deletedAt: Date?
 
     public init(
-        id: UUID, drinkId: UUID, consumedAt: Date, volumeMl: Int, price: Decimal?,
-        caffeineMg: Double, sugarG: Double, updatedAt: Date?, deletedAt: Date?
+        id: UUID,
+        drinkId: UUID,
+        consumedAt: Date,
+        volumeMl: Int,
+        price: Decimal?,
+        caffeineMg: Double,
+        sugarG: Double,
+        updatedAt: Date?,
+        deletedAt: Date?
     ) {
         self.id = id
         self.drinkId = drinkId
@@ -40,7 +47,8 @@ public struct CreateEntryDTO: Codable, Sendable, Hashable {
     public var volumeMl: Int?
     public var price: Decimal?
 
-    public init(id: UUID = UUID(), drinkId: UUID, consumedAt: Date = .now, volumeMl: Int? = nil, price: Decimal? = nil) {
+    public init(id: UUID = UUID(), drinkId: UUID, consumedAt: Date = .now, volumeMl: Int? = nil, price: Decimal? = nil)
+    {
         self.id = id
         self.drinkId = drinkId
         self.consumedAt = consumedAt

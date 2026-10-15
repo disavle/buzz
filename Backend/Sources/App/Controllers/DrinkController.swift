@@ -1,6 +1,6 @@
-import Vapor
 import Fluent
 import Shared
+import Vapor
 
 struct DrinkController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {
@@ -28,7 +28,8 @@ struct DrinkController: RouteCollection {
                 or.filter(\.$name ~~ search)
             }
         }
-        return try await query
+        return
+            try await query
             .sort(\.$brand)
             .sort(\.$name)
             .all()

@@ -102,7 +102,12 @@ final class AddEntryViewModel {
         isSaving = true
         defer { isSaving = false }
         do {
-            let result = try await addEntry.execute(drink: selected, volumeMl: volumeMl, consumedAt: consumedAt, price: price)
+            let result = try await addEntry.execute(
+                drink: selected,
+                volumeMl: volumeMl,
+                consumedAt: consumedAt,
+                price: price
+            )
             output.finished(result.entry)
         } catch {
             // Typed throws: `error` is already `AddEntryError`, no casting needed.

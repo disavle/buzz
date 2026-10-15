@@ -74,9 +74,13 @@ public extension Endpoint where Response == SyncDTO {
 
 public extension Endpoint where Response == StatsDTO {
     static func stats(period: StatsPeriod, timeZone: TimeZone = .current) -> Self {
-        Self(method: .get, path: "/stats", query: [
-            URLQueryItem(name: "period", value: period.rawValue),
-            URLQueryItem(name: "tz", value: timeZone.identifier),
-        ])
+        Self(
+            method: .get,
+            path: "/stats",
+            query: [
+                URLQueryItem(name: "period", value: period.rawValue),
+                URLQueryItem(name: "tz", value: timeZone.identifier),
+            ]
+        )
     }
 }

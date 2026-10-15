@@ -91,7 +91,7 @@
 ## Шаг 10. CI на GitHub Actions
 
 1. Создай репозиторий на GitHub.
-2. Напиши `.github/workflows/ios.yml`: на `pull_request` запускать `runs-on: macos-26`, `actions/checkout`, `jdx/mise-action` и `mise run test`.
+2. Напиши `.github/workflows/ci.yml` с job-ом `iOS`: на `pull_request` запускать `runs-on: macos-26`, `actions/checkout`, `jdx/mise-action` и `mise run test`.
 3. Открой PR.
 
 **Проверка:** в PR зелёная галочка. Потом сломай тест и посмотри, как CI краснеет.
@@ -99,7 +99,7 @@
 
 ## Шаг 11. Бэкенд в том же CI
 
-Второй workflow `backend.yml`: на `ubuntu-latest` с `container: swift:6.2` и `swift test --package-path Backend`. Ограничь запуск через `paths:`, чтобы правка в `iOS/` не запускала тесты бэка.
+Второй job `Backend` в том же `ci.yml`: на `ubuntu-latest` с `container: swift:6.2` и `swift test --package-path Backend`. Чтобы правка в `iOS/` не запускала тесты бэка, добавь job `Changes` с `dorny/paths-filter` и условие `if:` на job-ах (а не `paths:` у всего workflow: иначе обязательная проверка зависнет на PR, где job не запустился).
 
 **Проверка:** правка в `Shared/` запускает оба workflow.
 

@@ -10,7 +10,11 @@ let persistence  = Module("Persistence", dependencies: [domain.dependency], test
 let networking   = Module("Networking", dependencies: [domain.dependency, .external(name: "Shared")], tests: true)
 let designSystem = Module("DesignSystem", resources: true, tests: true)
 // Offline sync (actor SyncEngine), see docs/client/sync.md. Features only see the SyncService protocol from Domain.
-let sync         = Module("Sync", dependencies: [domain.dependency, persistence.dependency, networking.dependency], tests: true)
+let sync = Module(
+    "Sync",
+    dependencies: [domain.dependency, persistence.dependency, networking.dependency, .external(name: "Shared")],
+    tests: true
+)
 
 // Every feature has its own String Catalog (Resources/Localizable.xcstrings), so resources: true.
 let featureDeps: [TargetDependency] = [domain.dependency, designSystem.dependency]

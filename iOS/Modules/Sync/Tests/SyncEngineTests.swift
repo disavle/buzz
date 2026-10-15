@@ -4,6 +4,7 @@ import Networking
 import Persistence
 import Shared
 import Testing
+
 @testable import Sync
 
 // Sync tests run without network: MockAPIClient is the "server",
@@ -43,10 +44,19 @@ func pushPending() async throws {
 func pullRemote() async throws {
     let f = try Fixture()
     let id = UUID()
-    f.api.seedRemote(EntryDTO(
-        id: id, drinkId: SeedCatalog.monster.id, consumedAt: .now, volumeMl: 500, price: nil,
-        caffeineMg: 160, sugarG: 55, updatedAt: .now, deletedAt: nil
-    ))
+    f.api.seedRemote(
+        EntryDTO(
+            id: id,
+            drinkId: SeedCatalog.monster.id,
+            consumedAt: .now,
+            volumeMl: 500,
+            price: nil,
+            caffeineMg: 160,
+            sugarG: 55,
+            updatedAt: .now,
+            deletedAt: nil
+        )
+    )
 
     await f.engine.syncNow()
 
@@ -72,7 +82,11 @@ func offlineKeepsPending() async throws {
     let changes = Broadcaster<Void>()
     let repo = SwiftDataEntryRepository(modelContainer: container, broadcaster: changes)
     let engine = SyncEngine(
-        store: SyncStore(modelContainer: container, changes: changes, defaults: UserDefaults(suiteName: UUID().uuidString)!),
+        store: SyncStore(
+            modelContainer: container,
+            changes: changes,
+            defaults: UserDefaults(suiteName: UUID().uuidString)!
+        ),
         api: MockAPIClient(failure: .transport),
         tokens: InMemoryTokenStore(token: "t")
     )

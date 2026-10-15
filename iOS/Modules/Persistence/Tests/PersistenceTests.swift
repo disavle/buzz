@@ -2,6 +2,7 @@ import Domain
 import Foundation
 import SwiftData
 import Testing
+
 @testable import Persistence
 
 // Each test makes a fresh in-memory database, so tests never affect each other.

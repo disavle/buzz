@@ -47,9 +47,15 @@ public final class EntryModel {
 
     public var asDomain: Entry {
         Entry(
-            id: id, drinkId: drinkId, brand: brand, drinkName: drinkName,
-            consumedAt: consumedAt, volumeMl: volumeMl, price: price,
-            caffeineMg: caffeineMg, sugarG: sugarG,
+            id: id,
+            drinkId: drinkId,
+            brand: brand,
+            drinkName: drinkName,
+            consumedAt: consumedAt,
+            volumeMl: volumeMl,
+            price: price,
+            caffeineMg: caffeineMg,
+            sugarG: sugarG,
             isSynced: syncState == .synced
         )
     }

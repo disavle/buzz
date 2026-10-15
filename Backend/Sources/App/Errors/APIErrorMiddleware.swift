@@ -1,5 +1,5 @@
-import Vapor
 import Shared
+import Vapor
 
 /// Replaces Vapor's default ErrorMiddleware: any error becomes
 /// an `APIErrorDTO` with a machine code that the client translates itself.
@@ -45,12 +45,13 @@ struct APIErrorMiddleware: AsyncMiddleware {
             return (.badRequest, APIErrorDTO(error: .invalidBody, reason: "\(error)"))
 
         case let error as any AbortError:
-            let code: APIErrorCode = switch error.status {
-            case .unauthorized: .unauthorized
-            case .notFound: .notFound
-            case .badRequest, .unprocessableEntity: .invalidBody
-            default: .internal
-            }
+            let code: APIErrorCode =
+                switch error.status {
+                case .unauthorized: .unauthorized
+                case .notFound: .notFound
+                case .badRequest, .unprocessableEntity: .invalidBody
+                default: .internal
+                }
             return (error.status, APIErrorDTO(error: code, reason: error.reason))
 
         default:

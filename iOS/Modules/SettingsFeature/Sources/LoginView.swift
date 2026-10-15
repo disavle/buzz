@@ -51,14 +51,22 @@ public struct LoginView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button { finished(false) } label: { Text("login.cancel", bundle: .module) }
+                    Button {
+                        finished(false)
+                    } label: {
+                        Text("login.cancel", bundle: .module)
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     if isLoading {
                         ProgressView()
                     } else {
-                        Button { Task { await submit() } } label: { Text("login.submit", bundle: .module) }
-                            .disabled(!isValid)
+                        Button {
+                            Task { await submit() }
+                        } label: {
+                            Text("login.submit", bundle: .module)
+                        }
+                        .disabled(!isValid)
                     }
                 }
             }
@@ -76,7 +84,7 @@ public struct LoginView: View {
             }
             finished(true)
         } catch {
-            self.error = error   // typed throws: already an AuthError
+            self.error = error  // typed throws: already an AuthError
         }
     }
 

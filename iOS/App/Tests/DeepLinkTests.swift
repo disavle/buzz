@@ -1,11 +1,15 @@
 import Foundation
 import Testing
+
 @testable import Buzz
 
-@Test("Deep links are parsed", arguments: [
-    ("buzz://add", DeepLink.add),
-    ("buzz://stats", DeepLink.stats),
-])
+@Test(
+    "Deep links are parsed",
+    arguments: [
+        ("buzz://add", DeepLink.add),
+        ("buzz://stats", DeepLink.stats),
+    ]
+)
 func parse(url: String, expected: DeepLink) {
     #expect(DeepLink(url: URL(string: url)!) == expected)
 }

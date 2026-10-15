@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+
 @testable import Domain
 
 // Swift Testing: `@Test` functions and `#expect` instead of XCTestCase and XCTAssert.
@@ -8,9 +9,9 @@ import Testing
 @Test("Caffeine and sugar are calculated from the volume")
 func entryNutrition() {
     let entry = Entry.make(drink: SeedCatalog.redBull, volumeMl: 500, consumedAt: .now)
-    #expect(entry.caffeineMg == 160)   // 32 mg per 100 ml * 5
+    #expect(entry.caffeineMg == 160)  // 32 mg per 100 ml * 5
     #expect(entry.sugarG == 55)
-    #expect(entry.isSynced == false)   // new entries are pending until sync
+    #expect(entry.isSynced == false)  // new entries are pending until sync
 }
 
 @Test("Recent drinks are unique and newest first")

@@ -28,10 +28,26 @@ public struct DrinkDetailView: View {
                 }
             }
             Section {
-                LabeledContent { Text(BuzzFormat.volume(drink.volumeMl)) } label: { Text("detail.volume", bundle: .module) }
-                LabeledContent { Text(BuzzFormat.caffeine(perCan)) } label: { Text("detail.caffeinePerCan", bundle: .module) }
-                LabeledContent { Text(BuzzFormat.caffeine(drink.caffeinePer100ml)) } label: { Text("detail.caffeinePer100", bundle: .module) }
-                LabeledContent { Text(BuzzFormat.sugar(sugarPerCan)) } label: { Text("detail.sugarPerCan", bundle: .module) }
+                LabeledContent {
+                    Text(BuzzFormat.volume(drink.volumeMl))
+                } label: {
+                    Text("detail.volume", bundle: .module)
+                }
+                LabeledContent {
+                    Text(BuzzFormat.caffeine(perCan))
+                } label: {
+                    Text("detail.caffeinePerCan", bundle: .module)
+                }
+                LabeledContent {
+                    Text(BuzzFormat.caffeine(drink.caffeinePer100ml))
+                } label: {
+                    Text("detail.caffeinePer100", bundle: .module)
+                }
+                LabeledContent {
+                    Text(BuzzFormat.sugar(sugarPerCan))
+                } label: {
+                    Text("detail.sugarPerCan", bundle: .module)
+                }
             }
         }
         .navigationTitle(drink.displayName)

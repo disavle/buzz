@@ -1199,7 +1199,7 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [GitHub Actions](https://docs.github.com/actions)
 
-**Код в Buzz.** `.github/workflows/ios.yml`, `.github/workflows/backend.yml`.
+**Код в Buzz.** `.github/workflows/ci.yml`.
 
 **Описание.** `docs/infra/README.md`, раздел 6.
 

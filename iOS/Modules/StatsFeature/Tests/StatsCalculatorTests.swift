@@ -1,12 +1,13 @@
 import Domain
 import Foundation
 import Testing
+
 @testable import StatsFeature
 
 private let calendar: Calendar = {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = TimeZone(identifier: "Europe/Moscow")!
-    calendar.firstWeekday = 2   // Monday
+    calendar.firstWeekday = 2  // Monday
     return calendar
 }()
 
@@ -24,7 +25,7 @@ func byDayFillsGaps() {
     let days = StatsCalculator(calendar: calendar).snapshot(entries: entries, period: .week, now: now).byDay
 
     #expect(days.count == 7)
-    #expect(days.last?.caffeineMg == 80)      // today
+    #expect(days.last?.caffeineMg == 80)  // today
     #expect(days.filter { $0.caffeineMg == 0 }.count == 5)
 }
 
@@ -42,8 +43,10 @@ func byHour() {
 
 @Test("Brands after the top 4 go to 'Other'")
 func otherBrands() {
-    let drinks = [SeedCatalog.redBull, SeedCatalog.monster, SeedCatalog.burn, SeedCatalog.adrenaline,
-                  SeedCatalog.flashUp, SeedCatalog.tornado]
+    let drinks = [
+        SeedCatalog.redBull, SeedCatalog.monster, SeedCatalog.burn, SeedCatalog.adrenaline,
+        SeedCatalog.flashUp, SeedCatalog.tornado,
+    ]
     let entries = drinks.enumerated().map { entry($1, daysAgo: $0, hour: 10) }
     let brands = StatsCalculator(calendar: calendar).snapshot(entries: entries, period: .week, now: now).byBrand
 

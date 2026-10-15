@@ -1,5 +1,5 @@
-import Vapor
 import Shared
+import Vapor
 
 // Shared DTOs know nothing about Vapor. Here the server teaches them to be HTTP content
 // and to validate incoming data.

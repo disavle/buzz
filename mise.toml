@@ -6,14 +6,14 @@
 # a git hook, and then generates Buzz.xcworkspace.
 #
 # Use `mise run generate`, not `mise generate`: `generate` is a built-in mise command.
-# To pin exact versions: `mise use tuist@latest ruby@3.3 swiftlint@latest`.
+# Versions are pinned; Renovate opens a PR when a new one comes out.
 
 min_version = "2025.1.0"
 
 [tools]
-tuist = "4"
-ruby = "3.3"          # for fastlane via Bundler
-swiftlint = "latest"
+tuist = "4.212.0"
+ruby = "3.3.12"          # for fastlane via Bundler
+swiftlint = "0.65.1"
 
 [env]
 # Put secrets and your Team ID in mise.local.toml (it is in .gitignore), for example:
@@ -21,7 +21,7 @@ swiftlint = "latest"
 
 [settings]
 # `mise run` installs missing tools from [tools] by itself
-task_run_auto_install = true
+task.run_auto_install = true
 
 # ---------- Main command ----------
 
@@ -67,7 +67,8 @@ run = [
 [tasks."lint:imports"]
 description = "Find imports of modules that are not declared as dependencies"
 dir = "iOS"
-run = "tuist inspect implicit-imports"
+# The graph needs resolved SPM dependencies, so install them first (fast when cached).
+run = ["tuist install", "tuist inspect implicit-imports"]
 
 [tasks.test]
 description = "Run all iOS unit tests via fastlane"

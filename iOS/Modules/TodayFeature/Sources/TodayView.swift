@@ -41,7 +41,11 @@ public struct TodayView: View {
         .overlay {
             if model.entries.isEmpty {
                 ContentUnavailableView {
-                    Label { Text("today.empty.title", bundle: .module) } icon: { Image(systemName: "bolt.slash") }
+                    Label {
+                        Text("today.empty.title", bundle: .module)
+                    } icon: {
+                        Image(systemName: "bolt.slash")
+                    }
                 } description: {
                     Text("today.empty.subtitle", bundle: .module)
                 }
@@ -54,7 +58,11 @@ public struct TodayView: View {
                 Button {
                     model.addTapped()
                 } label: {
-                    Label { Text("today.add", bundle: .module) } icon: { Image(systemName: "plus") }
+                    Label {
+                        Text("today.add", bundle: .module)
+                    } icon: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }
@@ -80,10 +88,18 @@ public struct TodayView: View {
             // Grid with 3 equal columns. In UIKit this would be a UIStackView with .fillEqually.
             Grid(horizontalSpacing: 8) {
                 GridRow {
-                    MetricTile("today.metric.left", value: BuzzFormat.caffeine(model.leftMg),
-                               color: model.isOverLimit ? .buzzOver : .accentColor, bundle: .module)
-                    MetricTile("today.metric.sugar", value: BuzzFormat.sugar(model.sugarG),
-                               color: .buzzSugar, bundle: .module)
+                    MetricTile(
+                        "today.metric.left",
+                        value: BuzzFormat.caffeine(model.leftMg),
+                        color: model.isOverLimit ? .buzzOver : .accentColor,
+                        bundle: .module
+                    )
+                    MetricTile(
+                        "today.metric.sugar",
+                        value: BuzzFormat.sugar(model.sugarG),
+                        color: .buzzSugar,
+                        bundle: .module
+                    )
                     MetricTile("today.metric.cans", value: model.entries.count.formatted(), bundle: .module)
                 }
             }
