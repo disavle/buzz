@@ -38,6 +38,8 @@ fix(sync): do not resend deleted entries
 chore: bump tuist to 4.213
 ```
 
+Автор коммитов в ветке должен быть владельцем репозитория (`git config user.name` и `user.email`). При squash-мерже GitHub дописывает строку `Co-authored-by` для каждого другого автора коммитов в ветке, поэтому чужой автор попадёт в историю `main`.
+
 ## Релизы
 
 Релиз iOS делается тегом на `main`: `git tag ios-v0.2.0 && git push origin ios-v0.2.0`. CI прогонит тесты и отправит сборку в TestFlight (когда будет настроен аккаунт разработчика, см. [docs/infra/SETUP.md](docs/infra/SETUP.md)). Номер сборки CI берёт сам из TestFlight, а версию (`MARKETING_VERSION`) меняют в `iOS/Project.swift` отдельным PR перед тегом.
