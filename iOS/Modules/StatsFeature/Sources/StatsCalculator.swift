@@ -44,7 +44,7 @@ public struct StatsSnapshot: Equatable, Sendable {
         byDay.isEmpty ? 0 : byDay.reduce(0) { $0 + $1.caffeineMg } / Double(byDay.count)
     }
     /// The busiest hour, for the "usually at 14:00–15:00" number.
-    public var peakHour: Int? { byHour.max { $0.count < $1.count }.flatMap { !$0.isEmpty ? $0.hour : nil } }
+    public var peakHour: Int? { byHour.max { $0.count < $1.count }.flatMap { $0.count > 0 ? $0.hour : nil } }
     public var totalCans: Int { byBrand.reduce(0) { $0 + $1.count } }
     public var lastWeekSpend: Decimal { spendByWeek.last?.amount ?? 0 }
 }

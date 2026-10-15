@@ -51,7 +51,9 @@ public struct Module {
                     bundleId: "\(Buzz.bundleIdPrefix).\(name)Tests",
                     deploymentTargets: Buzz.deploymentTargets,
                     sources: ["Modules/\(name)/Tests/**"],
-                    dependencies: [.target(name: name)]
+                    // Tests also see the module's own dependencies (fakes from Domain, DTOs from Shared),
+                    // otherwise `tuist inspect implicit-imports` reports them as undeclared.
+                    dependencies: [.target(name: name)] + dependencies
                 )
             )
         }

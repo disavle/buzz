@@ -12,11 +12,11 @@ disabled_rules:
   - opening_brace
   - line_length          # swift-format controls line length
 opt_in_rules:
-  - empty_count
   - sorted_first_last
   - contains_over_filter_count
   - weak_delegate
-# first_where is not used: it mistakes Fluent queries (`.filter(...).first()`) for collections.
+# first_where and empty_count are not used: they mistake Fluent queries and model fields
+# like `HourBucket.count` for collections, and `swiftlint --fix` then breaks the build.
 
 analyzer_rules:          # run only by `swiftlint analyze`
   - unused_declaration
