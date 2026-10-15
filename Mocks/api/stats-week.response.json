@@ -1,0 +1,194 @@
+{
+  "period": "week",
+  "dailyCaffeineLimitMg": 400,
+  "byDay": [
+    {
+      "day": "2026-10-09T00:00:00Z",
+      "caffeineMg": 360,
+      "sugarG": 72.0,
+      "count": 3
+    },
+    {
+      "day": "2026-10-10T00:00:00Z",
+      "caffeineMg": 400,
+      "sugarG": 80.0,
+      "count": 3
+    },
+    {
+      "day": "2026-10-11T00:00:00Z",
+      "caffeineMg": 480,
+      "sugarG": 96.0,
+      "count": 4
+    },
+    {
+      "day": "2026-10-12T00:00:00Z",
+      "caffeineMg": 160,
+      "sugarG": 32.0,
+      "count": 1
+    },
+    {
+      "day": "2026-10-13T00:00:00Z",
+      "caffeineMg": 390,
+      "sugarG": 78.0,
+      "count": 3
+    },
+    {
+      "day": "2026-10-14T00:00:00Z",
+      "caffeineMg": 240,
+      "sugarG": 48.0,
+      "count": 2
+    },
+    {
+      "day": "2026-10-15T00:00:00Z",
+      "caffeineMg": 310,
+      "sugarG": 62.0,
+      "count": 3
+    }
+  ],
+  "byHour": [
+    {
+      "hour": 0,
+      "count": 0
+    },
+    {
+      "hour": 1,
+      "count": 0
+    },
+    {
+      "hour": 2,
+      "count": 0
+    },
+    {
+      "hour": 3,
+      "count": 0
+    },
+    {
+      "hour": 4,
+      "count": 0
+    },
+    {
+      "hour": 5,
+      "count": 0
+    },
+    {
+      "hour": 6,
+      "count": 0
+    },
+    {
+      "hour": 7,
+      "count": 0
+    },
+    {
+      "hour": 8,
+      "count": 1
+    },
+    {
+      "hour": 9,
+      "count": 3
+    },
+    {
+      "hour": 10,
+      "count": 2
+    },
+    {
+      "hour": 11,
+      "count": 1
+    },
+    {
+      "hour": 12,
+      "count": 2
+    },
+    {
+      "hour": 13,
+      "count": 3
+    },
+    {
+      "hour": 14,
+      "count": 5
+    },
+    {
+      "hour": 15,
+      "count": 3
+    },
+    {
+      "hour": 16,
+      "count": 2
+    },
+    {
+      "hour": 17,
+      "count": 1
+    },
+    {
+      "hour": 18,
+      "count": 1
+    },
+    {
+      "hour": 19,
+      "count": 2
+    },
+    {
+      "hour": 20,
+      "count": 1
+    },
+    {
+      "hour": 21,
+      "count": 1
+    },
+    {
+      "hour": 22,
+      "count": 0
+    },
+    {
+      "hour": 23,
+      "count": 0
+    }
+  ],
+  "byBrand": [
+    {
+      "brand": "Monster",
+      "count": 9
+    },
+    {
+      "brand": "Red Bull",
+      "count": 6
+    },
+    {
+      "brand": "Burn",
+      "count": 4
+    },
+    {
+      "brand": "Flash Up",
+      "count": 2
+    },
+    {
+      "brand": "Tornado",
+      "count": 1
+    }
+  ],
+  "spendByWeek": [
+    {
+      "weekStart": "2026-09-07T00:00:00Z",
+      "total": 980
+    },
+    {
+      "weekStart": "2026-09-14T00:00:00Z",
+      "total": 1240
+    },
+    {
+      "weekStart": "2026-09-21T00:00:00Z",
+      "total": 1100
+    },
+    {
+      "weekStart": "2026-09-28T00:00:00Z",
+      "total": 1490
+    },
+    {
+      "weekStart": "2026-10-05T00:00:00Z",
+      "total": 1320
+    },
+    {
+      "weekStart": "2026-10-12T00:00:00Z",
+      "total": 1560
+    }
+  ]
+}

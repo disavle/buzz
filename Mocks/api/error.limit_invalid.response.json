@@ -1,0 +1,4 @@
+{
+  "error": "limit_invalid",
+  "reason": "dailyCaffeineLimitMg is not between 1 and 2000"
+}

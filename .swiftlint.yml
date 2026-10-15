@@ -1,0 +1,20 @@
+# swift-format handles formatting, SwiftLint catches real code problems.
+included:
+  - iOS/App
+  - iOS/Modules
+  - Shared/Sources
+  - Backend/Sources
+excluded:
+  - iOS/Derived
+  - iOS/Tuist/.build
+disabled_rules:
+  - trailing_comma
+  - opening_brace
+  - line_length          # swift-format controls line length
+opt_in_rules:
+  - empty_count
+  - first_where
+  - sorted_first_last
+  - contains_over_filter_count
+  - unused_declaration
+  - weak_delegate

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Europe/Moscow",
+  "schedule": ["before 9am on monday"],
+  "packageRules": [
+    {
+      "description": "Patch updates of tools and actions merge automatically when CI is green",
+      "matchManagers": ["mise", "github-actions", "bundler"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "tools",
+      "automerge": true
+    },
+    {
+      "description": "Vapor and other SPM packages in a separate PR",
+      "matchManagers": ["swift"],
+      "groupName": "swift packages"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Buzz · Статистика</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#5B3DF5}a:hover{color:#4327D9}
+</style>
+</helmet>
+<div style="width: 390px; height: 1480px; box-sizing: border-box; position: relative; overflow: hidden; background: {{t.bg}}; color: {{t.label}}; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+  <div style="padding: 62px 16px 120px 16px; display: flex; flex-direction: column; gap: 16px">
+    <h1 style="margin: 44px 0 0 0; font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: 0.4px">Статистика</h1>
+    <div role="group" aria-label="Период" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: {{t.fill}}; border-radius: 12px; padding: 3px; gap: 2px">
+      <button style="height: 32px; border: none; border-radius: 10px; background: {{t.segOn}}; color: {{t.label}}; font-size: 14px; font-weight: 600; font-family: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.12)">Неделя</button>
+      <button style="height: 32px; border: none; border-radius: 10px; background: transparent; color: {{t.label}}; font-size: 14px; font-weight: 500; font-family: inherit">Месяц</button>
+    </div>
+
+    <section style="background: {{t.card}}; border-radius: 26px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 13px; color: {{t.sec}}">Кофеин по дням · в среднем</div>
+        <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 28px; font-weight: 700">329 <span style="font-size: 17px; font-weight: 600; color: {{t.sec}}">мг/день</span></div>
+      </div>
+      <div style="position: relative; height: 160px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end; border-bottom: 0.5px solid {{t.sep}}">
+        <div style="position: absolute; left: 0; right: 0; top: 53px; border-top: 1.5px dashed {{t.sec}}"></div>
+        <div style="position: absolute; right: 0; top: 34px; font-size: 11px; font-weight: 600; color: {{t.sec}}">лимит 400 мг</div>
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+          <div style="height: {{d.h}}; background: {{d.color}}; border-radius: 6px 6px 3px 3px"></div>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-top: -8px">
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+          <div style="text-align: center; font-size: 12px; color: {{t.sec}}; font-weight: {{d.weight}}">{{d.label}}</div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 16px; font-size: 12px; color: {{t.sec}}">
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{t.accent}}"></span>в пределах лимита</span>
+        <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{t.warn}}"></span>выше лимита</span>
+      </div>
+    </section>
+
+    <section style="background: {{t.card}}; border-radius: 26px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 13px; color: {{t.sec}}">Во сколько обычно пьёшь</div>
+        <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 28px; font-weight: 700">14:00–15:00</div>
+      </div>
+      <div style="height: 96px; display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 3px; align-items: end; border-bottom: 0.5px solid {{t.sep}}">
+        <sc-for list="{{hours}}" as="h" hint-placeholder-count="24">
+          <div style="height: {{h.h}}; background: {{h.color}}; border-radius: 3px 3px 1px 1px"></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: {{t.sec}}; margin-top: -8px">
+        <span>0</span><span>6</span><span>12</span><span>18</span><span>23</span>
+      </div>
+    </section>
+
+    <section style="background: {{t.card}}; border-radius: 26px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="font-size: 13px; color: {{t.sec}}">Любимые бренды</div>
+      <div style="display: flex; align-items: center; gap: 20px">
+        <div style="position: relative; width: 150px; height: 150px; flex: none">
+          <svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Доли брендов: Monster 9, Red Bull 6, Burn 4, Flash Up 2, другие 1">
+            <g transform="rotate(-90 75 75)" fill="none" stroke-width="22">
+              <circle cx="75" cy="75" r="60" stroke="#4D7C0F" stroke-dasharray="151.2 376.99" stroke-dashoffset="0"></circle>
+              <circle cx="75" cy="75" r="60" stroke="#3D5AFE" stroke-dasharray="99.8 376.99" stroke-dashoffset="-154.2"></circle>
+              <circle cx="75" cy="75" r="60" stroke="#C2410C" stroke-dasharray="65.5 376.99" stroke-dashoffset="-257"></circle>
+              <circle cx="75" cy="75" r="60" stroke="#0F766E" stroke-dasharray="31.3 376.99" stroke-dashoffset="-325.5"></circle>
+              <circle cx="75" cy="75" r="60" stroke="#8E8E93" stroke-dasharray="14.1 376.99" stroke-dashoffset="-359.8"></circle>
+            </g>
+          </svg>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center">
+            <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 26px; font-weight: 700">22</div>
+            <div style="font-size: 12px; color: {{t.sec}}">банки</div>
+          </div>
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 9px">
+          <sc-for list="{{brands}}" as="b" hint-placeholder-count="5">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 14px">
+              <span style="width: 10px; height: 10px; border-radius: 5px; background: {{b.color}}; flex: none"></span>
+              <span style="flex: 1">{{b.name}}</span>
+              <span style="font-weight: 600; font-variant-numeric: tabular-nums">{{b.count}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: {{t.card}}; border-radius: 26px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 13px; color: {{t.sec}}">Траты по неделям · эта неделя</div>
+        <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 28px; font-weight: 700">1 560 ₽</div>
+      </div>
+      <svg width="322" height="128" viewBox="0 0 322 128" role="img" aria-label="Траты по неделям: 820, 1140, 960, 1380, 1210, 1560 рублей">
+        <line x1="0" y1="124" x2="322" y2="124" stroke="{{t.sep}}" stroke-width="1"></line>
+        <line x1="0" y1="64" x2="322" y2="64" stroke="{{t.sep}}" stroke-width="1" stroke-dasharray="3 4"></line>
+        <path d="M8 69 C 28 60, 50 48, 70 48 S 112 60, 132 60 S 174 32, 194 32 S 236 43, 256 43 S 298 24, 314 20" fill="none" stroke="{{t.accent}}" stroke-width="3" stroke-linecap="round"></path>
+        <circle cx="8" cy="69" r="4.5" fill="{{t.card}}" stroke="{{t.accent}}" stroke-width="2.5"></circle>
+        <circle cx="70" cy="48" r="4.5" fill="{{t.card}}" stroke="{{t.accent}}" stroke-width="2.5"></circle>
+        <circle cx="132" cy="60" r="4.5" fill="{{t.card}}" stroke="{{t.accent}}" stroke-width="2.5"></circle>
+        <circle cx="194" cy="32" r="4.5" fill="{{t.card}}" stroke="{{t.accent}}" stroke-width="2.5"></circle>
+        <circle cx="256" cy="43" r="4.5" fill="{{t.card}}" stroke="{{t.accent}}" stroke-width="2.5"></circle>
+        <circle cx="314" cy="20" r="5.5" fill="{{t.accent}}"></circle>
+      </svg>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: {{t.sec}}; margin-top: -8px">
+        <span>08.09</span><span>15.09</span><span>22.09</span><span>29.09</span><span>06.10</span><span>13.10</span>
+      </div>
+    </section>
+  </div>
+
+  <nav aria-label="Вкладки" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 64px; border-radius: 32px; background: {{t.glass}}; border: 1px solid {{t.glassEdge}}; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; box-sizing: border-box; backdrop-filter: blur(20px)">
+    <a href="Main.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 2 4.5 13.5h6.5l-1 8.5 9-11.5h-6.5l1-8.5z"></path></svg>Сегодня</a>
+    <a href="Catalog.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="2"></rect></svg>Каталог</a>
+    <a href="Stats.dc.html" style="border-radius: 28px; background: {{t.fill}}; color: {{t.accent}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M3 20.5h18M6.5 17V11M11 17V5.5M15.5 17v-8M20 17v-4"></path></svg>Статистика</a>
+    <a href="Settings.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="10" cy="17" r="2.2"></circle></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":1480}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var t = dark
+      ? { bg: '#000000', card: '#1C1C1E', label: '#FFFFFF', sec: '#AEAEB2', fill: '#2C2C2E', segOn: '#636366', sep: '#38383A', accent: '#9A8CFF', accentDim: '#4A4380', warn: '#FF8A4C', glass: 'rgba(44,44,46,0.86)', glassEdge: 'rgba(255,255,255,0.10)' }
+      : { bg: '#F2F2F7', card: '#FFFFFF', label: '#000000', sec: '#6C6C70', fill: '#E3E3E8', segOn: '#FFFFFF', sep: '#E5E5EA', accent: '#5B3DF5', accentDim: '#C9BFFF', warn: '#C2410C', glass: 'rgba(255,255,255,0.86)', glassEdge: 'rgba(0,0,0,0.06)' };
+    var limit = 400, max = 600, H = 160;
+    var week = [['Чт', 320], ['Пт', 400], ['Сб', 480], ['Вс', 160], ['Пн', 380], ['Вт', 240], ['Ср', 320]];
+    var days = week.map(function (w, i) {
+      return { label: w[0], h: Math.round(w[1] / max * H) + 'px', color: w[1] > limit ? t.warn : t.accent, weight: i === 6 ? '700' : '400' };
+    });
+    var counts = [0,0,0,0,0,0,0,1,2,3,2,1,2,3,4,3,2,1,1,2,1,1,0,0];
+    var hours = counts.map(function (c) {
+      return { h: (c === 0 ? 2 : Math.round(c / 4 * 92)) + 'px', color: c === 4 ? t.accent : (c === 0 ? t.sep : t.accentDim) };
+    });
+    var brands = [
+      { name: 'Monster', count: 9, color: '#4D7C0F' },
+      { name: 'Red Bull', count: 6, color: '#3D5AFE' },
+      { name: 'Burn', count: 4, color: '#C2410C' },
+      { name: 'Flash Up', count: 2, color: '#0F766E' },
+      { name: 'Другие', count: 1, color: '#8E8E93' }
+    ];
+    return { t: t, days: days, hours: hours, brands: brands };
+  }
+}
+</script>
+</body>
+</html>

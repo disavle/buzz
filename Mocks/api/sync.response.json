@@ -1,0 +1,38 @@
+{
+  "drinks": [
+    {
+      "id": "9C1D3A52-7E0B-4F57-9B7A-1F2E3D4C5B6A",
+      "brand": "Homemade",
+      "name": "Cold Brew",
+      "volumeMl": 330,
+      "caffeinePer100ml": 45,
+      "sugarPer100ml": 0,
+      "isCustom": true
+    }
+  ],
+  "entries": [
+    {
+      "id": "A1B2C3D4-0001-4000-8000-000000000001",
+      "drinkId": "00000000-0000-0000-0000-000000000004",
+      "consumedAt": "2026-10-15T15:40:00Z",
+      "volumeMl": 500,
+      "price": 149,
+      "caffeineMg": 150,
+      "sugarG": 0,
+      "updatedAt": "2026-10-15T15:40:05Z",
+      "deletedAt": null
+    },
+    {
+      "id": "A1B2C3D4-0009-4000-8000-000000000009",
+      "drinkId": "00000000-0000-0000-0000-000000000003",
+      "consumedAt": "2026-10-14T19:00:00Z",
+      "volumeMl": 500,
+      "price": null,
+      "caffeineMg": 160,
+      "sugarG": 55,
+      "updatedAt": "2026-10-15T08:00:00Z",
+      "deletedAt": "2026-10-15T08:00:00Z"
+    }
+  ],
+  "serverTime": "2026-10-15T21:00:00Z"
+}

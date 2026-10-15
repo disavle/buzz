@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Buzz · Каталог</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#5B3DF5}a:hover{color:#4327D9}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: {{t.bg}}; color: {{t.label}}; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+  <div style="padding: 62px 16px 0 16px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: flex-end; gap: 8px">
+      <button aria-label="Фильтр" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: {{t.card}}; color: {{t.label}}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"></path></svg>
+      </button>
+      <button aria-label="Свой напиток" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: {{t.accent}}; color: {{t.onAccent}}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+    </div>
+    <h1 style="margin: -10px 0 0 0; font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: 0.4px">Каталог</h1>
+    <label style="display: flex; align-items: center; gap: 8px; height: 40px; border-radius: 20px; background: {{t.fill}}; padding: 0 14px; color: {{t.sec}}">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <input placeholder="Бренд или название" aria-label="Поиск" style="flex: 1; border: none; outline: none; background: transparent; font-size: 17px; font-family: inherit; color: {{t.label}}">
+    </label>
+    <div role="group" aria-label="Фильтр" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: {{t.fill}}; border-radius: 12px; padding: 3px; gap: 2px">
+      <button style="height: 32px; border: none; border-radius: 10px; background: {{t.segOn}}; color: {{t.label}}; font-size: 14px; font-weight: 600; font-family: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.12)">Все</button>
+      <button style="height: 32px; border: none; border-radius: 10px; background: transparent; color: {{t.label}}; font-size: 14px; font-weight: 500; font-family: inherit">Мои</button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <sc-for list="{{drinks}}" as="d" hint-placeholder-count="6">
+        <a href="AddEntry.dc.html" style="background: {{t.card}}; border-radius: 22px; padding: 8px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: {{t.label}}">
+          <div style="height: 104px; border-radius: 16px; background: {{d.tile}}; color: #FFFFFF; display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 12px; box-sizing: border-box">
+            <span style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-weight: 800; font-size: 44px; line-height: 44px">{{d.letter}}</span>
+            <span style="font-size: 12px; font-weight: 600; opacity: 0.9">{{d.vol}}</span>
+          </div>
+          <div style="padding: 0 6px 6px 6px; display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: 15px; font-weight: 600">{{d.name}}</div>
+            <div style="font-size: 13px; color: {{t.sec}}">{{d.caf}}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <nav aria-label="Вкладки" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 64px; border-radius: 32px; background: {{t.glass}}; border: 1px solid {{t.glassEdge}}; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; box-sizing: border-box; backdrop-filter: blur(20px)">
+    <a href="Main.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 2 4.5 13.5h6.5l-1 8.5 9-11.5h-6.5l1-8.5z"></path></svg>Сегодня</a>
+    <a href="Catalog.dc.html" style="border-radius: 28px; background: {{t.fill}}; color: {{t.accent}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2.2"></rect><rect x="13" y="3" width="8" height="8" rx="2.2"></rect><rect x="3" y="13" width="8" height="8" rx="2.2"></rect><rect x="13" y="13" width="8" height="8" rx="2.2"></rect></svg>Каталог</a>
+    <a href="Stats.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 20.5h18M6.5 17V11M11 17V5.5M15.5 17v-8M20 17v-4"></path></svg>Статистика</a>
+    <a href="Settings.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="10" cy="17" r="2.2"></circle></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var t = dark
+      ? { bg: '#000000', card: '#1C1C1E', label: '#FFFFFF', sec: '#AEAEB2', fill: '#2C2C2E', segOn: '#636366', accent: '#9A8CFF', onAccent: '#14102E', glass: 'rgba(44,44,46,0.86)', glassEdge: 'rgba(255,255,255,0.10)' }
+      : { bg: '#F2F2F7', card: '#FFFFFF', label: '#000000', sec: '#6C6C70', fill: '#E3E3E8', segOn: '#FFFFFF', accent: '#5B3DF5', onAccent: '#FFFFFF', glass: 'rgba(255,255,255,0.86)', glassEdge: 'rgba(0,0,0,0.06)' };
+    var drinks = [
+      { letter: 'R', tile: '#3D5AFE', name: 'Red Bull', vol: '250 мл', caf: '32 мг/100 мл' },
+      { letter: 'M', tile: '#4D7C0F', name: 'Monster Ultra', vol: '500 мл', caf: '32 мг/100 мл' },
+      { letter: 'B', tile: '#C2410C', name: 'Burn Original', vol: '250 мл', caf: '32 мг/100 мл' },
+      { letter: 'A', tile: '#BE185D', name: 'Adrenaline Rush', vol: '250 мл', caf: '30 мг/100 мл' },
+      { letter: 'F', tile: '#0F766E', name: 'Flash Up', vol: '450 мл', caf: '30 мг/100 мл' },
+      { letter: 'Я', tile: '#475569', name: 'Мой колд-брю', vol: '330 мл', caf: '45 мг/100 мл · мой' }
+    ];
+    return { t: t, drinks: drinks };
+  }
+}
+</script>
+</body>
+</html>

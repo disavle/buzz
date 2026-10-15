@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Buzz · Добавить банку</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#5B3DF5}a:hover{color:#4327D9}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: {{t.under}}; color: {{t.label}}; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+  <div style="position: absolute; left: 0; right: 0; top: 54px; bottom: 0; background: {{t.sheet}}; border-radius: 34px 34px 0 0; padding: 8px 16px 0 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <div style="width: 36px; height: 5px; border-radius: 3px; background: {{t.grabber}}; align-self: center"></div>
+    <div style="display: grid; grid-template-columns: 88px 1fr 88px; align-items: center; margin-top: -6px">
+      <button style="height: 44px; border: none; background: {{t.fill}}; color: {{t.label}}; border-radius: 22px; font-size: 15px; font-weight: 500; font-family: inherit">Отмена</button>
+      <div style="text-align: center; font-size: 17px; font-weight: 600">Новая банка</div>
+      <div></div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 13px; font-weight: 600; color: {{t.sec}}; text-transform: uppercase; letter-spacing: 0.4px; padding-left: 4px">Недавние</div>
+      <div style="display: flex; gap: 10px; overflow: hidden">
+        <sc-for list="{{recent}}" as="r" hint-placeholder-count="4">
+          <button style="flex: none; width: 78px; border: {{r.ring}}; background: {{t.card}}; border-radius: 18px; padding: 10px 6px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-family: inherit; color: {{t.label}}">
+            <span style="width: 40px; height: 40px; border-radius: 11px; background: {{r.tile}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-weight: 800; font-size: 18px">{{r.letter}}</span>
+            <span style="font-size: 12px; font-weight: 500; line-height: 15px; text-align: center">{{r.name}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <label style="display: flex; align-items: center; gap: 8px; height: 40px; border-radius: 20px; background: {{t.fill}}; padding: 0 14px; color: {{t.sec}}">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <input placeholder="Поиск в каталоге" aria-label="Поиск в каталоге" style="flex: 1; border: none; outline: none; background: transparent; font-size: 17px; font-family: inherit; color: {{t.label}}">
+    </label>
+
+    <div style="background: {{t.card}}; border-radius: 26px; overflow: hidden">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px">
+        <div style="width: 52px; height: 52px; border-radius: 14px; background: #4D7C0F; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-weight: 800; font-size: 24px">M</div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 17px; font-weight: 600">Monster Ultra</div>
+          <div style="font-size: 13px; color: {{t.sec}}">32 мг/100 мл · 0 г сахара</div>
+        </div>
+        <button style="height: 32px; border: none; border-radius: 16px; background: {{t.accentSoft}}; color: {{t.accent}}; font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit">Сменить</button>
+      </div>
+      <div style="border-top: 0.5px solid {{t.sep}}; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 15px; font-weight: 600">Объём</div>
+        <div role="group" aria-label="Объём" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: {{t.fill}}; border-radius: 12px; padding: 3px; gap: 2px">
+          <button style="height: 34px; border: none; border-radius: 10px; background: transparent; color: {{t.label}}; font-size: 14px; font-weight: 500; font-family: inherit">250</button>
+          <button style="height: 34px; border: none; border-radius: 10px; background: transparent; color: {{t.label}}; font-size: 14px; font-weight: 500; font-family: inherit">330</button>
+          <button style="height: 34px; border: none; border-radius: 10px; background: {{t.segOn}}; color: {{t.label}}; font-size: 14px; font-weight: 600; font-family: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.12)">500 мл</button>
+          <button style="height: 34px; border: none; border-radius: 10px; background: transparent; color: {{t.label}}; font-size: 14px; font-weight: 500; font-family: inherit">Свой</button>
+        </div>
+      </div>
+      <div style="border-top: 0.5px solid {{t.sep}}; padding: 0 16px; min-height: 52px; display: flex; align-items: center; justify-content: space-between">
+        <div style="font-size: 17px">Время</div>
+        <button style="height: 34px; border: none; border-radius: 9px; background: {{t.fill}}; color: {{t.label}}; font-size: 17px; padding: 0 12px; font-family: inherit">Сейчас, 21:15</button>
+      </div>
+      <div style="border-top: 0.5px solid {{t.sep}}; padding: 0 16px; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px">
+        <label for="price" style="font-size: 17px">Цена</label>
+        <input id="price" placeholder="необязательно" style="flex: 1; text-align: right; border: none; outline: none; background: transparent; font-size: 17px; font-family: inherit; color: {{t.label}}">
+      </div>
+    </div>
+
+    <div style="background: {{t.warnSoft}}; border-radius: 18px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.warn}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 15px; font-weight: 600; color: {{t.warn}}">+160 мг кофеина</div>
+        <div style="font-size: 13px; color: {{t.label}}">Будет 480 из 400 мг: лимит превышен на 80 мг</div>
+      </div>
+    </div>
+
+    <button style="height: 52px; border: none; border-radius: 26px; background: {{t.accent}}; color: {{t.onAccent}}; font-size: 17px; font-weight: 600; font-family: inherit">Добавить</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var t = dark
+      ? { under: '#0B0B0C', sheet: '#1C1C1E', card: '#2C2C2E', label: '#FFFFFF', sec: '#AEAEB2', fill: '#3A3A3C', segOn: '#636366', sep: '#48484A', grabber: '#5A5A5E', accent: '#9A8CFF', accentSoft: '#2A2550', onAccent: '#14102E', warn: '#FF8A4C', warnSoft: 'rgba(255,138,76,0.16)' }
+      : { under: '#6E6E73', sheet: '#F2F2F7', card: '#FFFFFF', label: '#000000', sec: '#6C6C70', fill: '#E3E3E8', segOn: '#FFFFFF', sep: '#E5E5EA', grabber: '#C7C7CC', accent: '#5B3DF5', accentSoft: '#ECE8FF', onAccent: '#FFFFFF', warn: '#C2410C', warnSoft: '#FFEDE3' };
+    var items = [
+      { letter: 'M', tile: '#4D7C0F', name: 'Monster Ultra', on: true },
+      { letter: 'B', tile: '#C2410C', name: 'Burn' },
+      { letter: 'R', tile: '#3D5AFE', name: 'Red Bull' },
+      { letter: 'F', tile: '#0F766E', name: 'Flash Up' }
+    ];
+    var recent = items.map(function (r) { return Object.assign({}, r, { ring: r.on ? '2px solid ' + t.accent : '2px solid transparent' }); });
+    return { t: t, recent: recent };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Buzz · Настройки</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#5B3DF5}a:hover{color:#4327D9}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: {{t.bg}}; color: {{t.label}}; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+  <div style="padding: 62px 16px 0 16px; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: 0.4px">{{s.title}}</h1>
+
+    <button style="width: 100%; border: none; background: {{t.card}}; border-radius: 26px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; text-align: left; font-family: inherit; color: {{t.label}}">
+      <span style="width: 60px; height: 60px; border-radius: 30px; background: {{accent}}; color: {{onAccent}}; display: flex; align-items: center; justify-content: center; font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 26px; font-weight: 700; flex: none">D</span>
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 20px; font-weight: 600">Disavle</span>
+        <span style="font-size: 13px; color: {{t.sec}}">{{s.profileSub}}</span>
+      </span>
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="{{t.chevron}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 2 6 6-6 6"></path></svg>
+    </button>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="font-size: 13px; color: {{t.sec}}; text-transform: uppercase; letter-spacing: 0.4px; padding-left: 16px">{{s.colorHead}}</div>
+      <div style="background: {{t.card}}; border-radius: 26px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div role="radiogroup" aria-label="{{s.colorHead}}" style="display: flex; justify-content: space-between">
+          <sc-for list="{{swatches}}" as="sw" hint-placeholder-count="6">
+            <button role="radio" aria-checked="{{sw.checked}}" aria-label="{{sw.name}}" onClick="{{sw.pick}}" style="width: 44px; height: 44px; border-radius: 22px; padding: 0; border: 3px solid {{sw.ring}}; background: {{t.card}}; display: flex; align-items: center; justify-content: center">
+              <span style="width: 32px; height: 32px; border-radius: 16px; background: {{sw.hex}}; color: {{sw.on}}; display: flex; align-items: center; justify-content: center">
+                <sc-if value="{{sw.selected}}" hint-placeholder-val="{{ false }}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+                </sc-if>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="font-size: 13px; color: {{t.sec}}">{{colorNote}}</div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="font-size: 13px; color: {{t.sec}}; text-transform: uppercase; letter-spacing: 0.4px; padding-left: 16px">{{s.limitHead}}</div>
+      <div style="background: {{t.card}}; border-radius: 26px; padding: 0 16px; min-height: 60px; display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; flex-direction: column; gap: 1px">
+          <div style="font-size: 17px">{{s.perDay}}</div>
+          <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 20px; font-weight: 700; color: {{accent}}">{{s.limitVal}}</div>
+        </div>
+        <div role="group" aria-label="{{s.limitHead}}" style="display: flex; background: {{t.fill}}; border-radius: 10px; overflow: hidden">
+          <button aria-label="{{s.minus}}" style="width: 50px; height: 36px; border: none; background: transparent; color: {{t.label}}; font-size: 22px; font-family: inherit">−</button>
+          <div style="width: 1px; background: {{t.sep}}; margin: 8px 0"></div>
+          <button aria-label="{{s.plus}}" style="width: 50px; height: 36px; border: none; background: transparent; color: {{t.label}}; font-size: 22px; font-family: inherit">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="font-size: 13px; color: {{t.sec}}; text-transform: uppercase; letter-spacing: 0.4px; padding-left: 16px">{{s.syncHead}}</div>
+      <div style="background: {{t.card}}; border-radius: 26px; overflow: hidden">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 16px; min-height: 48px">
+          <div style="font-size: 17px">{{s.last}}</div>
+          <div style="font-size: 17px; color: {{t.sec}}">{{s.lastVal}}</div>
+        </div>
+        <div style="border-top: 0.5px solid {{t.sep}}; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; min-height: 48px">
+          <div style="font-size: 17px">{{s.pendingRow}}</div>
+          <div style="font-size: 17px; color: {{t.sec}}">{{s.pendingVal}}</div>
+        </div>
+        <button style="width: 100%; border: none; border-top: 0.5px solid {{t.sep}}; background: transparent; text-align: left; padding: 0 16px; min-height: 48px; font-size: 17px; color: {{accent}}; font-family: inherit; display: flex; align-items: center; gap: 8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5M4 4v3h3M4 13a8 8 0 0 0 14.5 4.5M20 20v-3h-3"></path></svg>{{s.syncNow}}</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="font-size: 13px; color: {{t.sec}}; text-transform: uppercase; letter-spacing: 0.4px; padding-left: 16px">{{s.appHead}}</div>
+      <div style="background: {{t.card}}; border-radius: 26px; overflow: hidden">
+        <button style="width: 100%; border: none; background: transparent; padding: 0 16px; min-height: 48px; display: flex; align-items: center; gap: 8px; font-family: inherit; color: {{t.label}}">
+          <span style="flex: 1; text-align: left; font-size: 17px">{{s.language}}</span>
+          <span style="font-size: 17px; color: {{t.sec}}">{{s.languageVal}}</span>
+          <svg width="8" height="13" viewBox="0 0 10 16" fill="none" stroke="{{t.chevron}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 2 6 6-6 6"></path></svg>
+        </button>
+        <div style="border-top: 0.5px solid {{t.sep}}; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; min-height: 48px">
+          <div style="font-size: 17px">{{s.version}}</div>
+          <div style="font-size: 17px; color: {{t.sec}}">{{s.versionVal}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="{{s.tabs}}" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 64px; border-radius: 32px; background: {{t.glass}}; border: 1px solid {{t.glassEdge}}; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; box-sizing: border-box; backdrop-filter: blur(20px)">
+    <a href="Main.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 2 4.5 13.5h6.5l-1 8.5 9-11.5h-6.5l1-8.5z"></path></svg>{{s.tabToday}}</a>
+    <a href="Catalog.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="2"></rect></svg>{{s.tabCatalog}}</a>
+    <a href="Stats.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 20.5h18M6.5 17V11M11 17V5.5M15.5 17v-8M20 17v-4"></path></svg>{{s.tabStats}}</a>
+    <a href="Settings.dc.html" style="border-radius: 28px; background: {{t.fill}}; color: {{accent}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="10" cy="17" r="2.2"></circle></svg>{{s.tabSettings}}</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"lang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { picked: 'violet' };
+  }
+  renderVals() {
+    var self = this;
+    var dark = this.props.dark ?? false;
+    var en = (this.props.lang ?? 'ru') === 'en';
+    var t = dark
+      ? { bg: '#000000', card: '#1C1C1E', label: '#FFFFFF', sec: '#AEAEB2', fill: '#2C2C2E', sep: '#38383A', chevron: '#5A5A5E', glass: 'rgba(44,44,46,0.86)', glassEdge: 'rgba(255,255,255,0.10)' }
+      : { bg: '#F2F2F7', card: '#FFFFFF', label: '#000000', sec: '#6C6C70', fill: '#E3E3E8', sep: '#E5E5EA', chevron: '#C7C7CC', glass: 'rgba(255,255,255,0.86)', glassEdge: 'rgba(0,0,0,0.06)' };
+    var s = en
+      ? { title: 'Settings', profileSub: 'Buzz account, sync is on', colorHead: 'App color', colorTail: 'The ring, buttons and charts change; the over‑limit warning stays orange.', limitHead: 'Caffeine limit', perDay: 'Per day', limitVal: '400 mg', minus: 'Decrease by 50 mg', plus: 'Increase by 50 mg', syncHead: 'Sync', last: 'Last synced', lastVal: 'Today, 9:02 PM', syncNow: 'Sync now', pendingRow: 'Waiting to upload', pendingVal: '1 entry', appHead: 'App', language: 'Language', languageVal: 'English', version: 'Version', versionVal: '0.1 (learning)', tabs: 'Tabs', tabToday: 'Today', tabCatalog: 'Catalog', tabStats: 'Stats', tabSettings: 'Settings' }
+      : { title: 'Настройки', profileSub: 'Аккаунт Buzz, синхронизация включена', colorHead: 'Основной цвет', colorTail: 'Кольцо, кнопки и графики перекрасятся, превышение лимита останется оранжевым.', limitHead: 'Лимит кофеина', perDay: 'В сутки', limitVal: '400 мг', minus: 'Уменьшить на 50 мг', plus: 'Увеличить на 50 мг', syncHead: 'Синхронизация', last: 'Последняя', lastVal: 'сегодня, 21:02', syncNow: 'Синхронизировать сейчас', pendingRow: 'Ждут отправки', pendingVal: '1 запись', appHead: 'Приложение', language: 'Язык', languageVal: 'Русский', version: 'Версия', versionVal: '0.1 (учебная)', tabs: 'Вкладки', tabToday: 'Сегодня', tabCatalog: 'Каталог', tabStats: 'Статистика', tabSettings: 'Настройки' };
+    var palette = [
+      { id: 'violet', ru: 'Фиолетовый', en: 'Violet', light: '#5B3DF5', dark: '#9A8CFF', onLight: '#FFFFFF', onDark: '#14102E' },
+      { id: 'blue', ru: 'Синий', en: 'Blue', light: '#0A5FD6', dark: '#64A8FF', onLight: '#FFFFFF', onDark: '#061B3A' },
+      { id: 'pink', ru: 'Розовый', en: 'Pink', light: '#C2185B', dark: '#FF7AB0', onLight: '#FFFFFF', onDark: '#3A0A1F' },
+      { id: 'green', ru: 'Зелёный', en: 'Green', light: '#2E7D32', dark: '#7BD88F', onLight: '#FFFFFF', onDark: '#0B2A10' },
+      { id: 'teal', ru: 'Бирюзовый', en: 'Teal', light: '#00796B', dark: '#5ED6C6', onLight: '#FFFFFF', onDark: '#05302B' },
+      { id: 'graphite', ru: 'Графит', en: 'Graphite', light: '#3A3A3C', dark: '#D1D1D6', onLight: '#FFFFFF', onDark: '#1C1C1E' }
+    ];
+    var cur = palette.find(function (p) { return p.id === self.state.picked; }) || palette[0];
+    var accent = dark ? cur.dark : cur.light;
+    var swatches = palette.map(function (p) {
+      var hex = dark ? p.dark : p.light;
+      var sel = p.id === cur.id;
+      return {
+        name: en ? p.en : p.ru, hex: hex, on: dark ? p.onDark : p.onLight,
+        selected: sel, checked: sel ? 'true' : 'false',
+        ring: sel ? hex : 'transparent',
+        pick: function () { self.setState({ picked: p.id }); }
+      };
+    });
+    return { t: t, s: s, accent: accent, onAccent: dark ? cur.onDark : cur.onLight, colorNote: (en ? cur.en : cur.ru) + '. ' + s.colorTail, swatches: swatches };
+  }
+}
+</script>
+</body>
+</html>

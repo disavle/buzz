@@ -1,0 +1,35 @@
+[
+  {
+    "id": "A1B2C3D4-0001-4000-8000-000000000001",
+    "drinkId": "00000000-0000-0000-0000-000000000004",
+    "consumedAt": "2026-10-15T15:40:00Z",
+    "volumeMl": 500,
+    "price": 149,
+    "caffeineMg": 150,
+    "sugarG": 0,
+    "updatedAt": "2026-10-15T15:40:05Z",
+    "deletedAt": null
+  },
+  {
+    "id": "A1B2C3D4-0002-4000-8000-000000000002",
+    "drinkId": "00000000-0000-0000-0000-000000000005",
+    "consumedAt": "2026-10-15T10:30:00Z",
+    "volumeMl": 250,
+    "price": 99,
+    "caffeineMg": 80,
+    "sugarG": 32.5,
+    "updatedAt": "2026-10-15T10:30:04Z",
+    "deletedAt": null
+  },
+  {
+    "id": "A1B2C3D4-0003-4000-8000-000000000003",
+    "drinkId": "00000000-0000-0000-0000-000000000001",
+    "consumedAt": "2026-10-15T06:10:00Z",
+    "volumeMl": 250,
+    "price": 129,
+    "caffeineMg": 80,
+    "sugarG": 27.5,
+    "updatedAt": "2026-10-15T06:10:02Z",
+    "deletedAt": null
+  }
+]

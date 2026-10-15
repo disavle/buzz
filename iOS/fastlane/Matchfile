@@ -1,0 +1,4 @@
+# Certificates and profiles live in a separate private git repo, encrypted with MATCH_PASSWORD.
+git_url(ENV["MATCH_GIT_URL"])
+storage_mode("git")
+app_identifier(["com.disavle.buzz"])

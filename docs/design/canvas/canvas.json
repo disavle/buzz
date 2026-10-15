@@ -1,0 +1,24 @@
+{"v":3,"createdOnFiles":{"v":1,"at":"2026-10-15T21:20:00Z"},"title":"Buzz — дизайн iOS","launch":{"view":"canvas"},"pages":[],"boards":{
+"Main.dc.html":{"x":0,"y":0,"w":390,"h":844,"title":"Сегодня"},
+"AddEntry.dc.html":{"x":470,"y":0,"w":390,"h":844,"title":"Добавить (sheet)"},
+"Catalog.dc.html":{"x":940,"y":0,"w":390,"h":844,"title":"Каталог"},
+"Stats.dc.html":{"x":1410,"y":0,"w":390,"h":1480,"title":"Статистика"},
+"Settings.dc.html":{"x":1880,"y":0,"w":390,"h":844,"title":"Настройки","is_interactive":true},
+"Tokens.dc.html":{"x":2400,"y":0,"w":1040,"h":1480,"title":"Цвета и типографика"},
+"TodayDark.dc.html":{"x":0,"y":1900,"w":390,"h":844,"title":"Сегодня · тёмная"},
+"AddEntryDark.dc.html":{"x":470,"y":1900,"w":390,"h":844,"title":"Добавить · тёмная"},
+"CatalogDark.dc.html":{"x":940,"y":1900,"w":390,"h":844,"title":"Каталог · тёмная"},
+"StatsDark.dc.html":{"x":1410,"y":1900,"w":390,"h":1480,"title":"Статистика · тёмная"},
+"SettingsDark.dc.html":{"x":1880,"y":1900,"w":390,"h":844,"title":"Настройки · тёмная","is_interactive":true},
+"TodayEn.dc.html":{"x":0,"y":3800,"w":390,"h":844,"title":"Today · English"},
+"SettingsEn.dc.html":{"x":470,"y":3800,"w":390,"h":844,"title":"Settings · English","is_interactive":true},
+"TodayRefresh.dc.html":{"x":-940,"y":0,"w":390,"h":844,"title":"Сегодня · pull to refresh"},
+"TodaySnack.dc.html":{"x":-470,"y":0,"w":390,"h":844,"title":"Сегодня · банка добавлена"}
+},"order":["Main.dc.html","AddEntry.dc.html","Catalog.dc.html","Stats.dc.html","Settings.dc.html","Tokens.dc.html","TodayDark.dc.html","AddEntryDark.dc.html","CatalogDark.dc.html","StatsDark.dc.html","SettingsDark.dc.html","TodayEn.dc.html","SettingsEn.dc.html","TodayRefresh.dc.html","TodaySnack.dc.html"],
+"notes":{
+"lightTitle":{"x":0,"y":-300,"text":"Buzz · светлая тема","kind":"title1","maxW":2270},
+"darkTitle":{"x":0,"y":1600,"text":"Buzz · тёмная тема","kind":"title1","maxW":2270},
+"enTitle":{"x":0,"y":3500,"text":"Buzz · English","kind":"title1","maxW":860},
+"statesTitle":{"x":-940,"y":-300,"text":"Состояния «Сегодня»","kind":"title1","maxW":860},
+"syncSticky":{"x":-1360,"y":0,"w":360,"maxH":480,"fill":"blue","text":"Снек после добавления банки: внизу над таб-баром, сам исчезает через 3 секунды, кнопка «Отменить» удаляет запись.\n\nPull to refresh на «Сегодня» и «Статистике»: сначала отправляет неотправленное, потом подтягивает новое с сервера.\n\nЗначок облака с косой чертой у записи значит, что она ещё не ушла на сервер. Когда сеть появится, запись уйдёт сама, и значок пропадёт.\n\nВ «Настройках» строка «Ждут отправки» показывает размер очереди."}
+},"designSystems":[]}

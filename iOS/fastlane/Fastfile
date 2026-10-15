@@ -1,0 +1,70 @@
+default_platform(:ios)
+
+WORKSPACE = "Buzz.xcworkspace"
+SCHEME = "Buzz"
+BUNDLE_ID = "com.disavle.buzz"
+
+platform :ios do
+  before_all do
+    # In CI this creates a temporary keychain, otherwise match cannot install the certificate.
+    setup_ci if ENV["CI"]
+  end
+
+  # sh runs from the fastlane/ folder, so we go up to iOS/.
+  private_lane :generate do
+    sh("cd .. && tuist install && tuist generate --no-open")
+  end
+
+  private_lane :asc_key do
+    app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_CONTENT"],
+      is_key_content_base64: true
+    )
+  end
+
+  desc "Unit tests of all modules on the simulator"
+  lane :test do
+    generate
+    run_tests(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      result_bundle: true,
+      output_directory: "fastlane/test_output"
+    )
+  end
+
+  desc "Run once locally: create certificates and profiles in the match repo"
+  lane :certs do
+    api_key = asc_key
+    match(type: "development", api_key: api_key)
+    match(type: "appstore", api_key: api_key)
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    api_key = asc_key
+    generate
+    match(type: "appstore", readonly: true, api_key: api_key)
+
+    # In CI we sign only the app target, manually, with the profile from match.
+    update_code_signing_settings(
+      path: "Buzz.xcodeproj",
+      targets: ["Buzz"],
+      use_automatic_signing: false,
+      team_id: ENV["TUIST_TEAM_ID"],
+      code_sign_identity: "Apple Distribution",
+      profile_name: ENV["sigh_#{BUNDLE_ID}_appstore_profile-name"]
+    )
+
+    build_number = latest_testflight_build_number(api_key: api_key, app_identifier: BUNDLE_ID) + 1
+    build_app(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      export_method: "app-store",
+      xcargs: "CURRENT_PROJECT_VERSION=#{build_number}"
+    )
+    upload_to_testflight(api_key: api_key, skip_waiting_for_build_processing: true)
+  end
+end

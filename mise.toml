@@ -1,0 +1,95 @@
+# Tool versions and project tasks. The same on your Mac and in CI.
+#
+# After cloning you need only one command:
+#     mise run generate
+# It installs the right tool versions, Ruby gems, SPM dependencies,
+# a git hook, and then generates Buzz.xcworkspace.
+#
+# Use `mise run generate`, not `mise generate`: `generate` is a built-in mise command.
+# To pin exact versions: `mise use tuist@latest ruby@3.3 swiftlint@latest`.
+
+min_version = "2025.1.0"
+
+[tools]
+tuist = "4"
+ruby = "3.3"          # for fastlane via Bundler
+swiftlint = "latest"
+
+[env]
+# Put secrets and your Team ID in mise.local.toml (it is in .gitignore), for example:
+# TUIST_TEAM_ID = "ABCDE12345"
+
+[settings]
+# `mise run` installs missing tools from [tools] by itself
+task_run_auto_install = true
+
+# ---------- Main command ----------
+
+[tasks.generate]
+description = "Everything after clone: gems, dependencies, git hook, Xcode project"
+depends = ["setup:gems", "setup:hooks"]
+dir = "iOS"
+run = [
+  "tuist install",
+  "tuist generate --no-open",
+]
+
+[tasks."setup:gems"]
+description = "Install fastlane gems into iOS/vendor/bundle"
+dir = "iOS"
+run = [
+  "bundle config set --local path vendor/bundle",
+  "bundle install --quiet",
+]
+
+[tasks."setup:hooks"]
+description = "git pre-commit hook: runs mise run lint before each commit"
+run = "mise generate git-pre-commit --write --task=lint"
+
+# ---------- Everyday tasks ----------
+
+[tasks.open]
+description = "Open the project in Xcode"
+dir = "iOS"
+run = "xed Buzz.xcworkspace"
+
+[tasks.format]
+description = "Format the code (swift-format from the Xcode toolchain)"
+run = "xcrun swift-format format --in-place --recursive --parallel iOS/App iOS/Modules Shared/Sources Backend/Sources"
+
+[tasks.lint]
+description = "Formatting check and SwiftLint"
+run = [
+  "xcrun swift-format lint --strict --recursive --parallel iOS/App iOS/Modules Shared/Sources Backend/Sources",
+  "swiftlint lint --quiet --strict",
+]
+
+[tasks."lint:imports"]
+description = "Find imports of modules that are not declared as dependencies"
+dir = "iOS"
+run = "tuist inspect implicit-imports"
+
+[tasks.test]
+description = "Run all iOS unit tests via fastlane"
+depends = ["generate"]
+dir = "iOS"
+run = "bundle exec fastlane test"
+
+[tasks.graph]
+description = "Draw the module graph"
+dir = "iOS"
+run = "tuist graph"
+
+[tasks.clean]
+description = "Delete generated files and start fresh"
+dir = "iOS"
+run = ["tuist clean", "rm -rf Buzz.xcodeproj Buzz.xcworkspace Derived"]
+
+[tasks."backend:run"]
+description = "Run the Vapor server locally"
+dir = "Backend"
+run = "swift run App serve --hostname 0.0.0.0"
+
+[tasks."backend:test"]
+dir = "Backend"
+run = "swift test"

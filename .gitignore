@@ -1,0 +1,31 @@
+# Tuist generates the Xcode project, so it is not in git
+*.xcodeproj
+*.xcworkspace
+Derived/
+iOS/Tuist/.build/
+.build/
+DerivedData/
+xcuserdata/
+
+# fastlane
+iOS/fastlane/report.xml
+iOS/fastlane/README.md
+iOS/fastlane/test_output/
+iOS/vendor/bundle/
+.bundle/
+iOS/.bundle/
+*.ipa
+*.dSYM.zip
+
+# mise: local variables and secrets
+mise.local.toml
+.env
+
+# Vapor
+Backend/db.sqlite
+.DS_Store
+
+# Swift Package Manager
+.swiftpm/
+Backend/.build/
+Shared/.build/

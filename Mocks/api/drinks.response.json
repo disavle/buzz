@@ -1,0 +1,83 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000001",
+    "brand": "Red Bull",
+    "name": "Energy Drink",
+    "volumeMl": 250,
+    "caffeinePer100ml": 32,
+    "sugarPer100ml": 11,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "brand": "Red Bull",
+    "name": "Sugarfree",
+    "volumeMl": 250,
+    "caffeinePer100ml": 32,
+    "sugarPer100ml": 0,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "brand": "Monster",
+    "name": "Energy",
+    "volumeMl": 500,
+    "caffeinePer100ml": 32,
+    "sugarPer100ml": 11,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000004",
+    "brand": "Monster",
+    "name": "Ultra White",
+    "volumeMl": 500,
+    "caffeinePer100ml": 30,
+    "sugarPer100ml": 0,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000005",
+    "brand": "Burn",
+    "name": "Original",
+    "volumeMl": 449,
+    "caffeinePer100ml": 32,
+    "sugarPer100ml": 13,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000006",
+    "brand": "Adrenaline",
+    "name": "Rush",
+    "volumeMl": 449,
+    "caffeinePer100ml": 30,
+    "sugarPer100ml": 12,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000007",
+    "brand": "Flash Up",
+    "name": "Energy",
+    "volumeMl": 450,
+    "caffeinePer100ml": 30,
+    "sugarPer100ml": 11,
+    "isCustom": false
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000008",
+    "brand": "Tornado",
+    "name": "Energy",
+    "volumeMl": 450,
+    "caffeinePer100ml": 30,
+    "sugarPer100ml": 12,
+    "isCustom": false
+  },
+  {
+    "id": "9C1D3A52-7E0B-4F57-9B7A-1F2E3D4C5B6A",
+    "brand": "Homemade",
+    "name": "Cold Brew",
+    "volumeMl": 330,
+    "caffeinePer100ml": 45,
+    "sugarPer100ml": 0,
+    "isCustom": true
+  }
+]

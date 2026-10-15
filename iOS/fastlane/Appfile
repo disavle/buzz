@@ -1,0 +1,2 @@
+app_identifier("com.disavle.buzz")
+team_id(ENV["TUIST_TEAM_ID"])

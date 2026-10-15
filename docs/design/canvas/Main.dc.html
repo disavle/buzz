@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Buzz · Сегодня</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#5B3DF5}a:hover{color:#4327D9}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: {{t.bg}}; color: {{t.label}}; font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased">
+  <div style="padding: 62px 16px 0 16px; display: flex; flex-direction: column; gap: 20px">
+    <sc-if value="{{refreshing}}" hint-placeholder-val="{{ false }}">
+      <div role="status" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 10px 0 14px 0; color: {{t.sec}}">
+        <svg width="32" height="32" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 2.5v4"></path><path d="m18.7 5.3-2.8 2.8" opacity="0.9"></path><path d="M21.5 12h-4" opacity="0.8"></path><path d="m18.7 18.7-2.8-2.8" opacity="0.7"></path><path d="M12 21.5v-4" opacity="0.55"></path><path d="m5.3 18.7 2.8-2.8" opacity="0.4"></path><path d="M2.5 12h4" opacity="0.3"></path><path d="m5.3 5.3 2.8 2.8" opacity="0.2"></path></svg>
+        <div style="font-size: 13px">{{s.refreshing}}</div>
+      </div>
+    </sc-if>
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: {{t.sec}}">{{s.date}}</div>
+      <button aria-label="{{s.add}}" style="width: 44px; height: 44px; border-radius: 22px; border: none; background: {{t.accent}}; color: {{t.onAccent}}; display: flex; align-items: center; justify-content: center; padding: 0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+    </div>
+    <h1 style="margin: -14px 0 0 0; font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: 0.4px">{{s.title}}</h1>
+
+    <div style="background: {{t.card}}; border-radius: 26px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 18px">
+      <div style="position: relative; width: 210px; height: 210px">
+        <svg width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="{{s.ringLabel}}">
+          <circle cx="105" cy="105" r="88" fill="none" stroke="{{t.fill}}" stroke-width="20"></circle>
+          <circle cx="105" cy="105" r="88" fill="none" stroke="{{t.accent}}" stroke-width="20" stroke-linecap="round" stroke-dasharray="442.3 552.9" transform="rotate(-90 105 105)"></circle>
+        </svg>
+        <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center">
+          <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 52px; line-height: 56px; font-weight: 700; font-variant-numeric: tabular-nums">320</div>
+          <div style="font-size: 15px; color: {{t.sec}}">{{s.of}}</div>
+        </div>
+      </div>
+      <div style="width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+        <div style="background: {{t.bg}}; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 12px; color: {{t.sec}}">{{s.left}}</div>
+          <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 22px; font-weight: 700; color: {{t.accent}}">{{s.leftVal}}</div>
+        </div>
+        <div style="background: {{t.bg}}; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 12px; color: {{t.sec}}">{{s.sugar}}</div>
+          <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 22px; font-weight: 700; color: {{t.sugar}}">{{s.sugarVal}}</div>
+        </div>
+        <div style="background: {{t.bg}}; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 12px; color: {{t.sec}}">{{s.cans}}</div>
+          <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 22px; font-weight: 700">3</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <div style="font-size: 20px; font-weight: 700; padding: 0 4px">{{s.list}}</div>
+      <div style="background: {{t.card}}; border-radius: 26px; overflow: hidden">
+        <sc-for list="{{entries}}" as="e" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; min-height: 64px; box-sizing: border-box; border-top: {{e.border}}">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: {{e.tile}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-weight: 800; font-size: 20px">{{e.letter}}</div>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+              <div style="font-size: 17px; font-weight: 600">{{e.name}}</div>
+              <div style="font-size: 13px; color: {{t.sec}}; display: flex; align-items: center; gap: 5px">
+                <sc-if value="{{e.pending}}" hint-placeholder-val="{{ false }}">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="{{s.pending}}"><path d="M7 18h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.2 4.5 4.5 0 0 0 7 18z"></path><path d="M4 4l16 16"></path></svg>
+                </sc-if>
+                <span>{{e.meta}}</span>
+              </div>
+            </div>
+            <div style="font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; font-size: 17px; font-weight: 700; color: {{t.accent}}; font-variant-numeric: tabular-nums">{{e.mg}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{snack}}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 108px; min-height: 56px; border-radius: 28px; background: {{t.snackBg}}; color: #FFFFFF; box-shadow: 0 10px 30px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; box-sizing: border-box">
+      <span style="width: 28px; height: 28px; border-radius: 14px; background: #9A8CFF; color: #14102E; display: flex; align-items: center; justify-content: center; flex: none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+      </span>
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 15px; font-weight: 600">{{s.snackTitle}}</span>
+        <span style="font-size: 13px; color: #D1D1D6">{{s.snackSub}}</span>
+      </span>
+      <button style="height: 40px; border: none; border-radius: 20px; background: rgba(255,255,255,0.14); color: #FFFFFF; font-size: 15px; font-weight: 600; padding: 0 14px; font-family: inherit">{{s.undo}}</button>
+    </div>
+  </sc-if>
+
+  <nav aria-label="{{s.tabs}}" style="position: absolute; left: 20px; right: 20px; bottom: 28px; height: 64px; border-radius: 32px; background: {{t.glass}}; border: 1px solid {{t.glassEdge}}; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; box-sizing: border-box; backdrop-filter: blur(20px)">
+    <a href="Main.dc.html" style="border-radius: 28px; background: {{t.fill}}; color: {{t.accent}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2 4.5 13.5h6.5l-1 8.5 9-11.5h-6.5l1-8.5z"></path></svg>{{s.tabToday}}</a>
+    <a href="Catalog.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="2"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="2"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="2"></rect></svg>{{s.tabCatalog}}</a>
+    <a href="Stats.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 20.5h18M6.5 17V11M11 17V5.5M15.5 17v-8M20 17v-4"></path></svg>{{s.tabStats}}</a>
+    <a href="Settings.dc.html" style="border-radius: 28px; color: {{t.label}}; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10px; font-weight: 500">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="10" cy="17" r="2.2"></circle></svg>{{s.tabSettings}}</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"refreshing":{"editor":"boolean","default":false},"snack":{"editor":"boolean","default":false},"lang":{"editor":"enum","options":["ru","en"],"default":"ru"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var en = (this.props.lang ?? 'ru') === 'en';
+    var refreshing = this.props.refreshing ?? false;
+    var snack = this.props.snack ?? false;
+    var t = dark
+      ? { bg: '#000000', card: '#1C1C1E', label: '#FFFFFF', sec: '#AEAEB2', fill: '#2C2C2E', sep: '#38383A', accent: '#9A8CFF', onAccent: '#14102E', sugar: '#4FD1D9', snackBg: '#3A3A3C', glass: 'rgba(44,44,46,0.86)', glassEdge: 'rgba(255,255,255,0.10)' }
+      : { bg: '#F2F2F7', card: '#FFFFFF', label: '#000000', sec: '#6C6C70', fill: '#E9E9EE', sep: '#E5E5EA', accent: '#5B3DF5', onAccent: '#FFFFFF', sugar: '#0B7A86', snackBg: '#1C1C1E', glass: 'rgba(255,255,255,0.86)', glassEdge: 'rgba(0,0,0,0.06)' };
+    var s = en
+      ? { date: 'Wednesday, October 15', add: 'Add a can', title: 'Today', ringLabel: 'Caffeine: 320 of 400 mg', of: 'of 400 mg caffeine', left: 'Left', leftVal: '80 mg', sugar: 'Sugar', sugarVal: '60 g', cans: 'Cans', list: 'Today’s cans', tabs: 'Tabs', tabToday: 'Today', tabCatalog: 'Catalog', tabStats: 'Stats', tabSettings: 'Settings', refreshing: 'Sending 1 entry, then fetching updates…', pending: 'Not synced yet', snackTitle: 'Monster Ultra added', snackSub: '+160 mg · 320 of 400 mg today', undo: 'Undo' }
+      : { date: 'Среда, 15 октября', add: 'Добавить банку', title: 'Сегодня', ringLabel: 'Кофеин: 320 из 400 мг', of: 'из 400 мг кофеина', left: 'Осталось', leftVal: '80 мг', sugar: 'Сахар', sugarVal: '60 г', cans: 'Банок', list: 'Выпито сегодня', tabs: 'Вкладки', tabToday: 'Сегодня', tabCatalog: 'Каталог', tabStats: 'Статистика', tabSettings: 'Настройки', refreshing: 'Отправляю 1 запись, потом загружаю новое…', pending: 'Ещё не синхронизировано', snackTitle: 'Monster Ultra добавлен', snackSub: '+160 мг · сегодня 320 из 400 мг', undo: 'Отменить' };
+    var rows = en
+      ? [
+        { letter: 'M', tile: '#4D7C0F', name: 'Monster Ultra', meta: '6:40 PM · 500 ml · 0 g sugar', mg: '+160 mg', pending: true },
+        { letter: 'B', tile: '#C2410C', name: 'Burn Original', meta: '1:30 PM · 250 ml · 33 g sugar', mg: '+80 mg' },
+        { letter: 'R', tile: '#3D5AFE', name: 'Red Bull', meta: '9:10 AM · 250 ml · 27 g sugar', mg: '+80 mg' }
+      ]
+      : [
+        { letter: 'M', tile: '#4D7C0F', name: 'Monster Ultra', meta: '18:40 · 500 мл · 0 г сахара', mg: '+160 мг', pending: true },
+        { letter: 'B', tile: '#C2410C', name: 'Burn Original', meta: '13:30 · 250 мл · 33 г сахара', mg: '+80 мг' },
+        { letter: 'R', tile: '#3D5AFE', name: 'Red Bull', meta: '09:10 · 250 мл · 27 г сахара', mg: '+80 мг' }
+      ];
+    var entries = rows.map(function (r, i) { return Object.assign({ pending: false }, r, { border: i === 0 ? 'none' : '0.5px solid ' + t.sep }); });
+    return { t: t, s: s, entries: entries, refreshing: refreshing, snack: snack };
+  }
+}
+</script>
+</body>
+</html>
