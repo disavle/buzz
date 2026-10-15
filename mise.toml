@@ -21,7 +21,7 @@ swiftlint = "latest"
 
 [settings]
 # `mise run` installs missing tools from [tools] by itself
-task_run_auto_install = true
+task.run_auto_install = true
 
 # ---------- Main command ----------
 
