@@ -34,7 +34,7 @@ Because of that:
 | Sync | Offline-first: outbox with `pending` state, `actor SyncEngine`, `NWPathMonitor` |
 | Languages | English + Russian, String Catalogs (`.xcstrings`) per module, `FormatStyle` for units |
 | Tests | Swift Testing (`@Test`, `#expect`, parameterized tests) |
-| Backend | Vapor 4, Fluent, SQLite, token auth, error codes instead of texts |
+| Backend | Vapor 4, Fluent, SQLite locally / Postgres on the server, token auth, error codes instead of texts |
 | Shared code | `Shared` Swift package with DTOs, used by the app and the server |
 | Tooling | Tuist (project as code), mise (tool versions and tasks), fastlane, GitHub Actions, Renovate, swift-format, SwiftLint |
 
@@ -99,7 +99,7 @@ The documentation is in Russian (my native language):
 
 - [Idea and MVP](docs/idea.md)
 - [Client: SwiftUI basics](docs/client/README.md), [architecture](docs/client/architecture.md), [architecture experiments](docs/client/architecture-experiments.md), [screens](docs/client/screens.md), [sync](docs/client/sync.md), [localization](docs/client/localization.md)
-- [Backend](docs/backend/README.md), [API](docs/backend/API.md), [step by step](docs/backend/STEPS.md)
+- [Backend](docs/backend/README.md), [API](docs/backend/API.md), [step by step](docs/backend/STEPS.md), [free deploy: Render + Neon](docs/backend/DEPLOY.md)
 - [Infrastructure: Tuist, mise, CI](docs/infra/README.md), [hands-on](docs/infra/HANDS-ON.md)
 - [Design tokens](docs/design/README.md) and [all screens](docs/design/screens/) (light, dark, English); source of the design canvas in [docs/design/canvas](docs/design/canvas/)
 - [Study plan](docs/learning/plan.md) and [handbook of new technologies](docs/learning/handbook.md)

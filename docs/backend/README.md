@@ -112,7 +112,7 @@ let entries = try await Entry.query(on: req.db)
 
 **Какую БД брать:**
 - **SQLite** — для старта. Один файл `db.sqlite`, ничего ставить не нужно. В тестах — in-memory.
-- **PostgreSQL** — когда захочется деплоя или серьёзных фич. Переход = замена драйвера (`FluentPostgresDriver`) и одной строки в `configure.swift`; модели и миграции остаются те же. Локально Postgres удобно поднимать через Docker.
+- **PostgreSQL** — на сервере. Если задана переменная `DATABASE_URL`, `configure.swift` подключает `FluentPostgresDriver` вместо SQLite; модели и миграции остаются те же. Бесплатная база на Neon и деплой описаны в [DEPLOY.md](DEPLOY.md).
 
 ## 5. DTO, общие с клиентом
 
@@ -200,7 +200,7 @@ Vapor даёт модуль `VaporTesting` для Swift Testing (`@Test`, `#expe
 4. `EntryController` + `Entry`: id от клиента, расчёт кофеина, мягкое удаление.
 5. `SyncController`: `withDeleted`, выборка по `updatedAt`.
 6. `StatsController`: агрегации. Упражнение: переписать «по дням» на SQL `GROUP BY` через SQLKit.
-7. Дальше: Postgres в Docker, срок жизни токенов, деплой (Fly.io или VPS).
+7. Дальше: бесплатный деплой на Render + Neon ([DEPLOY.md](DEPLOY.md)), срок жизни токенов.
 
 ## Ссылки
 
