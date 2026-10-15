@@ -13,8 +13,28 @@ disabled_rules:
   - line_length          # swift-format controls line length
 opt_in_rules:
   - empty_count
-  - first_where
   - sorted_first_last
   - contains_over_filter_count
-  - unused_declaration
   - weak_delegate
+# first_where is not used: it mistakes Fluent queries (`.filter(...).first()`) for collections.
+
+analyzer_rules:          # run only by `swiftlint analyze`
+  - unused_declaration
+
+# Short names are fine where they are the domain words: ml, mg, to, db, tz, ru, en.
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1
+
+# Reducers and mock routers are one big switch by design.
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+function_body_length:
+  warning: 80
+  error: 100
+
+large_tuple:
+  warning: 3
+  error: 4

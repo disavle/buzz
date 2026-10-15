@@ -50,7 +50,7 @@ public actor KeychainTokenStore: TokenStore {
         guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
             let data = result as? Data
         else { return nil }
-        return String(decoding: data, as: UTF8.self)
+        return String(bytes: data, encoding: .utf8)
     }
 
     private func write(_ value: String, account: String) {
