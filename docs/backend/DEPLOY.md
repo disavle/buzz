@@ -36,7 +36,7 @@
 ## Настройка (один раз, руками)
 
 1. **Neon.** Зарегистрируйся на neon.com через GitHub, создай проект `buzz`. На странице Connect скопируй строку подключения, она выглядит как `postgresql://user:password@host/neondb?sslmode=require`. Если в конце есть `&channel_binding=require`, убери эту часть.
-2. **Первый образ.** Влей этот PR в `main`, job `Deploy backend` соберёт и выложит образ. Шаг «Deploy on Render» пока пропустится, это нормально.
+2. **Первый образ.** GitHub → Actions → CI → Run workflow, ветка `main`. Job `Deploy backend` соберёт и выложит образ. Шаг «Deploy on Render» пока пропустится, это нормально. Потом образ пересобирается сам при каждом пуше в `main`, который меняет бэкенд.
 3. **Сделай образ публичным.** GitHub → твой профиль → Packages → `buzz-backend` → Package settings → Change visibility → Public. Тогда Render скачает его без пароля.
 4. **Render.** Зарегистрируйся на render.com через GitHub. New → Web Service → Existing Image, адрес `ghcr.io/disavle/buzz-backend:latest`, тариф Free. В Environment добавь `DATABASE_URL` со строкой из Neon.
 5. **Deploy Hook.** В Render: сервис → Settings → Deploy Hook, скопируй URL. В GitHub: репозиторий → Settings → Secrets and variables → Actions → New repository secret, имя `RENDER_DEPLOY_HOOK`.

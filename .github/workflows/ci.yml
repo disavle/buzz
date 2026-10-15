@@ -81,7 +81,11 @@ jobs:
   deploy:
     name: Deploy backend
     needs: [changes, backend]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && needs.changes.outputs.backend == 'true'
+    # Runs on a push to main that touches the backend, or by hand: Actions → CI → Run workflow (branch main).
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && needs.changes.outputs.backend == 'true'))
     runs-on: ubuntu-latest
     permissions:
       contents: read
