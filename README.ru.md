@@ -34,7 +34,7 @@ Buzz — трекер энергетиков для iPhone. Записываеш
 | Синхронизация | Offline-first: очередь `pending`, `actor SyncEngine`, `NWPathMonitor` |
 | Языки | Английский и русский, свой String Catalog (`.xcstrings`) в каждом модуле, `FormatStyle` для единиц |
 | Тесты | Swift Testing (`@Test`, `#expect`, параметризованные тесты) |
-| Бэкенд | Vapor 4, Fluent, SQLite, авторизация по токену, коды ошибок вместо текстов |
+| Бэкенд | Vapor 4, Fluent, SQLite локально / Postgres на сервере, авторизация по токену, коды ошибок вместо текстов |
 | Общий код | Swift-пакет `Shared` с DTO, его используют и приложение, и сервер |
 | Инструменты | Tuist (проект как код), mise (версии инструментов и задачи), fastlane, GitHub Actions, Renovate, swift-format, SwiftLint |
 
@@ -94,7 +94,7 @@ mise run open        # открывает проект в Xcode
 
 - [Идея и MVP](docs/idea.md)
 - [Клиент: основы SwiftUI](docs/client/README.md), [архитектура](docs/client/architecture.md), [эксперименты с архитектурами](docs/client/architecture-experiments.md), [экраны](docs/client/screens.md), [синхронизация](docs/client/sync.md), [локализация](docs/client/localization.md)
-- [Бэкенд](docs/backend/README.md), [API](docs/backend/API.md), [по шагам](docs/backend/STEPS.md)
+- [Бэкенд](docs/backend/README.md), [API](docs/backend/API.md), [по шагам](docs/backend/STEPS.md), [бесплатный деплой: Render + Neon](docs/backend/DEPLOY.md)
 - [Инфраструктура: Tuist, mise, CI](docs/infra/README.md), [практика](docs/infra/HANDS-ON.md)
 - [Дизайн-токены](docs/design/README.md) и [все экраны](docs/design/screens/) (светлая, тёмная тема, английский); исходники холста в [docs/design/canvas](docs/design/canvas/)
 - [План обучения](docs/learning/plan.md) и [справочник по новым технологиям](docs/learning/handbook.md)

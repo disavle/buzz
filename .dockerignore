@@ -1,0 +1,8 @@
+# The Docker image of the server needs only Backend/ and Shared/.
+# Everything else is left out so the build is faster and secrets do not get into the image.
+*
+!Backend/
+!Shared/
+Backend/.build/
+Backend/db.sqlite
+Shared/.build/

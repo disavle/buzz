@@ -8,6 +8,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/vapor.git", from: "4.115.0"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.12.0"),
         .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.8.0"),
+        // Postgres for the deployed server (Neon); SQLite stays for local runs and tests
+        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
         // DTOs shared with the iOS client
         .package(path: "../Shared"),
     ],
@@ -18,6 +20,7 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
+                .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "Shared", package: "Shared"),
             ]
         ),
