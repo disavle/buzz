@@ -12,6 +12,7 @@
    - включи **Allow auto-merge**: без этого Renovate не сможет сам вливать мелкие обновления;
    - включи **Automatically delete head branches**, чтобы ветки удалялись после мержа.
    - оставь включённым только **Allow squash merging**: в `main` будет один коммит на задачу (процесс описан в [CONTRIBUTING.md](../../CONTRIBUTING.md)).
+   - под ним в **Default commit message** выбери **Pull request title**. Тогда в коммит попадает только заголовок PR, без описания и без подписей из него.
 
 4. **Защита `main`.** Settings → Rules → Rulesets → New branch ruleset:
    - Enforcement status: Active, Target branches: Include default branch;
