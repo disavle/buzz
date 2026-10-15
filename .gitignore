@@ -23,6 +23,8 @@ mise.local.toml
 
 # Vapor
 Backend/db.sqlite
+Backend/server.log
+Backend/.server.pid
 .DS_Store
 
 # Swift Package Manager

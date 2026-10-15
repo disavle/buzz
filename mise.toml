@@ -76,6 +76,14 @@ depends = ["generate"]
 dir = "iOS"
 run = "bundle exec fastlane test"
 
+[tasks.ios]
+description = "Build the app and run it in the simulator"
+depends = ["generate"]
+dir = "iOS"
+# tuist run builds the scheme and launches it on a booted (or default) simulator.
+# Pick a device with: mise run ios -- --device "iPhone 17"
+run = "tuist run Buzz"
+
 [tasks.graph]
 description = "Draw the module graph"
 dir = "iOS"

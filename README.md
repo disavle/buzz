@@ -82,11 +82,14 @@ Other tasks (`mise tasks` lists all of them):
 
 | Task | What it does |
 |---|---|
+| `mise run ios` | builds the app and runs it in the simulator |
 | `mise run test` | all iOS unit tests via fastlane |
 | `mise run lint` | swift-format and SwiftLint |
 | `mise run backend:run` | starts the Vapor server on `http://localhost:8080` |
 | `mise run backend:test` | backend tests |
 | `mise run graph` | draws the module graph |
+
+**Shell aliases:** add `source /path/to/buzz/scripts/buzz.zsh` to `~/.zshrc` to get `buzz-ios`, `buzz-api`, `buzz-dev` (backend in the background + app) and more. See [docs/infra/SETUP.md](docs/infra/SETUP.md).
 
 **Without the backend:** in Xcode, Edit Scheme → Run → Environment Variables, add `BUZZ_MOCK_API = 1`. The app then talks to an in-memory fake server. Without logging in, the app works fully offline anyway.
 
