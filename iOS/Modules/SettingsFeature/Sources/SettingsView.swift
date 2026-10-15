@@ -32,8 +32,14 @@ struct SettingsView: View {
         Section {
             switch store.state.account {
             case .guest:
-                Button { store.send(.loginTapped) } label: {
-                    Label { Text("settings.login", bundle: .module) } icon: { Image(systemName: "person.crop.circle") }
+                Button {
+                    store.send(.loginTapped)
+                } label: {
+                    Label {
+                        Text("settings.login", bundle: .module)
+                    } icon: {
+                        Image(systemName: "person.crop.circle")
+                    }
                 }
             case .loggedIn(let email):
                 HStack(spacing: 12) {
@@ -47,7 +53,9 @@ struct SettingsView: View {
                         Text(statusText).font(.footnote).foregroundStyle(.secondary)
                     }
                 }
-                Button(role: .destructive) { store.send(.logoutTapped) } label: {
+                Button(role: .destructive) {
+                    store.send(.logoutTapped)
+                } label: {
                     Text("settings.logout", bundle: .module)
                 }
             }
@@ -58,7 +66,9 @@ struct SettingsView: View {
         Section {
             HStack {
                 ForEach(AccentChoice.allCases) { choice in
-                    Button { store.send(.accentPicked(choice)) } label: {
+                    Button {
+                        store.send(.accentPicked(choice))
+                    } label: {
                         Circle()
                             .fill(choice.color)
                             .frame(width: 32, height: 32)
@@ -68,7 +78,12 @@ struct SettingsView: View {
                                 }
                             }
                             .padding(4)
-                            .overlay(Circle().strokeBorder(store.state.accent == choice ? choice.color : .clear, lineWidth: 3))
+                            .overlay(
+                                Circle().strokeBorder(
+                                    store.state.accent == choice ? choice.color : .clear,
+                                    lineWidth: 3
+                                )
+                            )
                     }
                     .buttonStyle(.plain)
                     .frame(maxWidth: .infinity)
@@ -101,13 +116,19 @@ struct SettingsView: View {
 
     private var sync: some View {
         Section {
-            LabeledContent { Text(statusText) } label: { Text("settings.sync.last", bundle: .module) }
+            LabeledContent {
+                Text(statusText)
+            } label: {
+                Text("settings.sync.last", bundle: .module)
+            }
             LabeledContent {
                 Text(store.state.pendingCount.formatted()).monospacedDigit()
             } label: {
                 Text("settings.sync.pending", bundle: .module)
             }
-            Button { store.send(.syncTapped) } label: {
+            Button {
+                store.send(.syncTapped)
+            } label: {
                 HStack {
                     Text("settings.sync.now", bundle: .module)
                     Spacer()
@@ -122,7 +143,9 @@ struct SettingsView: View {
 
     private var app: some View {
         Section {
-            Button { store.send(.languageTapped) } label: {
+            Button {
+                store.send(.languageTapped)
+            } label: {
                 LabeledContent {
                     Text(currentLanguage)
                 } label: {
@@ -143,7 +166,8 @@ struct SettingsView: View {
 
     private var statusText: String {
         switch store.state.sync {
-        case .idle(let date?): String(localized: "settings.sync.at \(date.formatted(.relative(presentation: .named)))", bundle: .module)
+        case .idle(let date?):
+            String(localized: "settings.sync.at \(date.formatted(.relative(presentation: .named)))", bundle: .module)
         case .idle(nil): String(localized: "settings.sync.never", bundle: .module)
         case .syncing: String(localized: "settings.sync.running", bundle: .module)
         case .failed: String(localized: "settings.sync.failed", bundle: .module)
@@ -168,10 +192,16 @@ struct SettingsView: View {
 
 #Preview("Logged in") {
     NavigationStack {
-        SettingsView(store: Store(
-            initial: SettingsState(account: .loggedIn(email: "dima@buzz.app"), sync: .idle(lastSync: .now.addingTimeInterval(-300)), pendingCount: 1),
-            reducer: { _, _ in .none }   // a reducer that does nothing: perfect for a static preview
-        ))
+        SettingsView(
+            store: Store(
+                initial: SettingsState(
+                    account: .loggedIn(email: "dima@buzz.app"),
+                    sync: .idle(lastSync: .now.addingTimeInterval(-300)),
+                    pendingCount: 1
+                ),
+                reducer: { _, _ in .none }  // a reducer that does nothing: perfect for a static preview
+            )
+        )
     }
     .buzzTheme()
 }

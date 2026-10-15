@@ -1,5 +1,5 @@
-import Vapor
 import Fluent
+import Vapor
 
 /// A random string the server uses to find the user
 /// from the `Authorization: Bearer <token>` header.

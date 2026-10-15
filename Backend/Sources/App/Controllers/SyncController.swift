@@ -1,6 +1,6 @@
-import Vapor
 import Fluent
 import Shared
+import Vapor
 
 struct SyncController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {

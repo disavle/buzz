@@ -41,13 +41,19 @@ struct AddEntryView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button { model.cancelTapped() } label: { Text("add.cancel", bundle: .module) }
+                    Button {
+                        model.cancelTapped()
+                    } label: {
+                        Text("add.cancel", bundle: .module)
+                    }
                 }
             }
             .safeAreaInset(edge: .bottom) { saveButton }
             .task { await model.onAppear() }
-            .alert(isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } }),
-                   error: model.error.map(LocalizedAddEntryError.init)) {}
+            .alert(
+                isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } }),
+                error: model.error.map(LocalizedAddEntryError.init)
+            ) {}
         }
     }
 
@@ -57,7 +63,9 @@ struct AddEntryView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
                 ForEach(model.recent) { drink in
-                    Button { model.select(drink) } label: {
+                    Button {
+                        model.select(drink)
+                    } label: {
                         VStack(spacing: 6) {
                             BrandTile(brand: drink.brand, size: 40)
                             Text(drink.brand).font(.caption.weight(.medium)).lineLimit(2)
@@ -80,7 +88,9 @@ struct AddEntryView: View {
     private var searchResults: some View {
         Section {
             ForEach(model.results) { drink in
-                Button { model.select(drink) } label: {
+                Button {
+                    model.select(drink)
+                } label: {
                     HStack(spacing: 12) {
                         BrandTile(brand: drink.brand, size: 40)
                         VStack(alignment: .leading) {
@@ -105,10 +115,14 @@ struct AddEntryView: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button { model.clearSelection() } label: { Text("add.change", bundle: .module) }
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.capsule)
-                    .controlSize(.small)
+                Button {
+                    model.clearSelection()
+                } label: {
+                    Text("add.change", bundle: .module)
+                }
+                .buttonStyle(.bordered)
+                .buttonBorderShape(.capsule)
+                .controlSize(.small)
             }
 
             // Segmented control = Picker with .segmented style (UISegmentedControl in UIKit).
@@ -152,8 +166,11 @@ struct AddEntryView: View {
                     Text("add.warning.title \(BuzzFormat.caffeine(model.previewMg))", bundle: .module)
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Color.buzzOver)
-                    Text("add.warning.subtitle \(BuzzFormat.caffeine(model.projectedTotalMg)) \(BuzzFormat.caffeine(Double(model.limitMg)))", bundle: .module)
-                        .font(.footnote)
+                    Text(
+                        "add.warning.subtitle \(BuzzFormat.caffeine(model.projectedTotalMg)) \(BuzzFormat.caffeine(Double(model.limitMg)))",
+                        bundle: .module
+                    )
+                    .font(.footnote)
                 }
             } icon: {
                 Image(systemName: "exclamationmark.triangle").foregroundStyle(Color.buzzOver)

@@ -41,9 +41,14 @@ public final class DrinkModel {
     /// Convert to the plain Domain struct. Features never see `DrinkModel`.
     public var asDomain: Drink {
         Drink(
-            id: id, brand: brand, name: name, volumeMl: volumeMl,
-            caffeinePer100ml: caffeinePer100ml, sugarPer100ml: sugarPer100ml,
-            imageURL: imageURL, isCustom: isCustom
+            id: id,
+            brand: brand,
+            name: name,
+            volumeMl: volumeMl,
+            caffeinePer100ml: caffeinePer100ml,
+            sugarPer100ml: sugarPer100ml,
+            imageURL: imageURL,
+            isCustom: isCustom
         )
     }
 

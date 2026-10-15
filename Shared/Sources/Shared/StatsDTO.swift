@@ -26,7 +26,14 @@ public struct StatsDTO: Codable, Sendable, Hashable {
     /// LineMark of spending by week.
     public var spendByWeek: [WeekSpend]
 
-    public init(period: StatsPeriod, dailyCaffeineLimitMg: Int, byDay: [DayStat], byHour: [HourStat], byBrand: [BrandStat], spendByWeek: [WeekSpend]) {
+    public init(
+        period: StatsPeriod,
+        dailyCaffeineLimitMg: Int,
+        byDay: [DayStat],
+        byHour: [HourStat],
+        byBrand: [BrandStat],
+        spendByWeek: [WeekSpend]
+    ) {
         self.period = period
         self.dailyCaffeineLimitMg = dailyCaffeineLimitMg
         self.byDay = byDay

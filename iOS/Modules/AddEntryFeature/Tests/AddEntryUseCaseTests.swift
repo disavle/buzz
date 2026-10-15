@@ -1,6 +1,7 @@
 import Domain
 import Foundation
 import Testing
+
 @testable import AddEntryFeature
 
 // The Clean Architecture payoff: rules are tested without UI and without a database.
@@ -13,13 +14,23 @@ func nutrition() {
     #expect(result.caffeineMg == 160)
 }
 
-@Test("Going over the limit is reported", arguments: [
-    (existingMg: 200.0, expectedOver: false),   // 200 + 160 = 360 <= 400
-    (existingMg: 300.0, expectedOver: true),    // 300 + 160 = 460 > 400
-])
+@Test(
+    "Going over the limit is reported",
+    arguments: [
+        (existingMg: 200.0, expectedOver: false),  // 200 + 160 = 360 <= 400
+        (existingMg: 300.0, expectedOver: true),  // 300 + 160 = 460 > 400
+    ]
+)
 func overLimit(existingMg: Double, expectedOver: Bool) async throws {
-    let existing = Entry(drinkId: UUID(), brand: "X", drinkName: "Y", consumedAt: noon.addingTimeInterval(-3600),
-                         volumeMl: 250, caffeineMg: existingMg, sugarG: 0)
+    let existing = Entry(
+        drinkId: UUID(),
+        brand: "X",
+        drinkName: "Y",
+        consumedAt: noon.addingTimeInterval(-3600),
+        volumeMl: 250,
+        caffeineMg: existingMg,
+        sugarG: 0
+    )
     let sut = DefaultAddEntryUseCase(
         entries: InMemoryEntryRepository(entries: [existing]),
         settings: InMemorySettingsRepository(limit: 400),
@@ -34,10 +45,17 @@ func overLimit(existingMg: Double, expectedOver: Bool) async throws {
 @Test("A date in the future is rejected")
 func futureDate() async {
     let sut = DefaultAddEntryUseCase(
-        entries: InMemoryEntryRepository(), settings: InMemorySettingsRepository(), now: { noon }
+        entries: InMemoryEntryRepository(),
+        settings: InMemorySettingsRepository(),
+        now: { noon }
     )
     await #expect(throws: AddEntryError.dateInFuture) {
-        try await sut.execute(drink: SeedCatalog.redBull, volumeMl: 250, consumedAt: noon.addingTimeInterval(3600), price: nil)
+        try await sut.execute(
+            drink: SeedCatalog.redBull,
+            volumeMl: 250,
+            consumedAt: noon.addingTimeInterval(3600),
+            price: nil
+        )
     }
 }
 

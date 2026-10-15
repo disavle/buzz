@@ -1,6 +1,6 @@
-import Vapor
 import Fluent
 import Shared
+import Vapor
 
 struct EntryController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {
@@ -28,7 +28,8 @@ struct EntryController: RouteCollection {
         if let to = try isoDate(period.to, name: "to") {
             query.filter(\.$consumedAt < to)
         }
-        return try await query
+        return
+            try await query
             .sort(\.$consumedAt, .descending)
             .all()
             .map { try $0.toDTO() }

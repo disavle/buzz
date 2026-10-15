@@ -63,7 +63,9 @@ public final class Store<State, Action: Sendable> {
     }
 
     /// A Binding for controls (Stepper, Toggle): read from `state`, write by sending an action.
-    public func binding<Value>(_ keyPath: KeyPath<State, Value>, send action: @escaping (Value) -> Action) -> Binding<Value> {
+    public func binding<Value>(_ keyPath: KeyPath<State, Value>, send action: @escaping (Value) -> Action) -> Binding<
+        Value
+    > {
         Binding(
             get: { self.state[keyPath: keyPath] },
             set: { self.send(action($0)) }

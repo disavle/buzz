@@ -80,7 +80,10 @@ public final class TodayViewModel {
             title: String(localized: "today.snack.added \(entry.displayName)", bundle: .module),
             subtitle: isOverLimit
                 ? String(localized: "today.snack.over \(over)", bundle: .module)
-                : String(localized: "today.snack.progress \(BuzzFormat.caffeine(entry.caffeineMg)) \(total) \(limit)", bundle: .module),
+                : String(
+                    localized: "today.snack.progress \(BuzzFormat.caffeine(entry.caffeineMg)) \(total) \(limit)",
+                    bundle: .module
+                ),
             isWarning: isOverLimit
         )
     }

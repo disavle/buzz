@@ -1,5 +1,5 @@
-import Vapor
 import Shared
+import Vapor
 
 /// The error that route handlers throw: an HTTP status plus a code for the client.
 /// `reason` is in English and only for developers.

@@ -1,7 +1,7 @@
-import Vapor
 import Fluent
 import FluentSQLiteDriver
 import Shared
+import Vapor
 
 public func configure(_ app: Application) async throws {
     // Database: in memory for tests, otherwise a db.sqlite file next to the project.

@@ -1,6 +1,7 @@
 import Domain
 import Foundation
 import Testing
+
 @testable import TodayFeature
 
 // View model tests: no UI, no database, just the fakes from Domain.

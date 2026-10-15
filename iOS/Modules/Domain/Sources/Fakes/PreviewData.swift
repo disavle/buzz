@@ -10,7 +10,7 @@ public enum PreviewData {
 
     public static let todayEntries: [Entry] = {
         var monster = Entry.make(drink: SeedCatalog.monsterUltra, volumeMl: 500, consumedAt: today(18, 40))
-        monster.isSynced = false   // shows the "not synced" icon
+        monster.isSynced = false  // shows the "not synced" icon
         var burn = Entry.make(drink: SeedCatalog.burn, volumeMl: 250, consumedAt: today(13, 30))
         burn.isSynced = true
         var redBull = Entry.make(drink: SeedCatalog.redBull, volumeMl: 250, consumedAt: today(9, 10))

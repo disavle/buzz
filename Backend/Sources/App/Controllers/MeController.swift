@@ -1,5 +1,5 @@
-import Vapor
 import Shared
+import Vapor
 
 struct MeController: RouteCollection {
     func boot(routes: any RoutesBuilder) throws {

@@ -36,7 +36,11 @@ public struct CustomDrinkForm: View {
                 }
                 Section {
                     Stepper(value: $volumeMl, in: 50...2000, step: 10) {
-                        LabeledContent { Text(BuzzFormat.volume(volumeMl)) } label: { Text("custom.volume", bundle: .module) }
+                        LabeledContent {
+                            Text(BuzzFormat.volume(volumeMl))
+                        } label: {
+                            Text("custom.volume", bundle: .module)
+                        }
                     }
                     // `TextField(value:format:)` edits a number directly. No String -> Double parsing by hand.
                     LabeledContent {
@@ -62,8 +66,12 @@ public struct CustomDrinkForm: View {
                     Button(action: finished) { Text("custom.cancel", bundle: .module) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button { Task { await save() } } label: { Text("custom.save", bundle: .module) }
-                        .disabled(!isValid || isSaving)
+                    Button {
+                        Task { await save() }
+                    } label: {
+                        Text("custom.save", bundle: .module)
+                    }
+                    .disabled(!isValid || isSaving)
                 }
             }
         }

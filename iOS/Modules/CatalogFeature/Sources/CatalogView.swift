@@ -28,8 +28,12 @@ public struct CatalogView: View {
                 // Lazy: cards are created only when they scroll into view, like cell reuse.
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(model.visible) { drink in
-                        Button { model.drinkTapped(drink) } label: { DrinkCard(drink: drink) }
-                            .buttonStyle(.plain)
+                        Button {
+                            model.drinkTapped(drink)
+                        } label: {
+                            DrinkCard(drink: drink)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
@@ -52,8 +56,14 @@ public struct CatalogView: View {
         .navigationTitle(Text("catalog.title", bundle: .module))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button { model.addCustomTapped() } label: {
-                    Label { Text("catalog.addCustom", bundle: .module) } icon: { Image(systemName: "plus") }
+                Button {
+                    model.addCustomTapped()
+                } label: {
+                    Label {
+                        Text("catalog.addCustom", bundle: .module)
+                    } icon: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }
@@ -107,10 +117,12 @@ struct DrinkCard: View {
 
 #Preview {
     NavigationStack {
-        CatalogView(model: CatalogViewModel(
-            repository: InMemoryDrinkRepository(),
-            output: .init(drinkTapped: { _ in }, addCustomTapped: {})
-        ))
+        CatalogView(
+            model: CatalogViewModel(
+                repository: InMemoryDrinkRepository(),
+                output: .init(drinkTapped: { _ in }, addCustomTapped: {})
+            )
+        )
     }
     .buzzTheme()
 }

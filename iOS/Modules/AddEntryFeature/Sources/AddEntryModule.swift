@@ -33,7 +33,8 @@ public struct AddEntryOutput {
 public enum AddEntryModule {
     /// The "composition root" of the module: creates use cases and wires them into the view model.
     @MainActor
-    public static func make(deps: AddEntryDependencies, output: AddEntryOutput, preselected: Drink? = nil) -> some View {
+    public static func make(deps: AddEntryDependencies, output: AddEntryOutput, preselected: Drink? = nil) -> some View
+    {
         let calculator = NutritionCalculator()
         let model = AddEntryViewModel(
             addEntry: DefaultAddEntryUseCase(entries: deps.entries, settings: deps.settings, calculator: calculator),

@@ -11,13 +11,19 @@ final class AppCoordinator {
     private let tabBar = UITabBarController()
 
     private lazy var today = TodayCoordinator(deps: deps)
-    private lazy var catalog = CatalogCoordinator(deps: deps, drinkNow: { [weak self] drink in
-        self?.showAddEntry(preselected: drink)
-    })
+    private lazy var catalog = CatalogCoordinator(
+        deps: deps,
+        drinkNow: { [weak self] drink in
+            self?.showAddEntry(preselected: drink)
+        }
+    )
     private lazy var stats = StatsCoordinator(deps: deps)
-    private lazy var settings = SettingsCoordinator(deps: deps, accentChanged: { [weak self] accent in
-        self?.window.tintColor = UIColor(accent.color)
-    })
+    private lazy var settings = SettingsCoordinator(
+        deps: deps,
+        accentChanged: { [weak self] accent in
+            self?.window.tintColor = UIColor(accent.color)
+        }
+    )
 
     init(window: UIWindow, deps: AppDependencies) {
         self.window = window

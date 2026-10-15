@@ -12,9 +12,14 @@ public struct DrinkDTO: Codable, Sendable, Hashable, Identifiable {
     public var isCustom: Bool
 
     public init(
-        id: UUID, brand: String, name: String, volumeMl: Int,
-        caffeinePer100ml: Double, sugarPer100ml: Double,
-        imageURL: URL? = nil, isCustom: Bool
+        id: UUID,
+        brand: String,
+        name: String,
+        volumeMl: Int,
+        caffeinePer100ml: Double,
+        sugarPer100ml: Double,
+        imageURL: URL? = nil,
+        isCustom: Bool
     ) {
         self.id = id
         self.brand = brand

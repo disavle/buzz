@@ -63,19 +63,23 @@ public actor SyncEngine: SyncService {
     public func start(changes: AsyncStream<Void>, network: NetworkMonitor) {
         guard triggerTasks.isEmpty else { return }
 
-        triggerTasks.append(Task { [weak self] in
-            for await _ in changes {
-                // Debounce: wait 2 seconds. If the user adds 3 cans quickly we send them in one pass.
-                try? await Task.sleep(for: .seconds(2))
-                await self?.syncNow()
+        triggerTasks.append(
+            Task { [weak self] in
+                for await _ in changes {
+                    // Debounce: wait 2 seconds. If the user adds 3 cans quickly we send them in one pass.
+                    try? await Task.sleep(for: .seconds(2))
+                    await self?.syncNow()
+                }
             }
-        })
+        )
 
-        triggerTasks.append(Task { [weak self] in
-            for await isOnline in network.updates() where isOnline {
-                await self?.syncNow()
+        triggerTasks.append(
+            Task { [weak self] in
+                for await isOnline in network.updates() where isOnline {
+                    await self?.syncNow()
+                }
             }
-        })
+        )
     }
 
     // MARK: - One pass

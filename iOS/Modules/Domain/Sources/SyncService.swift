@@ -30,7 +30,9 @@ public struct NoopSyncService: SyncService {
     public init() {}
     public func syncNow() async {}
     public func statusUpdates() -> AsyncStream<SyncStatus> {
-        AsyncStream { $0.yield(.offlineGuest); $0.finish() }
+        AsyncStream {
+            $0.yield(.offlineGuest); $0.finish()
+        }
     }
     public func pendingCount() async -> Int { 0 }
 }

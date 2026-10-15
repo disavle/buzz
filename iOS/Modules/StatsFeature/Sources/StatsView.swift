@@ -59,7 +59,9 @@ public struct StatsView: View {
                         y: .value(String(localized: "stats.axis.caffeine", bundle: .module), day.caffeineMg)
                     )
                     // Orange when over the limit, accent color otherwise.
-                    .foregroundStyle(day.caffeineMg > Double(model.limitMg) ? AnyShapeStyle(Color.buzzOver) : AnyShapeStyle(.tint))
+                    .foregroundStyle(
+                        day.caffeineMg > Double(model.limitMg) ? AnyShapeStyle(Color.buzzOver) : AnyShapeStyle(.tint)
+                    )
                     .cornerRadius(4)
                 }
                 RuleMark(y: .value(String(localized: "stats.axis.limit", bundle: .module), model.limitMg))
@@ -101,7 +103,9 @@ public struct StatsView: View {
                     x: .value(String(localized: "stats.axis.hour", bundle: .module), bucket.hour),
                     y: .value(String(localized: "stats.axis.cans", bundle: .module), bucket.count)
                 )
-                .foregroundStyle(bucket.hour == model.snapshot.peakHour ? AnyShapeStyle(.tint) : AnyShapeStyle(.tint.opacity(0.45)))
+                .foregroundStyle(
+                    bucket.hour == model.snapshot.peakHour ? AnyShapeStyle(.tint) : AnyShapeStyle(.tint.opacity(0.45))
+                )
             }
             .chartXScale(domain: 0...23)
             .chartXAxis { AxisMarks(values: [0, 6, 12, 18, 23]) }
@@ -147,7 +151,10 @@ public struct StatsView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(model.snapshot.byBrand) { share in
                         HStack {
-                            Circle().fill(share.brand.map(BrandPalette.color(for:)) ?? .gray).frame(width: 10, height: 10)
+                            Circle().fill(share.brand.map(BrandPalette.color(for:)) ?? .gray).frame(
+                                width: 10,
+                                height: 10
+                            )
                             if let brand = share.brand { Text(brand) } else { Text("stats.other", bundle: .module) }
                             Spacer()
                             Text(share.count.formatted()).monospacedDigit()
@@ -171,7 +178,7 @@ public struct StatsView: View {
                     x: .value(String(localized: "stats.axis.week", bundle: .module), week.weekStart, unit: .weekOfYear),
                     y: .value(String(localized: "stats.axis.money", bundle: .module), week.amount)
                 )
-                .interpolationMethod(.catmullRom)   // smooth curve instead of straight segments
+                .interpolationMethod(.catmullRom)  // smooth curve instead of straight segments
                 PointMark(
                     x: .value(String(localized: "stats.axis.week", bundle: .module), week.weekStart, unit: .weekOfYear),
                     y: .value(String(localized: "stats.axis.money", bundle: .module), week.amount)
@@ -192,11 +199,13 @@ public struct StatsView: View {
 
 #Preview {
     NavigationStack {
-        StatsView(model: StatsViewModel(
-            entries: InMemoryEntryRepository(entries: PreviewData.history()),
-            settings: InMemorySettingsRepository(),
-            sync: NoopSyncService()
-        ))
+        StatsView(
+            model: StatsViewModel(
+                entries: InMemoryEntryRepository(entries: PreviewData.history()),
+                settings: InMemorySettingsRepository(),
+                sync: NoopSyncService()
+            )
+        )
     }
     .buzzTheme()
 }

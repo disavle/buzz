@@ -16,7 +16,7 @@ public struct BrandTile: View {
             .foregroundStyle(.white)
             .frame(width: size, height: size)
             .background(BrandPalette.color(for: brand), in: .rect(cornerRadius: size * 0.27, style: .continuous))
-            .accessibilityHidden(true)   // the brand name is already next to the tile
+            .accessibilityHidden(true)  // the brand name is already next to the tile
     }
 }
 

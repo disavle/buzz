@@ -1,5 +1,5 @@
-import Vapor
 import Logging
+import Vapor
 
 @main
 enum Entrypoint {

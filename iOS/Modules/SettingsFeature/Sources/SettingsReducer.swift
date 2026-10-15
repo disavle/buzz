@@ -16,7 +16,7 @@ public func settingsReducer(env: SettingsEnvironment) -> Reducer<SettingsState, 
                 }
             }
 
-        case let .loaded(limit, email, pending):
+        case .loaded(let limit, let email, let pending):
             state.dailyLimitMg = limit
             state.account = email.map { .loggedIn(email: $0) } ?? .guest
             state.pendingCount = pending
@@ -24,7 +24,10 @@ public func settingsReducer(env: SettingsEnvironment) -> Reducer<SettingsState, 
 
         case .limitChanged(let value):
             // Clamp in the reducer: the rule lives in one place, not in every control.
-            state.dailyLimitMg = min(max(value, SettingsState.limitRange.lowerBound), SettingsState.limitRange.upperBound)
+            state.dailyLimitMg = min(
+                max(value, SettingsState.limitRange.lowerBound),
+                SettingsState.limitRange.upperBound
+            )
             let limit = state.dailyLimitMg
             return .run { _ in await env.saveLimit(limit) }
 

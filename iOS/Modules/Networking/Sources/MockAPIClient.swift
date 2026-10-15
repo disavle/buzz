@@ -25,8 +25,12 @@ public final class MockAPIClient: APIClient {
     public init(drinks: [Drink] = SeedCatalog.all, failure: APIError? = nil) {
         let dtos = drinks.map {
             DrinkDTO(
-                id: $0.id, brand: $0.brand, name: $0.name, volumeMl: $0.volumeMl,
-                caffeinePer100ml: $0.caffeinePer100ml, sugarPer100ml: $0.sugarPer100ml,
+                id: $0.id,
+                brand: $0.brand,
+                name: $0.name,
+                volumeMl: $0.volumeMl,
+                caffeinePer100ml: $0.caffeinePer100ml,
+                sugarPer100ml: $0.sugarPer100ml,
                 isCustom: $0.isCustom
             )
         }
@@ -57,7 +61,9 @@ public final class MockAPIClient: APIClient {
             )
 
         case (.get, "/me"):
-            result = state.withLock { UserDTO(id: UUID(), email: "demo@buzz.app", dailyCaffeineLimitMg: $0.limit, locale: .en) }
+            result = state.withLock {
+                UserDTO(id: UUID(), email: "demo@buzz.app", dailyCaffeineLimitMg: $0.limit, locale: .en)
+            }
 
         case (.get, "/drinks"):
             result = state.withLock { Array($0.drinks.values) }
@@ -65,15 +71,19 @@ public final class MockAPIClient: APIClient {
         case (.post, "/entries"):
             let dto = try decode(CreateEntryDTO.self, endpoint.body)
             result = state.withLock { state -> EntryDTO in
-                if let existing = state.entries[dto.id] { return existing }   // idempotent
+                if let existing = state.entries[dto.id] { return existing }  // idempotent
                 let drink = state.drinks[dto.drinkId]
                 let volume = dto.volumeMl ?? drink?.volumeMl ?? 0
                 let entry = EntryDTO(
-                    id: dto.id, drinkId: dto.drinkId, consumedAt: dto.consumedAt, volumeMl: volume,
+                    id: dto.id,
+                    drinkId: dto.drinkId,
+                    consumedAt: dto.consumedAt,
+                    volumeMl: volume,
                     price: dto.price,
                     caffeineMg: (drink?.caffeinePer100ml ?? 0) * Double(volume) / 100,
                     sugarG: (drink?.sugarPer100ml ?? 0) * Double(volume) / 100,
-                    updatedAt: now, deletedAt: nil
+                    updatedAt: now,
+                    deletedAt: nil
                 )
                 state.entries[dto.id] = entry
                 return entry

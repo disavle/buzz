@@ -7,7 +7,8 @@ import Foundation
 // MARK: - Add entry
 
 public protocol AddEntryUseCase: Sendable {
-    func execute(drink: Drink, volumeMl: Int, consumedAt: Date, price: Decimal?) async throws(AddEntryError) -> AddEntryResult
+    func execute(drink: Drink, volumeMl: Int, consumedAt: Date, price: Decimal?) async throws(AddEntryError)
+        -> AddEntryResult
 }
 
 public struct DefaultAddEntryUseCase: AddEntryUseCase {
@@ -29,7 +30,9 @@ public struct DefaultAddEntryUseCase: AddEntryUseCase {
         self.now = now
     }
 
-    public func execute(drink: Drink, volumeMl: Int, consumedAt: Date, price: Decimal?) async throws(AddEntryError) -> AddEntryResult {
+    public func execute(drink: Drink, volumeMl: Int, consumedAt: Date, price: Decimal?) async throws(AddEntryError)
+        -> AddEntryResult
+    {
         // 1. Business rules.
         guard (50...2000).contains(volumeMl) else { throw .invalidVolume }
         if let price, price < 0 { throw .invalidPrice }
@@ -38,9 +41,14 @@ public struct DefaultAddEntryUseCase: AddEntryUseCase {
         // 2. Create the entry.
         let nutrition = calculator.nutrition(of: drink, volumeMl: volumeMl)
         let entry = Entry(
-            drinkId: drink.id, brand: drink.brand, drinkName: drink.name,
-            consumedAt: consumedAt, volumeMl: volumeMl, price: price,
-            caffeineMg: nutrition.caffeineMg, sugarG: nutrition.sugarG
+            drinkId: drink.id,
+            brand: drink.brand,
+            drinkName: drink.name,
+            consumedAt: consumedAt,
+            volumeMl: volumeMl,
+            price: price,
+            caffeineMg: nutrition.caffeineMg,
+            sugarG: nutrition.sugarG
         )
 
         // 3. Save and count the day total. Storage errors become one simple case.

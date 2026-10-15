@@ -63,7 +63,7 @@ final class SettingsCoordinator: Coordinator {
             if loggedIn {
                 // Everything the guest saved offline is still `pending`: send it now.
                 Task { await self.deps.sync.syncNow() }
-                start()   // rebuild the screen to show the new account
+                start()  // rebuild the screen to show the new account
             }
         }
         navigation.present(deps.host(view), animated: true)

@@ -35,9 +35,11 @@ public actor KeychainTokenStore: TokenStore {
     // MARK: - Keychain helpers
 
     private func baseQuery(account: String) -> [String: Any] {
-        [kSecClass as String: kSecClassGenericPassword,
-         kSecAttrService as String: service,
-         kSecAttrAccount as String: account]
+        [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: account,
+        ]
     }
 
     private func read(account: String) -> String? {
@@ -46,7 +48,8 @@ public actor KeychainTokenStore: TokenStore {
         query[kSecMatchLimit as String] = kSecMatchLimitOne
         var result: AnyObject?
         guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let data = result as? Data else { return nil }
+            let data = result as? Data
+        else { return nil }
         return String(decoding: data, as: UTF8.self)
     }
 
