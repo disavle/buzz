@@ -1,0 +1,9 @@
+#!/bin/sh
+# Git runs this before every push. If the linters fail, nothing is pushed.
+# This is the second guard: it also catches commits made with `git commit --no-verify`
+# or from a place where the pre-commit hook was not installed.
+# Installed with `mise run setup:hooks` (it is also part of `mise run generate`).
+#
+# Note: the linters check the files on disk, so commit or stash unfinished work first.
+
+exec "$(git rev-parse --show-toplevel)/.githooks/run-lint" push

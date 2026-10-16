@@ -61,3 +61,7 @@ docker run --rm -p 8080:8080 -e DATABASE_URL="..." buzz-backend   # с базо�
 - Render Deploy Hooks: https://render.com/docs/deploy-hooks
 - Neon, лимиты Free: https://neon.com/faqs/free-plan-limits-and-quotas
 - GitHub Container Registry: https://docs.github.com/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+
+## Подключить приложение к Render
+
+Адрес `https://buzz-backend-latest.onrender.com` уже зашит в сборки для iPhone и TestFlight (`renderServer` в `iOS/Project.swift`), симулятор по умолчанию ходит на `localhost`. Если имя сервиса на Render поменяется, поправь `renderServer` и выполни `mise run generate`. Как переопределить адрес, см. [docs/infra/SETUP.md](../infra/SETUP.md), шаг 6.

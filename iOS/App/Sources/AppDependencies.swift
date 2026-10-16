@@ -22,28 +22,43 @@ final class AppDependencies {
     let syncEngine: SyncEngine
     var sync: any SyncService { syncEngine }
     private let network = NetworkMonitor()
+    /// "Data changed, reload the screens": local edits and data from the server.
     private let changes = Broadcaster<Void>()
+    /// "The user changed something": only this starts an automatic sync.
+    private let localEdits = Broadcaster<Void>()
 
-    init(environment: [String: String] = ProcessInfo.processInfo.environment) throws {
+    init(
+        environment: [String: String] = ProcessInfo.processInfo.environment,
+        infoPlist: [String: Any] = Bundle.main.infoDictionary ?? [:]
+    ) throws {
         // UI tests and screenshots can start with a clean in-memory database.
         let inMemory = environment["BUZZ_IN_MEMORY"] == "1"
         container = try PersistenceContainer.make(inMemory: inMemory)
         try PersistenceContainer.seedIfNeeded(container)
 
-        // One broadcaster for "entries changed": the repository yields on local changes,
-        // the sync store yields on server changes. Screens and the sync engine listen to it.
-        entries = SwiftDataEntryRepository(modelContainer: container, broadcaster: changes)
+        // Two signals: `changes` (repository and sync store, screens listen to it)
+        // and `localEdits` (repository only, the sync engine listens to it).
+        entries = SwiftDataEntryRepository(modelContainer: container, broadcaster: changes, localEdits: localEdits)
         drinks = SwiftDataDrinkRepository(modelContainer: container)
         settings = UserDefaultsSettingsRepository()
         entryStore = EntryStore(repository: entries)
 
         // Network: the real Vapor server, or a fake one with BUZZ_MOCK_API=1
         // (Xcode: Edit Scheme > Run > Arguments > Environment Variables).
+        // Server address, first match wins:
+        // 1. BUZZ_API_URL from the scheme: a quick override, only when run from Xcode;
+        // 2. BuzzAPIURL from Info.plist: baked in at build time (see BUZZ_SERVER_URL in Project.swift):
+        //    Render on a real iPhone, localhost in the simulator, or TUIST_API_URL if it is set;
+        // 3. localhost, a last resort if Info.plist has no address (it always has one in the app).
         tokens = KeychainTokenStore()
         if environment["BUZZ_MOCK_API"] == "1" {
             api = MockAPIClient()
         } else {
-            let baseURL = URL(string: environment["BUZZ_API_URL"] ?? "http://localhost:8080")!
+            let address =
+                environment["BUZZ_API_URL"]
+                ?? infoPlist["BuzzAPIURL"] as? String
+                ?? "http://localhost:8080"
+            let baseURL = URL(string: address)!
             api = URLSessionAPIClient(baseURL: baseURL, tokens: tokens)
         }
         auth = RemoteAuthService(api: api, tokens: tokens)
@@ -57,10 +72,12 @@ final class AppDependencies {
 
     func startBackgroundWork() {
         entryStore.startListening()
-        let changes = changes.stream()
+        // The engine listens to local edits only. If it listened to `changes`, its own pass
+        // (which saves data and yields `changes`) would start the next pass every ~2 seconds.
+        let edits = localEdits.stream()
         let network = network
         Task {
-            await syncEngine.start(changes: changes, network: network)
+            await syncEngine.start(changes: edits, network: network)
             await syncEngine.syncNow()
         }
     }

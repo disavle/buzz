@@ -27,10 +27,10 @@
    echo 'eval "$(mise activate zsh)"' >> ~/.zshrc && exec zsh
    git clone https://github.com/disavle/buzz && cd buzz
    mise trust
-   mise run generate     # инструменты, гемы, pre-commit хук, Buzz.xcworkspace
+   mise run generate     # инструменты, гемы, git-хуки, Buzz.xcworkspace
    mise run open
    ```
-   Нужен Xcode 26 из App Store. Pre-commit хук ставится той же командой `mise run generate`.
+   Нужен Xcode 26 из App Store. Git-хуки с линтером перед коммитом и пушем включаются той же командой `mise run generate` (подробнее в [CONTRIBUTING.md](../../CONTRIBUTING.md#git-хуки)).
 
    **Алиасы для zsh.** Добавь в `~/.zshrc` одну строку (путь замени на свой) и открой новую вкладку терминала:
    ```bash
@@ -56,6 +56,18 @@
    TUIST_TEAM_ID = "ABCDE12345"
    ```
    Затем снова выполни `mise run generate`.
+
+   **Какой сервер.** Ничего настраивать не нужно: сборка на iPhone (и в TestFlight) ходит на `https://buzz-backend-latest.onrender.com`, а симулятор на локальный `http://localhost:8080`. Адрес зашивается в `Info.plist` (ключ `BuzzAPIURL`) из build setting `BUZZ_SERVER_URL` в `iOS/Project.swift`, поэтому приложение находит сервер и при запуске с иконки, не только из Xcode. Разные значения для телефона и симулятора задаёт условная настройка Xcode `BUZZ_SERVER_URL[sdk=iphonesimulator*]`.
+
+   Чтобы все сборки ходили на один сервер (например, симулятор на Render или телефон на Mac в локальной сети), добавь в `mise.local.toml` строку и снова выполни `mise run generate`:
+   ```toml
+   [env]
+   TUIST_TEAM_ID = "ABCDE12345"
+   TUIST_API_URL = "https://buzz-backend-latest.onrender.com"
+   ```
+   Для разового переопределения есть переменная схемы `BUZZ_API_URL` (Edit Scheme → Run → Environment Variables), она важнее значения из `Info.plist`.
+
+   Бесплатный Render засыпает после 15 минут без запросов, первый запрос после этого может идти около минуты. Если вход упал с ошибкой соединения, подожди и попробуй ещё раз.
 
 7. **Бэкенд локально:** `mise run backend:run`. База SQLite лежит в `Backend/db.sqlite`, миграции в режиме разработки применяются при старте. Симулятор ходит на `http://localhost:8080`: http к localhost уже разрешён в `Info.plist`.
 
@@ -87,5 +99,4 @@
 
 ## Пока не настроено совсем
 
-- **Бэкенд в интернете.** Сервер живёт только локально. Когда понадобится: Postgres вместо SQLite, Dockerfile и деплой (Fly.io или VPS). Это отдельная задача.
-- **Адрес сервера для TestFlight-сборки.** Сейчас приложение берёт его из переменной `BUZZ_API_URL` (по умолчанию `http://localhost:8080`, см. `AppDependencies.swift`). Для сборки в TestFlight адрес надо будет зашить в конфигурацию Release вместе с деплоем бэкенда.
+- **Отдельный сервер для TestFlight.** Пока TestFlight-сборка ходит на тот же сервер на Render, что и сборка на телефон (шаг 6). Если понадобится отдельный staging, передай `TUIST_API_URL` в job `TestFlight` в `.github/workflows/ci.yml`.

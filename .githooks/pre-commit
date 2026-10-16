@@ -1,0 +1,14 @@
+#!/bin/sh
+# Git runs this before every commit. If the linters fail, the commit is stopped.
+# Installed with `mise run setup:hooks` (it is also part of `mise run generate`).
+#
+# Note: the linters check the files on disk, not only the staged part of them.
+
+# Only Swift code and the linter settings can break the linters.
+# A commit with only docs or other files skips the check and stays instant.
+# --cached = staged files; --diff-filter=ACMR = added, copied, modified, renamed (not deleted).
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -qE '\.swift$|^\.swiftlint\.yml$|^\.swift-format$'; then
+  exit 0
+fi
+
+exec "$(git rev-parse --show-toplevel)/.githooks/run-lint" commit

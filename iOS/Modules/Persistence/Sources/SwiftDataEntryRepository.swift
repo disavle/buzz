@@ -14,14 +14,24 @@ public actor SwiftDataEntryRepository: EntryRepository, ModelActor {
     public nonisolated let modelContainer: ModelContainer
     public nonisolated let modelExecutor: any ModelExecutor
     private nonisolated let broadcaster: Broadcaster<Void>
+    private nonisolated let localEdits: Broadcaster<Void>
 
-    /// - Parameter broadcaster: pass the same one to `SyncStore`, so data that comes
-    ///   from the server also tells the screens to reload.
-    public init(modelContainer: ModelContainer, broadcaster: Broadcaster<Void> = .init()) {
+    /// - Parameters:
+    ///   - broadcaster: "data changed, reload the screens". Pass the same one to `SyncStore`,
+    ///     so data that comes from the server also tells the screens to reload.
+    ///   - localEdits: "the user changed something, it needs to be sent". Only the sync engine
+    ///     listens to it. It must stay separate from `broadcaster`: otherwise every sync pass
+    ///     (which also changes data) would start the next pass, in an endless loop.
+    public init(
+        modelContainer: ModelContainer,
+        broadcaster: Broadcaster<Void> = .init(),
+        localEdits: Broadcaster<Void> = .init()
+    ) {
         self.modelContainer = modelContainer
         let context = ModelContext(modelContainer)
         self.modelExecutor = DefaultSerialModelExecutor(modelContext: context)
         self.broadcaster = broadcaster
+        self.localEdits = localEdits
     }
 
     public func entries(from: Date, to: Date) async throws -> [Entry] {
@@ -39,6 +49,7 @@ public actor SwiftDataEntryRepository: EntryRepository, ModelActor {
         modelContext.insert(EntryModel(entry, syncState: .pending))
         try modelContext.save()
         broadcaster.yield()
+        localEdits.yield()
     }
 
     public func delete(id: UUID) async throws {
@@ -53,6 +64,7 @@ public actor SwiftDataEntryRepository: EntryRepository, ModelActor {
         }
         try modelContext.save()
         broadcaster.yield()
+        localEdits.yield()
     }
 
     public func recentDrinkIds(limit: Int) async throws -> [UUID] {

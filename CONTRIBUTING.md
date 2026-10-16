@@ -44,6 +44,25 @@ chore: bump tuist to 4.213
 
 Релиз iOS делается тегом на `main`: `git tag ios-v0.2.0 && git push origin ios-v0.2.0`. CI прогонит тесты и отправит сборку в TestFlight (когда будет настроен аккаунт разработчика, см. [docs/infra/SETUP.md](docs/infra/SETUP.md)). Номер сборки CI берёт сам из TestFlight, а версию (`MARKETING_VERSION`) меняют в `iOS/Project.swift` отдельным PR перед тегом.
 
+## Git-хуки
+
+В папке [.githooks/](.githooks) лежат два хука, оба запускают `mise run lint` (swift-format и SwiftLint):
+
+| Хук | Когда | Что делает |
+|---|---|---|
+| `pre-commit` | перед каждым коммитом | если среди файлов коммита есть `.swift` или настройки линтеров, гоняет линтер; при ошибке коммит не создаётся |
+| `pre-push` | перед каждым пушем | гоняет линтер всегда; при ошибке ничего не уходит на GitHub. Ловит коммиты, сделанные с `--no-verify` |
+
+Включаются одной командой (она же входит в `mise run generate`):
+
+```bash
+mise run setup:hooks     # = git config core.hooksPath .githooks
+```
+
+Если линтер упал: `mise run format` чинит форматирование сам, остальное, что написал SwiftLint, правится руками, потом `git add` и снова коммит. Пропустить проверку один раз можно через `git commit --no-verify` или `git push --no-verify`, но CI всё равно её сделает.
+
+Линтер проверяет файлы на диске, а не только застейдженные части, поэтому перед пушем незаконченную работу лучше закоммитить или убрать в `git stash`.
+
 ## Перед пушем
 
-Pre-commit хук запускает `mise run lint`. Перед PR полезно прогнать `mise run test` и, если трогал сервер, `mise run backend:test`.
+Линтер запустят хуки. Перед PR полезно прогнать `mise run test` и, если трогал сервер, `mise run backend:test`.

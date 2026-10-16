@@ -72,7 +72,7 @@ You need a Mac with Xcode 26 (iOS 18+ SDK) and [mise](https://mise.jdx.dev).
 ```bash
 git clone https://github.com/disavle/buzz.git
 cd buzz
-mise run generate    # installs tuist, ruby, gems, git hook and generates Buzz.xcworkspace
+mise run generate    # installs tuist, ruby, gems, git hooks and generates Buzz.xcworkspace
 mise run open        # opens the workspace in Xcode
 ```
 
@@ -84,7 +84,7 @@ Other tasks (`mise tasks` lists all of them):
 |---|---|
 | `mise run ios` | builds the app and runs it in the simulator |
 | `mise run test` | all iOS unit tests via fastlane |
-| `mise run lint` | swift-format and SwiftLint |
+| `mise run lint` | swift-format and SwiftLint (git hooks run it before every commit and push) |
 | `mise run backend:run` | starts the Vapor server on `http://localhost:8080` |
 | `mise run backend:test` | backend tests |
 | `mise run graph` | draws the module graph |

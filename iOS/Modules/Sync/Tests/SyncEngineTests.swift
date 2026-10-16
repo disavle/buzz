@@ -14,6 +14,7 @@ private struct Fixture {
     let api = MockAPIClient()
     let tokens = InMemoryTokenStore(token: "mock-token")
     let changes = Broadcaster<Void>()
+    let localEdits = Broadcaster<Void>()
     let repo: SwiftDataEntryRepository
     let store: SyncStore
     let engine: SyncEngine
@@ -22,7 +23,7 @@ private struct Fixture {
         let container = try PersistenceContainer.make(inMemory: true)
         // A separate UserDefaults suite, so tests do not share lastSyncedAt.
         let defaults = UserDefaults(suiteName: UUID().uuidString)!
-        repo = SwiftDataEntryRepository(modelContainer: container, broadcaster: changes)
+        repo = SwiftDataEntryRepository(modelContainer: container, broadcaster: changes, localEdits: localEdits)
         store = SyncStore(modelContainer: container, changes: changes, defaults: defaults)
         engine = SyncEngine(store: store, api: api, tokens: tokens)
     }
@@ -95,4 +96,39 @@ func offlineKeepsPending() async throws {
     await engine.syncNow()
 
     #expect(await engine.pendingCount() == 1)
+}
+
+private actor Counter {
+    private(set) var value = 0
+    func increment() { value += 1 }
+}
+
+@Test("A sync pass is not a local edit, so it does not start the next pass")
+func syncDoesNotRetriggerItself() async throws {
+    let f = try Fixture()
+    let edits = Counter()
+    let stream = f.localEdits.stream()
+    let listener = Task { for await _ in stream { await edits.increment() } }
+
+    try await f.repo.add(.make(drink: SeedCatalog.redBull, volumeMl: 250, consumedAt: .now))
+    await f.engine.syncNow()  // marks the entry synced and pulls: both change data
+    try await Task.sleep(for: .milliseconds(100))
+    listener.cancel()
+
+    #expect(await edits.value == 1)  // only the user's add, nothing from the sync itself
+}
+
+@Test("An empty /sync answer does not tell the screens to reload")
+func emptyPullIsQuiet() async throws {
+    let f = try Fixture()
+    await f.engine.syncNow()  // first pass: catalog may arrive
+
+    let reloads = Counter()
+    let stream = f.changes.stream()
+    let listener = Task { for await _ in stream { await reloads.increment() } }
+    await f.engine.syncNow()  // nothing new on the server
+    try await Task.sleep(for: .milliseconds(100))
+    listener.cancel()
+
+    #expect(await reloads.value == 0)
 }
