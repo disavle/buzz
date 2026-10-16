@@ -53,7 +53,8 @@ final class AppDependencies {
         if environment["BUZZ_MOCK_API"] == "1" {
             api = MockAPIClient()
         } else {
-            let address = environment["BUZZ_API_URL"]
+            let address =
+                environment["BUZZ_API_URL"]
                 ?? infoPlist["BuzzAPIURL"] as? String
                 ?? "http://localhost:8080"
             let baseURL = URL(string: address)!

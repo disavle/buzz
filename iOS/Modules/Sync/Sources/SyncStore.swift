@@ -96,7 +96,20 @@ public actor SyncStore: ModelActor {
     public func apply(_ delta: SyncDTO) throws {
         // Usually /sync returns nothing new. Then we stay quiet: no save, no "reload the screens".
         guard !delta.drinks.isEmpty || !delta.entries.isEmpty else { return }
-        for remote in delta.drinks {
+        // Drinks first: entries below look up their drink in the local catalog.
+        try applyDrinks(delta.drinks)
+        try applyEntries(delta.entries, serverTime: delta.serverTime)
+        guard modelContext.hasChanges else { return }  // everything was older or still pending
+        try modelContext.save()
+        changes.yield()
+    }
+
+    // `apply` is split into two helpers to keep each function short and easy to read
+    // (SwiftLint's cyclomatic_complexity rule fails the build when one function has too many branches).
+    // The helpers only change the context; `apply` saves once at the end.
+
+    private func applyDrinks(_ remoteDrinks: [DrinkDTO]) throws {
+        for remote in remoteDrinks {
             let id = remote.id
             let descriptor = FetchDescriptor<DrinkModel>(predicate: #Predicate { $0.id == id })
             if let local = try modelContext.fetch(descriptor).first {
@@ -107,10 +120,12 @@ public actor SyncStore: ModelActor {
                 modelContext.insert(DrinkModel(Drink(remote), syncState: .synced))
             }
         }
+    }
 
+    private func applyEntries(_ remoteEntries: [EntryDTO], serverTime: Date) throws {
         let drinks = try modelContext.fetch(FetchDescriptor<DrinkModel>()).map(\.asDomain)
-        for remote in delta.entries {
-            let remoteUpdatedAt = remote.updatedAt ?? delta.serverTime
+        for remote in remoteEntries {
+            let remoteUpdatedAt = remote.updatedAt ?? serverTime
             if let local = try entry(remote.id) {
                 guard local.syncState == .synced else { continue }  // pending wins, see the rule above
                 guard remoteUpdatedAt > local.updatedAt else { continue }  // conflict: newer updatedAt wins
@@ -133,9 +148,6 @@ public actor SyncStore: ModelActor {
                 )
             }
         }
-        guard modelContext.hasChanges else { return }  // everything was older or still pending
-        try modelContext.save()
-        changes.yield()
     }
 
     private func entry(_ id: UUID) throws -> EntryModel? {
