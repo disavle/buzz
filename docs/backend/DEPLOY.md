@@ -41,7 +41,7 @@
 4. **Render.** Зарегистрируйся на render.com через GitHub. New → Web Service → Existing Image, адрес `ghcr.io/disavle/buzz-backend:latest`, тариф Free. В Environment добавь `DATABASE_URL` со строкой из Neon.
 5. **Deploy Hook.** В Render: сервис → Settings → Deploy Hook, скопируй URL. В GitHub: репозиторий → Settings → Secrets and variables → Actions → New repository secret, имя `RENDER_DEPLOY_HOOK`.
 
-После этого каждый пуш в `main`, который меняет бэкенд, сам доезжает до Render.
+После этого каждый пуш в `main`, который меняет код сервера (`Backend/Sources`, `Backend/Package.*`, `Backend/Dockerfile`) или `Shared/`, сам доезжает до Render. Изменения в тестах, документации и iOS деплой не запускают. Если нужно задеплоить без изменений кода, запусти CI вручную, как в шаге 2.
 
 **Проверка:** открой `https://<имя-сервиса>.onrender.com/health`, должно вернуться `ok`. Первый раз ответ придёт примерно через минуту.
 
