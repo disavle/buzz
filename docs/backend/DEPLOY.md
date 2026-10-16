@@ -64,4 +64,4 @@ docker run --rm -p 8080:8080 -e DATABASE_URL="..." buzz-backend   # с базо�
 
 ## Подключить приложение к Render
 
-Чтобы iPhone ходил на задеплоенный сервер, добавь `TUIST_API_URL = "https://<имя-сервиса>.onrender.com"` в `mise.local.toml` и выполни `mise run generate`. Подробности в [docs/infra/SETUP.md](../infra/SETUP.md), шаг 6.
+Адрес `https://buzz-backend-latest.onrender.com` уже зашит в сборки для iPhone и TestFlight (`renderServer` в `iOS/Project.swift`), симулятор по умолчанию ходит на `localhost`. Если имя сервиса на Render поменяется, поправь `renderServer` и выполни `mise run generate`. Как переопределить адрес, см. [docs/infra/SETUP.md](../infra/SETUP.md), шаг 6.

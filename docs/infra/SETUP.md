@@ -57,13 +57,15 @@
    ```
    Затем снова выполни `mise run generate`.
 
-   **Сервер для iPhone.** На телефоне `localhost` означает сам телефон, поэтому укажи адрес бэкенда на Render в том же `mise.local.toml` и снова выполни `mise run generate`:
+   **Какой сервер.** Ничего настраивать не нужно: сборка на iPhone (и в TestFlight) ходит на `https://buzz-backend-latest.onrender.com`, а симулятор на локальный `http://localhost:8080`. Адрес зашивается в `Info.plist` (ключ `BuzzAPIURL`) из build setting `BUZZ_SERVER_URL` в `iOS/Project.swift`, поэтому приложение находит сервер и при запуске с иконки, не только из Xcode. Разные значения для телефона и симулятора задаёт условная настройка Xcode `BUZZ_SERVER_URL[sdk=iphonesimulator*]`.
+
+   Чтобы все сборки ходили на один сервер (например, симулятор на Render или телефон на Mac в локальной сети), добавь в `mise.local.toml` строку и снова выполни `mise run generate`:
    ```toml
    [env]
    TUIST_TEAM_ID = "ABCDE12345"
-   TUIST_API_URL = "https://<имя-сервиса>.onrender.com"
+   TUIST_API_URL = "https://buzz-backend-latest.onrender.com"
    ```
-   Адрес зашивается в `Info.plist` (ключ `BuzzAPIURL`), так что приложение ходит на Render и при запуске с иконки, не только из Xcode. Симулятор с этой настройкой тоже пойдёт на Render; чтобы вернуться к локальному серверу, убери строку и снова сгенерируй проект. Для разового переопределения есть переменная схемы `BUZZ_API_URL` (Edit Scheme → Run → Environment Variables), она важнее значения из `Info.plist`.
+   Для разового переопределения есть переменная схемы `BUZZ_API_URL` (Edit Scheme → Run → Environment Variables), она важнее значения из `Info.plist`.
 
    Бесплатный Render засыпает после 15 минут без запросов, первый запрос после этого может идти около минуты. Если вход упал с ошибкой соединения, подожди и попробуй ещё раз.
 
@@ -97,5 +99,4 @@
 
 ## Пока не настроено совсем
 
-- **Бэкенд в интернете.** Сервер живёт только локально. Когда понадобится: Postgres вместо SQLite, Dockerfile и деплой (Fly.io или VPS). Это отдельная задача.
-- **Адрес сервера для TestFlight-сборки.** Локально он задаётся через `TUIST_API_URL` (шаг 6). Для сборки в CI нужно передать ту же переменную в job `TestFlight` в `.github/workflows/ci.yml`, иначе в сборку попадёт `http://localhost:8080`.
+- **Отдельный сервер для TestFlight.** Пока TestFlight-сборка ходит на тот же сервер на Render, что и сборка на телефон (шаг 6). Если понадобится отдельный staging, передай `TUIST_API_URL` в job `TestFlight` в `.github/workflows/ci.yml`.

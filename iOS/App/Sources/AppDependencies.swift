@@ -47,8 +47,9 @@ final class AppDependencies {
         // (Xcode: Edit Scheme > Run > Arguments > Environment Variables).
         // Server address, first match wins:
         // 1. BUZZ_API_URL from the scheme: a quick override, only when run from Xcode;
-        // 2. BuzzAPIURL from Info.plist: set at generate time from TUIST_API_URL (see Project.swift);
-        // 3. localhost, for the simulator and `mise run backend:run`.
+        // 2. BuzzAPIURL from Info.plist: baked in at build time (see BUZZ_SERVER_URL in Project.swift):
+        //    Render on a real iPhone, localhost in the simulator, or TUIST_API_URL if it is set;
+        // 3. localhost, a last resort if Info.plist has no address (it always has one in the app).
         tokens = KeychainTokenStore()
         if environment["BUZZ_MOCK_API"] == "1" {
             api = MockAPIClient()

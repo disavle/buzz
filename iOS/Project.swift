@@ -28,6 +28,10 @@ let modules = [domain, persistence, networking, designSystem, sync, today, addEn
 
 // MARK: - App
 
+// Server addresses. See BUZZ_SERVER_URL in the app settings below for which one a build gets.
+let renderServer = "https://buzz-backend-latest.onrender.com"  // Render, docs/backend/DEPLOY.md
+let localServer = "http://localhost:8080"  // `mise run backend:run` on this Mac
+
 let app: Target = .target(
     name: "Buzz",
     destinations: Buzz.destinations,
@@ -39,8 +43,9 @@ let app: Target = .target(
         "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
         // Server address baked into the build, so the app finds the server even when launched
         // from the home screen (scheme environment variables work only when run from Xcode).
-        // Set TUIST_API_URL in mise.local.toml, e.g. "https://buzz.onrender.com", then `mise run generate`.
-        "BuzzAPIURL": .string(Environment.apiUrl.getString(default: "http://localhost:8080")),
+        // The value comes from the BUZZ_SERVER_URL build setting below: Xcode replaces $(...)
+        // with the setting's value when it copies Info.plist into the app.
+        "BuzzAPIURL": "$(BUZZ_SERVER_URL)",
         "UILaunchScreen": [:],
         // Without this iOS will not show the "Language" row in the app's system settings.
         "CFBundleLocalizations": ["en", "ru"],
@@ -71,6 +76,14 @@ let app: Target = .target(
         // Team ID comes from the TUIST_TEAM_ID variable (locally from mise.local.toml, in CI from a secret).
         "DEVELOPMENT_TEAM": .string(Environment.teamId.getString(default: "")),
         "CODE_SIGN_STYLE": "Automatic",
+        // Which server the app talks to (read from Info.plist by AppDependencies).
+        // A real iPhone, and every TestFlight build, uses the server deployed on Render.
+        "BUZZ_SERVER_URL": .string(Environment.apiUrl.getString(default: renderServer)),
+        // The simulator uses the local server from `mise run backend:run` (or `buzz-dev`).
+        // `[sdk=iphonesimulator*]` is an Xcode "conditional build setting": this value wins
+        // only when building for the simulator.
+        "BUZZ_SERVER_URL[sdk=iphonesimulator*]": .string(Environment.apiUrl.getString(default: localServer)),
+        // To point both at one server, set TUIST_API_URL in mise.local.toml and run `mise run generate`.
     ])
 )
 

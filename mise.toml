@@ -18,7 +18,7 @@ swiftlint = "0.65.1"
 [env]
 # Put secrets and your Team ID in mise.local.toml (it is in .gitignore), for example:
 # TUIST_TEAM_ID = "ABCDE12345"
-# TUIST_API_URL = "https://buzz.onrender.com"   # server the app talks to; default http://localhost:8080
+# TUIST_API_URL = "http://192.168.1.10:8080"   # one server for every build; default: Render on iPhone, localhost in simulator
 
 [settings]
 # `mise run` installs missing tools from [tools] by itself
