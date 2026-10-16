@@ -1,0 +1,36 @@
+#!/bin/sh
+# Shared helper for the pre-commit and pre-push hooks (git ignores this file name by itself).
+# Runs `mise run lint` and, if it fails, explains what to do. A non-zero exit code
+# from a hook makes git stop the commit or the push.
+#
+# Usage: .githooks/run-lint commit|push   (the word is only used in the messages)
+
+action="$1"
+
+# Git clients with a GUI (Xcode, Fork, Tower) start hooks with a short PATH,
+# so add the usual places where mise lives on a Mac.
+PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+# Run from the repository root, where mise.toml is.
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+if ! command -v mise >/dev/null 2>&1; then
+  echo "✋ mise is not installed, so the linters cannot run. Install it: https://mise.jdx.dev" >&2
+  echo "   (To skip the check once: git $action --no-verify)" >&2
+  exit 1
+fi
+
+echo "🔍 Running linters before $action (mise run lint)..."
+if mise run lint; then
+  exit 0
+fi
+
+cat >&2 <<MSG
+
+✋ Linters failed, so the $action was stopped.
+   1. Fix formatting automatically:  mise run format
+   2. Fix what SwiftLint reported above by hand.
+   3. git add the files and try again.
+   To skip the check once (CI will still catch it): git $action --no-verify
+MSG
+exit 1

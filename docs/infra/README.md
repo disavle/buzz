@@ -121,7 +121,7 @@ mise run generate
 Она по цепочке:
 1. ставит tuist, ruby и swiftlint нужных версий (настройка `task_run_auto_install`);
 2. ставит гемы fastlane в `iOS/vendor/bundle` (задача `setup:gems`);
-3. вешает git pre-commit хук, который запускает `mise run lint` (задача `setup:hooks`, встроенный `mise generate git-pre-commit`);
+3. включает git-хуки из папки `.githooks/`: `pre-commit` и `pre-push` запускают `mise run lint` и останавливают коммит или пуш, если линтер нашёл ошибку (задача `setup:hooks`, это одна команда `git config core.hooksPath .githooks`);
 4. делает `tuist install` (SPM-зависимости, у нас `Shared`) и `tuist generate`.
 
 Почему `mise run generate`, а не `mise generate`: у mise есть своя встроенная команда `generate`, и она перехватит вызов. Сокращённо можно писать `mise r generate`.
@@ -153,7 +153,7 @@ mise run generate
 Уже лежит в скелете:
 - **swift-format** ([.swift-format](../../.swift-format)) вместо SwiftFormat. Это официальный форматтер Apple, с Xcode 16 он входит в тулчейн (`xcrun swift-format`) и не требует установки.
 - **SwiftLint** ([.swiftlint.yml](../../.swiftlint.yml)) только для смысловых правил, форматирование отдано swift-format.
-- **pre-commit хук** через mise, без husky, lefthook и прочих лишних инструментов.
+- **git-хуки** `pre-commit` и `pre-push` лежат в репозитории в [.githooks/](../../.githooks) и запускают `mise run lint`, без husky, lefthook и прочих лишних инструментов. Коммит, где нет Swift-файлов, проверку пропускает. Подробнее в [CONTRIBUTING.md](../../CONTRIBUTING.md#git-хуки).
 - **Renovate** ([renovate.json](../../renovate.json)) раз в неделю открывает PR с обновлениями `mise.toml`, гемов, GitHub Actions и SPM-пакетов. Мелкие обновления инструментов вливаются сами при зелёном CI. Dependabot так не умеет, потому что не понимает `mise.toml`. Подключается как GitHub App.
 - **Проверка границ модулей в CI** через `tuist inspect implicit-imports`.
 

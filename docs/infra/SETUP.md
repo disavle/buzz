@@ -27,10 +27,10 @@
    echo 'eval "$(mise activate zsh)"' >> ~/.zshrc && exec zsh
    git clone https://github.com/disavle/buzz && cd buzz
    mise trust
-   mise run generate     # инструменты, гемы, pre-commit хук, Buzz.xcworkspace
+   mise run generate     # инструменты, гемы, git-хуки, Buzz.xcworkspace
    mise run open
    ```
-   Нужен Xcode 26 из App Store. Pre-commit хук ставится той же командой `mise run generate`.
+   Нужен Xcode 26 из App Store. Git-хуки с линтером перед коммитом и пушем включаются той же командой `mise run generate` (подробнее в [CONTRIBUTING.md](../../CONTRIBUTING.md#git-хуки)).
 
    **Алиасы для zsh.** Добавь в `~/.zshrc` одну строку (путь замени на свой) и открой новую вкладку терминала:
    ```bash

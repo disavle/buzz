@@ -72,7 +72,7 @@ buzz/
 ```bash
 git clone https://github.com/disavle/buzz.git
 cd buzz
-mise run generate    # ставит tuist, ruby, гемы, git-хук и генерирует Buzz.xcworkspace
+mise run generate    # ставит tuist, ruby, гемы, git-хуки и генерирует Buzz.xcworkspace
 mise run open        # открывает проект в Xcode
 ```
 
@@ -84,7 +84,7 @@ mise run open        # открывает проект в Xcode
 |---|---|
 | `mise run ios` | собирает приложение и запускает в симуляторе |
 | `mise run test` | все юнит-тесты iOS через fastlane |
-| `mise run lint` | swift-format и SwiftLint |
+| `mise run lint` | swift-format и SwiftLint (git-хуки запускают его перед каждым коммитом и пушем) |
 | `mise run backend:run` | запускает Vapor на `http://localhost:8080` |
 | `mise run backend:test` | тесты бэкенда |
 | `mise run graph` | рисует граф модулей |

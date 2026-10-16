@@ -3,7 +3,7 @@
 # After cloning you need only one command:
 #     mise run generate
 # It installs the right tool versions, Ruby gems, SPM dependencies,
-# a git hook, and then generates Buzz.xcworkspace.
+# git hooks (linters before commit and push), and then generates Buzz.xcworkspace.
 #
 # Use `mise run generate`, not `mise generate`: `generate` is a built-in mise command.
 # Versions are pinned; Renovate opens a PR when a new one comes out.
@@ -27,7 +27,7 @@ task.run_auto_install = true
 # ---------- Main command ----------
 
 [tasks.generate]
-description = "Everything after clone: gems, dependencies, git hook, Xcode project"
+description = "Everything after clone: gems, dependencies, git hooks, Xcode project"
 depends = ["setup:gems", "setup:hooks"]
 dir = "iOS"
 run = [
@@ -44,8 +44,10 @@ run = [
 ]
 
 [tasks."setup:hooks"]
-description = "git pre-commit hook: runs mise run lint before each commit"
-run = "mise generate git-pre-commit --write --task=lint"
+description = "git hooks from .githooks/: run the linters before each commit and push"
+# core.hooksPath tells git to take hooks from .githooks/ (it is in the repo) instead of .git/hooks/
+# (not in the repo). So the hooks are reviewed like code and update with every `git pull`.
+run = "git config core.hooksPath .githooks"
 
 # ---------- Everyday tasks ----------
 
