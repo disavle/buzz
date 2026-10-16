@@ -22,6 +22,7 @@ jobs:
     outputs:
       ios: ${{ steps.filter.outputs.ios }}
       backend: ${{ steps.filter.outputs.backend }}
+      deploy: ${{ steps.filter.outputs.deploy }}
     steps:
       - uses: actions/checkout@v5
       - uses: dorny/paths-filter@v3
@@ -40,6 +41,14 @@ jobs:
               - 'Backend/**'
               - 'Shared/**'
               - '.github/workflows/ci.yml'
+            # Only what ends up in the server image. Tests, docs and the workflow itself do not deploy;
+            # after changing the workflow, run it by hand if a new image is needed.
+            deploy:
+              - 'Backend/Sources/**'
+              - 'Backend/Package.*'
+              - 'Backend/Dockerfile'
+              - 'Shared/**'
+              - '.dockerignore'
 
   ios:
     name: iOS
@@ -81,11 +90,12 @@ jobs:
   deploy:
     name: Deploy backend
     needs: [changes, backend]
-    # Runs on a push to main that touches the backend, or by hand: Actions → CI → Run workflow (branch main).
+    # Runs on a push to main that changes the server code or Shared (see the `deploy` filter above),
+    # or by hand: Actions → CI → Run workflow (branch main).
     if: >-
       github.ref == 'refs/heads/main' &&
       (github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && needs.changes.outputs.backend == 'true'))
+      (github.event_name == 'push' && needs.changes.outputs.deploy == 'true'))
     runs-on: ubuntu-latest
     permissions:
       contents: read
