@@ -37,6 +37,10 @@ let app: Target = .target(
     infoPlist: .extendingDefault(with: [
         "CFBundleShortVersionString": "$(MARKETING_VERSION)",
         "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
+        // Server address baked into the build, so the app finds the server even when launched
+        // from the home screen (scheme environment variables work only when run from Xcode).
+        // Set TUIST_API_URL in mise.local.toml, e.g. "https://buzz.onrender.com", then `mise run generate`.
+        "BuzzAPIURL": .string(Environment.apiUrl.getString(default: "http://localhost:8080")),
         "UILaunchScreen": [:],
         // Without this iOS will not show the "Language" row in the app's system settings.
         "CFBundleLocalizations": ["en", "ru"],
