@@ -60,6 +60,9 @@ public actor SyncEngine: SyncService {
 
     /// Start the automatic triggers: local changes (with a small delay to merge
     /// a series of actions) and the network coming back.
+    ///
+    /// - Parameter changes: edits made by the user only. Not data from the server:
+    ///   a pass that reacts to its own results never stops.
     public func start(changes: AsyncStream<Void>, network: NetworkMonitor) {
         guard triggerTasks.isEmpty else { return }
 

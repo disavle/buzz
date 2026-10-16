@@ -94,11 +94,15 @@ public actor SyncStore: ModelActor {
 
     /// The main rule: never overwrite something that is still pending on this device.
     public func apply(_ delta: SyncDTO) throws {
+        // Usually /sync returns nothing new. Then we stay quiet: no save, no "reload the screens".
+        guard !delta.drinks.isEmpty || !delta.entries.isEmpty else { return }
         for remote in delta.drinks {
             let id = remote.id
             let descriptor = FetchDescriptor<DrinkModel>(predicate: #Predicate { $0.id == id })
             if let local = try modelContext.fetch(descriptor).first {
-                if local.syncState == .synced { local.update(from: Drink(remote)) }
+                // Write only real differences: assigning the same values still marks the row as changed.
+                let drink = Drink(remote)
+                if local.syncState == .synced, local.asDomain != drink { local.update(from: drink) }
             } else {
                 modelContext.insert(DrinkModel(Drink(remote), syncState: .synced))
             }
@@ -129,6 +133,7 @@ public actor SyncStore: ModelActor {
                 )
             }
         }
+        guard modelContext.hasChanges else { return }  // everything was older or still pending
         try modelContext.save()
         changes.yield()
     }
