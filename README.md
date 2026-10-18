@@ -102,7 +102,7 @@ The documentation is in Russian (my native language):
 - [Backend](docs/backend/README.md), [API](docs/backend/API.md), [step by step](docs/backend/STEPS.md), [free deploy: Render + Neon](docs/backend/DEPLOY.md)
 - [Infrastructure: Tuist, mise, CI](docs/infra/README.md), [hands-on](docs/infra/HANDS-ON.md)
 - [Design tokens](docs/design/README.md) and [all screens](docs/design/screens/) (light, dark, English); source of the design canvas in [docs/design/canvas](docs/design/canvas/)
-- [Handbook of new technologies with a 40-day course](docs/learning/handbook.md)
+- [Course: build a new feature in Buzz by hand](docs/learning/course.md) and [handbook of new technologies](docs/learning/handbook.md)
 
 The docs are a snapshot from the day the repository was created. Some code samples in them were written before the real code and may differ from it: the code is the source of truth.
 
