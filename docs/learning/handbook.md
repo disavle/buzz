@@ -1,174 +1,94 @@
-# Конспект нового стека: сделай сам
+# Справочник нового стека
 
-Карточки по всему новому, что уже есть в проекте Buzz: инструменты, фреймворки и подходы. Конспект пополняется сам, когда в ветках проекта появляется новый инструмент, подход или код. Можно и вручную: напиши «обнови конспект» в ветке «Конспект нового стека». В конце файла журнал изменений.
+Справочник по всему новому, что есть в проекте Buzz: инструменты, фреймворки и подходы. Здесь только теория: что это, зачем, чем заменяет привычное из UIKit, где лежит в коде Buzz и где читать подробнее. Практика — в отдельном курсе [course.md](course.md): там по блокам примерно на 30 минут ты сам пишешь новую фичу в Buzz, а каждый блок ссылается на нужные карточки отсюда.
 
-**Как читать карточку.** В каждой одно и то же:
-- **Что и зачем.** Одной-двумя фразами.
+Справочник пополняется, когда в проекте появляется новый инструмент, подход или код. Можно и вручную: напиши «обнови конспект» в ветке «Конспект нового стека». В конце файла журнал изменений.
+
+**Как читать карточку.**
+- **Что и зачем.** Суть одной-двумя фразами.
 - **Было → стало.** Что это заменяет из UIKit-стека.
-- **Руками.** Короткая инструкция: шаги в пустой песочнице и минимальный пример на игрушечном коде (счётчик, `Item`), чтобы понять инструмент отдельно от Buzz.
-- **Разобрать в Buzz.** Что посмотреть и попробовать поправить в коде Buzz. Код пишут ветки проекта, а ты потом изучаешь и правишь его сам; эта строка подсказывает, на что смотреть.
-- **Код в Buzz**: файлы и строки, где это используется. Ссылки ведут в репозиторий [disavle/buzz](https://github.com/disavle/buzz), ветка `main`; клонировать: `git clone https://github.com/disavle/buzz.git`.
-- **Описание** и **документация**: документ проекта в `docs/` и официальная документация.
-
-Отмечай `[x]`, когда прошёл карточку руками и разобрал это место в коде Buzz.
+- **Ключевые идеи, подвохи** — там, где они есть.
+- **Документация.** Официальная документация Apple, Swift, Vapor и других.
+- **Код в Buzz.** Файлы и строки, где это используется. Ссылки ведут в репозиторий [disavle/buzz](https://github.com/disavle/buzz), ветка `main`.
+- **Описание.** Документ проекта в `docs/`.
 
 ---
 
-## Курс: 40 будних дней, одна новая фича
-
-Справочник можно читать как wiki, а можно проходить как курс: 8 недель по будням, 30–60 минут в день, с открытым Buzz в Xcode. Каждый день — маленькое задание в одной-двух карточках, раздел **Уроки курса**. Код не удаляешь и не переписываешь по памяти: каждый день дописываешь в Buzz кусочек новой фичи. К концу курса она готова целиком и проходит через все технологии из справочника.
-
-**Фича «Самочувствие».** Вечерняя отметка: настроение от 1 до 5, сколько часов спал, короткая заметка. Отдельная вкладка со списком отметок, формой, поиском по заметкам и графиком «настроение против кофеина». Отметки хранятся в SwiftData, синхронизируются с сервером на Vapor и работают офлайн. Новый модуль `WellbeingFeature`, новая таблица в базе, новые эндпоинты `/checkins`.
-
-**Как проходить день.**
-1. Прочитай карточку дня (5–10 минут). Если тема новая, сначала сделай шаг «Руками» в песочнице.
-2. Сделай задание дня в ветке `learn/wellbeing`. В задании указано, где подсмотреть похожий код в Buzz: смотреть можно, копировать нельзя.
-3. Проверь пункт «Готово, когда». Сделай коммит и запиши в журнал три строки: что сделал, что сломалось, что понял. Журнал — `docs/learning/journal.md` или страница в Notion; потом это готовый материал для резюме.
-
-**Правила.**
-- Пишешь сам, без Copilot и без Claude. Можно документацию Apple и Vapor, WWDC и этот справочник. Claude зови после, чтобы сравнить решение или разобрать ошибку.
-- Застрял на 25 минут — запиши вопрос в журнал и закончи день. Завтра со свежей головой будет проще.
-- Пропустил день или неделю — продолжай с того же места, догонять не надо. Курс без дат.
-- Заканчивай день на понятном следующем шаге, тогда завтра легко начать.
-
-**Неделя 1. Модуль и первый экран**
-
-- [ ] День 1. Ветка и пустой модуль (H1, H2, H7)
-- [ ] День 2. Модель в Domain (E5, H1)
-- [ ] День 3. Первая вьюха и превью (B1, B11)
-- [ ] День 4. ViewModel на @Observable (B2, E1)
-- [ ] День 5. Список с секциями (B4)
-
-**Неделя 2. Интерфейс**
-
-- [ ] День 6. Форма: поток данных (B3)
-- [ ] День 7. Поля ввода и фокус (B7)
-- [ ] День 8. Навигация (B8)
-- [ ] День 9. Новая вкладка через координатор (E2, B12)
-- [ ] День 10. Цвет, анимация, хаптик (B9, B13)
-
-**Неделя 3. Данные**
-
-- [ ] День 11. Модель SwiftData (C2)
-- [ ] День 12. Репозиторий в фоне (C3, A3)
-- [ ] День 13. Миграция схемы (C2)
-- [ ] День 14. Макросы изнутри (A7)
-- [ ] День 15. Настройки в @AppStorage (C6)
-
-**Неделя 4. Конкурентность и реактивность**
-
-- [ ] День 16. async/await и отмена (A1)
-- [ ] День 17. Параллельная загрузка (A2)
-- [ ] День 18. Живые обновления (A4)
-- [ ] День 19. Поиск: Combine и .task(id:) (A8, B5)
-- [ ] День 20. Старый API и typed throws (A5, A6)
-
-**Неделя 5. Архитектура, строки, тесты**
-
-- [ ] День 21. Use case по Clean (E3)
-- [ ] День 22. Мини-Redux для настроек (E4)
-- [ ] День 23. Строки и плюрализация (D1, D2)
-- [ ] День 24. Форматы (D3)
-- [ ] День 25. Тесты на Swift Testing (F1)
-
-**Неделя 6. График и сервер**
-
-- [ ] День 26. График настроения и кофеина (B10)
-- [ ] День 27. Готовые модификаторы (B6)
-- [ ] День 28. Первый эндпоинт (G2, G1)
-- [ ] День 29. Таблица в базе (G3)
-- [ ] День 30. Общий DTO (G6)
-
-**Неделя 7. Качество сервера и сеть**
-
-- [ ] День 31. Авторизация и коды ошибок (G4, G5)
-- [ ] День 32. Тесты сервера (G7)
-- [ ] День 33. Клиент к API (C1)
-- [ ] День 34. Фейковый сервер (C7)
-- [ ] День 35. Офлайн-синхронизация (C4)
-
-**Неделя 8. Синхронизация, инфраструктура, выпуск**
-
-- [ ] День 36. Сеть пропала и вернулась (C5)
-- [ ] День 37. Postgres локально (G8)
-- [ ] День 38. Линт и CI (H5, H4)
-- [ ] День 39. Деплой (G9, H6)
-- [ ] День 40. Выпуск и итоги (H7, H3, H8, H9)
-
----
-
-## Оглавление и прогресс
+## Оглавление
 
 **A. Язык и конкурентность**
-- [ ] A1. async/await и Task
-- [ ] A2. Structured concurrency: async let и группы задач
-- [ ] A3. actor, @MainActor, Sendable и Swift 6
-- [ ] A4. AsyncStream и AsyncSequence
-- [ ] A5. Мост со старым кодом: continuation
-- [ ] A6. Typed throws
-- [ ] A7. Макросы
-- [ ] A8. Combine: Subject, операторы, AnyCancellable
+- A1. async/await и Task
+- A2. Structured concurrency: async let и группы задач
+- A3. actor, @MainActor, Sendable и Swift 6
+- A4. AsyncStream и AsyncSequence
+- A5. Мост со старым кодом: continuation
+- A6. Typed throws
+- A7. Макросы
+- A8. Combine: Subject, операторы, AnyCancellable
+- A9. Mutex и Synchronization: защита данных без актора
 
 **B. Интерфейс на SwiftUI**
-- [ ] B1. Мышление SwiftUI: UI как функция от состояния
-- [ ] B2. Observation (@Observable)
-- [ ] B3. Поток данных: @State, @Binding, @Bindable, @Environment, @Entry
-- [ ] B4. Списки и сетки вместо Diffable + CompositionalLayout
-- [ ] B5. Жизненный цикл: .task, .task(id:), debounce без Combine
-- [ ] B6. Готовые модификаторы: searchable, refreshable, ContentUnavailableView
-- [ ] B7. Формы и ввод: Form, TextField(value:format:), @FocusState
-- [ ] B8. Навигация: NavigationStack, TabView, sheet
-- [ ] B9. Анимации, переходы и хаптики
-- [ ] B10. Swift Charts
-- [ ] B11. #Preview
-- [ ] B12. SwiftUI внутри UIKit и наоборот
-- [ ] B13. Дизайн-токены, системные цвета, tint
+- B1. Мышление SwiftUI: UI как функция от состояния
+- B2. Observation (@Observable)
+- B3. Поток данных: @State, @Binding, @Bindable, @Environment, @Entry
+- B4. Списки и сетки вместо Diffable + CompositionalLayout
+- B5. Жизненный цикл: .task, .task(id:), debounce без Combine
+- B6. Готовые модификаторы: searchable, refreshable, ContentUnavailableView
+- B7. Формы и ввод: Form, TextField(value:format:), @FocusState
+- B8. Навигация: NavigationStack, TabView, sheet
+- B9. Анимации, переходы и хаптики
+- B10. Swift Charts
+- B11. #Preview
+- B12. SwiftUI внутри UIKit и наоборот
+- B13. Дизайн-токены, системные цвета, tint
+- B14. Доступность: VoiceOver и Dynamic Type
 
 **C. Данные и сеть**
-- [ ] C1. Сетевой слой на URLSession async/await
-- [ ] C2. SwiftData
-- [ ] C3. @ModelActor: SwiftData в фоне
-- [ ] C4. Offline-first синхронизация (outbox)
-- [ ] C5. NWPathMonitor и триггеры синхронизации
-- [ ] C6. @AppStorage и Keychain
-- [ ] C7. Моки и фейковый сервер (BUZZ_MOCK_API)
+- C1. Сетевой слой на URLSession async/await
+- C2. SwiftData
+- C3. @ModelActor: SwiftData в фоне
+- C4. Offline-first синхронизация (outbox)
+- C5. NWPathMonitor и триггеры синхронизации
+- C6. @AppStorage и Keychain
+- C7. Моки и фейковый сервер (BUZZ_MOCK_API)
+- C8. Codable, JSON и деньги в Decimal
 
 **D. Локализация**
-- [ ] D1. String Catalog и плюрализация
-- [ ] D2. Строки в модулях: bundle .module и генерация символов
-- [ ] D3. FormatStyle и Measurement
+- D1. String Catalog и плюрализация
+- D2. Строки в модулях: bundle .module и генерация символов
+- D3. FormatStyle и Measurement
 
 **E. Архитектура**
-- [ ] E1. MVVM на @Observable
-- [ ] E2. Координаторы + UIHostingController (гибрид)
-- [ ] E3. Clean Architecture в одной фиче
-- [ ] E4. Самописный Redux (и потом TCA)
-- [ ] E5. Модули: фичи видят только Domain
+- E1. MVVM на @Observable
+- E2. Координаторы + UIHostingController (гибрид)
+- E3. Clean Architecture в одной фиче
+- E4. Самописный Redux (и потом TCA)
+- E5. Модули: фичи видят только Domain
 
 **F. Тесты**
-- [ ] F1. Swift Testing
+- F1. Swift Testing
 
 **G. Сервер на Swift**
-- [ ] G1. Vapor: сервер как долгоживущий процесс
-- [ ] G2. Роуты, контроллеры, Content
-- [ ] G3. Fluent: модели, миграции, запросы
-- [ ] G4. Авторизация по bearer-токену
-- [ ] G5. Ошибки кодами и свой middleware
-- [ ] G6. Общий пакет Shared с DTO
-- [ ] G7. Тесты Vapor (VaporTesting)
-- [ ] G8. Postgres в Docker и деплой
-- [ ] G9. Деплой: Docker multi-stage, GHCR, deploy hook, 12-factor
+- G1. Vapor: сервер как долгоживущий процесс
+- G2. Роуты, контроллеры, Content
+- G3. Fluent: модели, миграции, запросы
+- G4. Авторизация по bearer-токену
+- G5. Ошибки кодами и свой middleware
+- G6. Общий пакет Shared с DTO
+- G7. Тесты Vapor (VaporTesting)
+- G8. Postgres в Docker и деплой
+- G9. Деплой: Docker multi-stage, GHCR, deploy hook, 12-factor
 
 **H. Инфраструктура**
-- [ ] H1. Tuist: проект как код
-- [ ] H2. mise: версии инструментов и задачи
-- [ ] H3. fastlane, match, App Store Connect API key
-- [ ] H4. GitHub Actions
-- [ ] H5. swift-format, SwiftLint, pre-commit
-- [ ] H6. Renovate
-- [ ] H7. GitHub Flow и защита main (rulesets)
-- [ ] H8. Заведение репозитория: чек-лист
-- [ ] H9. Релизы: CHANGELOG и GitHub Release по тегу
+- H1. Tuist: проект как код
+- H2. mise: версии инструментов и задачи
+- H3. fastlane, match, App Store Connect API key
+- H4. GitHub Actions
+- H5. swift-format, SwiftLint, pre-commit
+- H6. Renovate
+- H7. GitHub Flow и защита main (rulesets)
+- H8. Заведение репозитория: чек-лист
+- H9. Релизы: CHANGELOG и GitHub Release по тегу
 
 ---
 
@@ -179,12 +99,6 @@
 **Что и зачем.** Асинхронный код пишется сверху вниз, как синхронный. `await` — точка, где функция может приостановиться и отдать поток. Отмена и ошибки работают через обычные `throws`.
 
 **Было → стало.** completion handler, `DispatchQueue.main.async`, «пирамида» колбэков → `async throws` функции, `try await`, `Task {}`.
-
-**Руками.**
-1. Напиши функцию с `async throws` и вызови её из другой `async` функции через `try await`.
-2. Из синхронного места (кнопка, `viewDidLoad`) запусти её в `Task { ... }`.
-3. Сохрани `Task` в переменную, вызови `task.cancel()` и проверь `Task.isCancelled` / `try Task.checkCancellation()` внутри.
-4. Попробуй `try await Task.sleep(for: .seconds(1))` и отмени задачу во время сна: сон бросит `CancellationError`.
 
 ```swift
 func slowNumber() async throws -> Int {
@@ -198,11 +112,6 @@ let task = Task {
 }
 task.cancel()
 ```
-
-**Разобрать в Buzz.** Метод загрузки каталога напитков `async throws`, вызываемый из ViewModel.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 16. async/await и отмена.** Загружай отметки в `.task { await model.load() }`. Добавь в `InMemoryCheckinRepository` задержку `try await Task.sleep(for: .seconds(2))` и уйди с экрана до конца загрузки. Проверь `Task.isCancelled` и не обновляй состояние после отмены. *Готово, когда:* в консоли видно, что загрузка отменилась при уходе с экрана.
 
 **Документация.** [Swift Book: Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/), [Task](https://developer.apple.com/documentation/swift/task)
 
@@ -218,23 +127,12 @@ task.cancel()
 
 **Было → стало.** `DispatchGroup` + `enter/leave/notify` → `async let` для фиксированного числа задач, `withThrowingTaskGroup` для динамического.
 
-**Руками.**
-1. Напиши две `async` функции с разными задержками.
-2. Вызови их последовательно и замерь время (`ContinuousClock().measure { }`).
-3. Перепиши на `async let a = ...; async let b = ...; let (x, y) = try await (a, b)` и сравни время.
-4. Для массива id сделай `withThrowingTaskGroup`, добавь `group.addTask` на каждый id и собери результаты циклом `for try await`.
-
 ```swift
 let total = try await withThrowingTaskGroup(of: Int.self) { group in
     for n in 1...3 { group.addTask { try await slowNumber() + n } }
     return try await group.reduce(0, +)
 }
 ```
-
-**Разобрать в Buzz.** На экране статистики загрузить `/me` и `/stats` параллельно через `async let`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 17. Параллельная загрузка.** Для карточки дня загрузи отметку и записи кофеина параллельно через `async let`. Для статистики по неделям посчитай средние значения через `withTaskGroup`, по задаче на неделю. *Готово, когда:* две загрузки по 1 секунде вместе занимают около 1 секунды, а не 2.
 
 **Документация.** [Swift Book: Concurrency → Calling Asynchronous Functions in Parallel](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/), [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup)
 
@@ -250,24 +148,12 @@ let total = try await withThrowingTaskGroup(of: Int.self) { group in
 
 **Swift 6.2 (Xcode 26).** В новых проектах включены «Default Actor Isolation = MainActor» и «Approachable Concurrency»: код по умолчанию живёт на главном акторе, а с него уходят явно через `@concurrent` или `nonisolated`.
 
-**Руками.**
-1. В Build Settings найди Swift Language Version, Default Actor Isolation, Approachable Concurrency и посмотри, что включено.
-2. Напиши `class Counter { var value = 0 }` и вызови `increment()` из 1000 задач в `TaskGroup`. Посмотри на ошибку компилятора.
-3. Замени `class` на `actor`, исправь вызовы на `await counter.increment()`.
-4. Сделай struct с `let`-полями и пометь `Sendable`; затем добавь в неё поле-класс и прочитай ошибку.
-5. Пометь свою ViewModel `@MainActor` и убедись, что `await api.load()` внутри неё не требует ручного возврата на main.
-
 ```swift
 actor Counter {
     private(set) var value = 0
     func increment() { value += 1 }
 }
 ```
-
-**Разобрать в Buzz.** `actor`-кэш картинок банок: две параллельные загрузки одного URL должны дать один сетевой запрос (храни `Task` в словаре). Потом `actor SyncEngine` (см. C4).
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 12. Репозиторий в фоне.** Задание в карточке C3, эта тема в нём тоже нужна.
 
 **Документация.** [Swift Book: Actors](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Actors), [Swift 6 migration guide](https://www.swift.org/migration/documentation/migrationguide/), [Sendable](https://developer.apple.com/documentation/swift/sendable)
 
@@ -283,22 +169,11 @@ actor Counter {
 
 **Было → стало.** `PassthroughSubject` / `NotificationCenter` / делегаты → `AsyncStream` + `for await`.
 
-**Руками.**
-1. Создай стрим через `let (stream, continuation) = AsyncStream.makeStream(of: Int.self)`.
-2. В одной задаче читай `for await x in stream { print(x) }`.
-3. В другой вызывай `continuation.yield(1)`, `yield(2)`, потом `continuation.finish()`. Убедись, что цикл завершился.
-4. Отмени читающую задачу до `finish()` и посмотри, что цикл тоже выходит.
-
 ```swift
 let (stream, cont) = AsyncStream.makeStream(of: String.self)
 Task { for await s in stream { print(s) } }
 cont.yield("привет"); cont.finish()
 ```
-
-**Разобрать в Buzz.** У репозитория записей `changes: AsyncStream<Void>`, на который подписан стор экрана «Сегодня»: добавил запись в шите — список обновился без координатора. Плюс `status: AsyncStream<SyncStatus>` у `SyncEngine`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 18. Живые обновления.** Пусть репозиторий после `save` и `delete` шлёт сигнал через `Broadcaster`, а ViewModel слушает его в `for await` и перезагружает список. Подсмотри: `Broadcaster.swift`, `EntryStore.swift`. *Готово, когда:* отметка, добавленная через диплинк, появляется в списке без ручного обновления.
 
 **Документация.** [AsyncStream](https://developer.apple.com/documentation/swift/asyncstream), [AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence)
 
@@ -314,16 +189,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** колбэк остаётся внутри, наружу торчит `async`.
 
-**Руками.**
-1. Возьми любую функцию с completion handler (или напиши свою с `DispatchQueue.asyncAfter`).
-2. Оберни: `try await withCheckedThrowingContinuation { cont in old { result in cont.resume(with: result) } }`.
-3. Специально вызови `resume` дважды и посмотри на краш в debug: checked-версия ловит эту ошибку.
-
-**Разобрать в Buzz.** Если понадобится системный API без async-версии (например, запрос разрешения), оберни его так.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 20. Старый API и typed throws.** Напиши напоминание через `UNUserNotificationCenter`. Оберни callback-метод `getPendingNotificationRequests(completionHandler:)` в `withCheckedContinuation` (даже если есть async-версия, так ты увидишь, как она устроена). Ошибки сохранения опиши как `enum CheckinError: Error` и используй `throws(CheckinError)`. *Готово, когда:* напоминание приходит в выбранное время, `catch` знает точный тип ошибки без `as?`.
-
 **Документация.** [withCheckedThrowingContinuation](https://developer.apple.com/documentation/swift/withcheckedthrowingcontinuation(isolation:function:_:))
 
 **Код в Buzz.** `withCheckedContinuation` в коде нет; похожий мост «колбэк → async» сделан через `AsyncStream` в [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:7`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L7).
@@ -335,16 +200,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Функция может объявить конкретный тип ошибки: `throws(SyncError)`. Тогда в `catch` сразу `SyncError`, без приведения типов.
 
 **Было → стало.** `throws` + `catch let e as MyError` → `throws(MyError)`.
-
-**Руками.**
-1. Объяви `enum ParseError: Error { case empty, notNumber }`.
-2. Напиши `func parse(_ s: String) throws(ParseError) -> Int`.
-3. В `do { } catch { }` проверь, что `error` уже имеет тип `ParseError` (поставь `switch error` без `default`).
-
-**Разобрать в Buzz.** Зависимость `sync` в Redux-окружении «Настроек» объявлена как `throws(SyncError)`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 20. Старый API и typed throws.** Задание в карточке A5, эта тема в нём тоже нужна.
 
 **Документация.** [SE-0413 Typed throws](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0413-typed-throws.md), [Swift Book: Error Handling](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 
@@ -359,16 +214,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** `@Observable`, `@Model`, `#Predicate`, `#Preview`, `@Test`, `#expect`, `@Entry` — всё это макросы, которые генерируют код при компиляции. Понимание того, во что они раскрываются, помогает читать ошибки.
 
 **Было → стало.** ручной бойлерплейт, кодогенерация Sourcery → макросы в языке.
-
-**Руками.**
-1. Поставь курсор на `@Observable` в своей модели → правый клик → **Expand Macro**. Посмотри на `_$observationRegistrar` и `access/withMutation`.
-2. То же для `@Model` и `#Predicate`.
-3. По желанию: File → New → Package → шаблон **Swift Macro**, напиши макрос `#URL("...")`, который проверяет строку при компиляции.
-
-**Разобрать в Buzz.** Раскрыть `@Observable` у `TodayViewModel` и `@Model` у `EntryModel`, понять, что сгенерировано. Свой макрос `#URL` для базового адреса API.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 14. Макросы изнутри.** Напиши `#Predicate<CheckinModel>` для отметок за последние 7 дней. В Xcode нажми правой кнопкой на `@Model` и `#Predicate` → Expand Macro и прочитай, какой код они генерируют. *Готово, когда:* можешь своими словами объяснить, что `@Model` добавляет к классу.
 
 **Документация.** [Swift Book: Macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/), [swift-syntax](https://github.com/swiftlang/swift-syntax)
 
@@ -390,23 +235,31 @@ cont.yield("привет"); cont.finish()
 - С `@Observable` нет `@Published`, поэтому значение в subject отправляется из `didSet` свойства `query`.
 - В Swift 6 `debounce` на `DispatchQueue.main` не доказывает компилятору главный поток, отсюда `MainActor.assumeIsolated` внутри `sink`.
 
-**Руками.**
-1. В Playground: `let subject = PassthroughSubject<String, Never>()`, `let c = subject.sink { print($0) }`, потом `subject.send("a")`. Убери `c`, отправь ещё раз и убедись, что ничего не печатается.
-2. Добавь `.debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)` и быстро отправь «c», «co», «col». Должно напечататься только «col».
-3. Вставь `.removeDuplicates()` и отправь одно и то же дважды с паузой.
-4. Напиши ViewModel с `var query = "" { didSet { subject.send(query) } }` и подпиской в `init`, которая вызывает async-метод через `Task`.
-5. Тест: шпион считает вызовы поиска, быстрый ввод даёт ровно один вызов (debounce в тесте сделай 50 мс через параметр `init`).
-
-**Разобрать в Buzz.** Сравни `CatalogViewModel` (Combine) с `AddEntryView` (`.task(id:)`): что короче, где проще отмена, как каждое тестируется. Куда ещё можно потренироваться (в Buzz не сделано): `NotificationCenter.default.publisher(for:)` для возврата из фона, `NetworkMonitor` на `CurrentValueSubject`, `Timer.publish` для снека.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 19. Поиск: Combine и .task(id:).** Добавь поиск по заметкам. Сначала через Combine: `PassthroughSubject` → `debounce` → `removeDuplicates` → `sink`, подписку держи в `AnyCancellable`. Потом в отдельном коммите перепиши на `.task(id: query)` и оставь тот вариант, который понятнее. *Готово, когда:* быстрый ввод даёт один поиск, а не по поиску на каждую букву.
-
 **Документация.** [Combine](https://developer.apple.com/documentation/combine), [Receiving and Handling Events with Combine](https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine), [debounce](https://developer.apple.com/documentation/combine/publisher/debounce(for:scheduler:options:)), [AnyCancellable](https://developer.apple.com/documentation/combine/anycancellable), [Using Combine (книга, бесплатно)](https://heckj.github.io/swiftui-notes/)
 
 **Код в Buzz.** subject [`iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift:40`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L40), `didSet` [`:28`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L28), `AnyCancellable` [`:45`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L45), цепочка с `debounce` [`:70`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L70), `sink` и `assumeIsolated` [`:75`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L75), отмена прошлого поиска [`:88`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L88); тест «быстрый ввод = один поиск» [`iOS/Modules/CatalogFeature/Tests/CatalogViewModelTests.swift:58`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Tests/CatalogViewModelTests.swift#L58). Влито в PR #10.
 
 **Описание.** комментарии в самом `CatalogViewModel.swift`, они написаны как пошаговый разбор.
+
+---
+
+## A9. Mutex и Synchronization: защита данных без актора
+
+**Что и зачем.** `Mutex<Value>` из фреймворка Synchronization (iOS 18+, Swift 6) — замок вокруг значения. Достать или поменять значение можно только внутри `withLock { ... }`, поэтому забыть про блокировку нельзя. Тип с `Mutex` внутри становится `Sendable` без `actor` и без `await`. Это нужно там, где вызов должен быть синхронным: например, `AsyncStream` вызывает `onTermination` из любого потока, и там нельзя ждать актор.
+
+**Было → стало (UIKit).** `DispatchQueue(label:)` с `sync`, `NSLock` или `os_unfair_lock` и `@unchecked Sendable` «на честном слове» → `Mutex`, который проверяет компилятор.
+
+**Когда что брать.**
+- Состояние с асинхронной логикой и несколькими шагами → `actor`.
+- Маленькое состояние, которое надо читать и менять синхронно и мгновенно → `Mutex`.
+- Значение, которое только читают после создания → `let` и `Sendable`, без замков.
+- `@unchecked Sendable` — последний вариант, с комментарием, почему это безопасно.
+
+**Документация.** [Mutex](https://developer.apple.com/documentation/synchronization/mutex), [SE-0433: Synchronous Mutual Exclusion Lock](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0433-mutex.md), [Sendable](https://developer.apple.com/documentation/swift/sendable)
+
+**Код в Buzz.** словарь подписчиков под замком [`iOS/Modules/Domain/Sources/Broadcaster.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Broadcaster.swift#L13), фейковый сервер [`iOS/Modules/Networking/Sources/MockAPIClient.swift:21`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/MockAPIClient.swift#L21), объяснение про `@unchecked` в [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L13).
+
+**Описание.** комментарии в `Broadcaster.swift`.
 
 ---
 
@@ -417,17 +270,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** View — лёгкое значение (`struct`), которое описывает, как выглядит экран при текущем состоянии. Поменял состояние — SwiftUI сам пересчитал разницу и обновил экран.
 
 **Было → стало.** `reloadData`, `apply(snapshot)`, ручное обновление лейблов → меняешь данные, `body` вызывается заново. Идентичность элементов (как item identifiers в Diffable) остаётся ключевой: `Identifiable`, `id:`.
-
-**Руками.**
-1. Новый проект: App, интерфейс SwiftUI, Swift 6.
-2. Сделай `@State private var count = 0`, `Text("\(count)")` и `Button("+1") { count += 1 }`. Обрати внимание: обновлять `Text` руками не нужно.
-3. Поменяй порядок модификаторов `.padding().background(.yellow)` и `.background(.yellow).padding()` и посмотри разницу.
-4. Сделай `ForEach` по массиву структур без `Identifiable`, получи ошибку, исправь через `id: \.self` и потом через `Identifiable`. Подумай, почему `id = UUID()` в инициализаторе модели ломает анимации (та же проблема, что в Diffable).
-
-**Разобрать в Buzz.** Пустое приложение с одним экраном «Сегодня»: статический список и число кофеина.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 3. Первая вьюха и превью.** Сделай `CheckinRow`: дата, эмодзи настроения, часы сна. Никакого состояния, только входные данные. Добавь три `#Preview`: хорошее настроение, плохое, сон 0 часов. Подсмотри: `DrinkCard` в `CatalogView.swift`. *Готово, когда:* в канвасе Xcode видно три варианта строки.
 
 **Документация.** [SwiftUI](https://developer.apple.com/documentation/swiftui), [Туториалы SwiftUI](https://developer.apple.com/tutorials/swiftui)
 
@@ -442,18 +284,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Класс, помеченный `@Observable`, сам сообщает UI, какие свойства изменились. View перерисовывается, только если прочитала изменившееся свойство.
 
 **Было → стало.** `ObservableObject` + `@Published` + `@StateObject`/`@ObservedObject` (и Combine) → `@Observable` + `@State`/обычный параметр/`@Bindable`. В iOS 26 UIKit тоже автоматически отслеживает `@Observable` в `viewWillLayoutSubviews` и `updateProperties()`.
-
-**Руками.**
-1. Напиши `@Observable final class CounterModel { var count = 0; var title = "" }`.
-2. Во View держи её как `@State private var model = CounterModel()`.
-3. Поставь `let _ = Self._printChanges()` в `body` и убедись, что изменение `title` не перерисовывает View, которая читает только `count`.
-4. Пометь зависимость (сервис) `@ObservationIgnored`, чтобы она не отслеживалась.
-5. Передай модель в дочернюю View обычным `let model: CounterModel`, а там, где нужен `$`-биндинг, объяви `@Bindable var model`.
-
-**Разобрать в Buzz.** `TodayViewModel` на `@Observable` с вычисляемыми `caffeine` и `isOverLimit`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 4. ViewModel на @Observable.** Создай `@Observable @MainActor final class WellbeingViewModel` со свойством `checkins: [Checkin]` и методом `load() async`, который берёт данные из `CheckinRepository`. Зависимость передавай в `init`. Подсмотри: `TodayViewModel.swift`. *Готово, когда:* превью экрана с `InMemoryCheckinRepository` показывает список из трёх отметок.
 
 **Документация.** [Observation](https://developer.apple.com/documentation/observation), [Миграция с ObservableObject](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
 
@@ -477,16 +307,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** проброс через инициализаторы и делегаты, синглтоны → окружение.
 
-**Руками.**
-1. Сделай `ToggleRow(isOn: Binding<Bool>)` и передай в неё `$flag` из родителя.
-2. Добавь ключ окружения: `extension EnvironmentValues { @Entry var greeting = "Привет" }`, прочитай его через `@Environment(\.greeting)`, подмени через `.environment(\.greeting, "Hi")`.
-3. Положи `@Observable`-объект через `.environment(obj)` и прочитай `@Environment(MyObj.self)`.
-
-**Разобрать в Buzz.** `APIClient` положить в окружение через `@Entry` и подменять фейком в превью.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 6. Форма: поток данных.** Создай `CheckinForm`: экран держит черновик в `@State`, а дочерняя вьюха `MoodPicker` получает `@Binding var mood: Int`. Если форма работает с `@Observable` моделью, используй `@Bindable`. Подсмотри: `AddEntryView.swift`. *Готово, когда:* выбор настроения в `MoodPicker` сразу меняет значение в родителе.
-
 **Документация.** [Model data](https://developer.apple.com/documentation/swiftui/model-data), [Entry()](https://developer.apple.com/documentation/swiftui/entry())
 
 **Код в Buzz.** биндинг в `@Observable` `$model.query` в [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:49`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L49); зависимости через `init` из [`iOS/App/Sources/AppDependencies.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L13) (`@Entry` в коде не используется).
@@ -506,16 +326,6 @@ cont.yield("привет"); cont.finish()
 - `orthogonalScrollingBehavior` → `ScrollView(.horizontal) { LazyHStack }` + `.scrollTargetBehavior(.viewAligned)`.
 - `CellRegistration` → обычная View.
 
-**Руками.**
-1. `List` из 20 элементов с двумя `Section` и свайпом удаления `.onDelete`.
-2. Сетка: `LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))])` внутри `ScrollView`. Поверни симулятор и посмотри, как меняется число колонок.
-3. Горизонтальная карусель с `.scrollTargetLayout()` и `.scrollTargetBehavior(.viewAligned)`.
-
-**Разобрать в Buzz.** Сетка каталога банок и горизонтальная лента «Недавние» в шите «Добавить».
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 5. Список с секциями.** Покажи отметки в `List`, сгруппированные по неделям (`Section` на каждую неделю). Добавь удаление свайпом (`.onDelete` или `.swipeActions`), которое зовёт `repository.delete`. Сравни с тем, сколько кода это заняло бы на Diffable + CompositionalLayout. *Готово, когда:* строки удаляются свайпом и не возвращаются после повторного `load()`.
-
 **Документация.** [Lists](https://developer.apple.com/documentation/swiftui/lists), [LazyVGrid](https://developer.apple.com/documentation/swiftui/lazyvgrid), [scrollTargetBehavior](https://developer.apple.com/documentation/swiftui/view/scrolltargetbehavior(_:))
 
 **Код в Buzz.** `LazyVGrid` в [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:29`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L29), `List` в [`iOS/Modules/TodayFeature/Sources/TodayView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift).
@@ -529,16 +339,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** `.task { }` запускает async-работу при появлении View и сам отменяет её при уходе. `.task(id: value)` перезапускает задачу при каждом изменении `value`, отменяя предыдущую.
 
 **Было → стало.** `viewDidLoad` + ручная отмена запросов; `debounce` из Combine → `.task(id:)` + `Task.sleep`.
-
-**Руками.**
-1. Повесь `.task { await model.load() }` на экран и уйди с него во время загрузки: проверь, что задача отменилась.
-2. Сделай поле поиска и `.task(id: text) { try? await Task.sleep(for: .milliseconds(300)); ... }`. Печатай в консоль, сколько раз реально выполнился поиск при быстром наборе.
-3. Попробуй `.onChange(of: value, initial: true) { }` для синхронной реакции.
-
-**Разобрать в Buzz.** Поиск по каталогу с debounce 300 мс. Поиск каталога переведён на Combine (A8), а на `.task(id:)` остался экран «Добавить банку». Сравни два подхода.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 19. Поиск: Combine и .task(id:).** Задание в карточке A8, эта тема в нём тоже нужна.
 
 **Документация.** [task(id:priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(id:priority:_:)), [onChange](https://developer.apple.com/documentation/swiftui/view/onchange(of:initial:_:))
 
@@ -555,13 +355,6 @@ cont.yield("привет"); cont.finish()
 - `UIRefreshControl` + target/action → `.refreshable { await reload() }` (индикатор крутится, пока функция не вернётся).
 - своя пустая View в `backgroundView` → `ContentUnavailableView("Пусто", systemImage: "tray")`.
 
-**Руками.** На одном экране со списком подключи все три. Для `refreshable` сделай функцию с `Task.sleep(for: .seconds(2))` и посмотри, как ведёт себя индикатор.
-
-**Разобрать в Buzz.** Pull to refresh на «Сегодня» запускает синхронизацию; пустое состояние «Пока ни одной банки».
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 27. Готовые модификаторы.** Добавь `.searchable` для поиска из дня 19, `.refreshable` для ручной синхронизации и `ContentUnavailableView` для пустого списка и пустого поиска. *Готово, когда:* пустой экран выглядит как системный, pull-to-refresh работает.
-
 **Документация.** [searchable](https://developer.apple.com/documentation/swiftui/view/searchable(text:placement:prompt:)), [refreshable](https://developer.apple.com/documentation/swiftui/view/refreshable(action:)), [ContentUnavailableView](https://developer.apple.com/documentation/swiftui/contentunavailableview)
 
 **Код в Buzz.** [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:45`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L45) и [`:49`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L49), [`iOS/Modules/TodayFeature/Sources/TodayView.swift:43`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift#L43) и [`:71`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift#L71), [`iOS/Modules/StatsFeature/Sources/StatsView.swift:44`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L44).
@@ -575,17 +368,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** `Form` сам рисует сгруппированную таблицу настроек. `TextField(value:format:)` парсит число или валюту по локали пользователя. `@FocusState` управляет клавиатурой.
 
 **Было → стало.** статическая `UITableView`, `UITextFieldDelegate`, ручной парсинг с заменой запятой на точку, `becomeFirstResponder` → `Form`, форматы, `@FocusState`.
-
-**Руками.**
-1. `Form` с `Section`, `Stepper`, `Toggle`, `DatePicker`, `Picker`.
-2. `TextField("Цена", value: $price, format: .currency(code: "RUB"))` с `@State var price: Decimal?`. Введи «12,5» с русской локалью.
-3. `@FocusState private var focused: Bool`, `.focused($focused)`, кнопка «Готово», которая ставит `focused = false`.
-4. Кнопка сохранения `.disabled(!isValid)`.
-
-**Разобрать в Buzz.** Форма «Свой напиток» и поле цены в «Добавить» без ручного парсинга.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 7. Поля ввода и фокус.** В `CheckinForm` используй `Form`: `Stepper` или `Slider` для сна, `TextField(value:format:)` для часов, `TextField` для заметки. Через `@FocusState` переводи фокус с часов на заметку по Return и скрывай клавиатуру по кнопке «Готово». *Готово, когда:* в поле часов нельзя ввести буквы, Return переносит фокус на заметку.
 
 **Документация.** [Form](https://developer.apple.com/documentation/swiftui/form), [TextField](https://developer.apple.com/documentation/swiftui/textfield), [FocusState](https://developer.apple.com/documentation/swiftui/focusstate)
 
@@ -602,17 +384,6 @@ cont.yield("привет"); cont.finish()
 **Было → стало.** `pushViewController`, `present`, координаторы → `NavigationStack(path:)` + `navigationDestination(for:)`, `.sheet(item:)`, `TabView` с `Tab`.
 
 **Важно для Buzz.** Ты выбрал гибрид: навигация на UIKit-координаторах, экраны на SwiftUI (см. E2). `NavigationStack` пробуешь как эксперимент в одной вкладке («Статистика»). Внутри хостинга координатора `NavigationStack` не используй: получится навбар в навбаре.
-
-**Руками.**
-1. `enum Route: Hashable { case detail(Int) }`, `@State var path: [Route] = []`, `NavigationStack(path: $path)` и `.navigationDestination(for: Route.self)`.
-2. Кнопки «открыть 3 экрана подряд» (`path = [.detail(1), .detail(2), .detail(3)]`) и «в корень» (`path.removeAll()`).
-3. `.sheet(item: $selected)` с `.presentationDetents([.medium, .large])`.
-4. `TabView(selection:)` с новым API `Tab("Имя", systemImage: ..., value: ...)`, свой `NavigationStack` в каждой вкладке.
-
-**Разобрать в Buzz.** Вкладка «Статистика» целиком на `NavigationStack` внутри одного хостинга; сравни с координатором в других вкладках.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 8. Навигация.** Оберни список в `NavigationStack`. По кнопке «+» открывай `CheckinForm` в `.sheet`, по тапу на строку переходи к деталям через `navigationDestination(for: Checkin.self)`. *Готово, когда:* форма закрывается после сохранения, детали открываются и закрываются свайпом назад.
 
 **Документация.** [Navigation](https://developer.apple.com/documentation/swiftui/navigation), [NavigationStack](https://developer.apple.com/documentation/swiftui/navigationstack), [TabView](https://developer.apple.com/documentation/swiftui/tabview)
 
@@ -636,17 +407,6 @@ cont.yield("привет"); cont.finish()
 | Хаптик | `.sensoryFeedback(.success, trigger: value)` |
 | Зум-переход | `.matchedTransitionSource(id:in:)` + `.navigationTransition(.zoom(sourceID:in:))` |
 
-**Руками.**
-1. Нарисуй кольцо из двух `Circle`, вторая с `.trim` и `.rotationEffect(.degrees(-90))`. Кнопка добавляет 10% и анимирует.
-2. Число в центре с `.contentTransition(.numericText(value: value))`.
-3. Плашка внизу экрана, которая появляется по кнопке и сама исчезает через 3 секунды через `.task(id: isShown) { try? await Task.sleep(for: .seconds(3)); isShown = false }`.
-4. `.sensoryFeedback(.warning, trigger: isOver)` и проверь на устройстве.
-
-**Разобрать в Buzz.** Кольцо кофеина, снек «банка добавлена» с кнопкой «Отменить», хаптик при превышении лимита.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 10. Цвет, анимация, хаптик.** Раскрась эмодзи настроения токенами из `Theme.swift` (никаких `Color(red:...)`). При сохранении дай `.sensoryFeedback(.success, trigger:)`, а счётчик «дней подряд» анимируй через `.contentTransition(.numericText())`. Подсмотри: `CaffeineRing.swift`. *Готово, когда:* в тёмной теме цвета читаются, телефон вибрирует при сохранении.
-
 **Документация.** [Animations](https://developer.apple.com/documentation/swiftui/animations), [sensoryFeedback](https://developer.apple.com/documentation/swiftui/view/sensoryfeedback(_:trigger:)), [navigationTransition](https://developer.apple.com/documentation/swiftui/view/navigationtransition(_:))
 
 **Код в Buzz.** [`iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift:38`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift#L38) (numericText) и [`:47`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift#L47) (хаптик), [`iOS/Modules/DesignSystem/Sources/Components/SnackView.swift:59`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/SnackView.swift#L59) и [`:62`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/SnackView.swift#L62).
@@ -661,19 +421,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** DGCharts (Charts от Daniel Gindi) или своя отрисовка в `draw(_:)` → `Chart { BarMark ... }`.
 
-**Руками.**
-1. Массив `struct Sale: Identifiable { day: Date; value: Double }` на 7 дней.
-2. `Chart(data) { BarMark(x: .value("День", $0.day, unit: .day), y: .value("Сумма", $0.value)) }`.
-3. Добавь `RuleMark(y: .value("Цель", 100))` с пунктиром и `.annotation`.
-4. Покрась столбики выше цели другим цветом через `.foregroundStyle`.
-5. Попробуй `LineMark` + `PointMark`, затем `SectorMark(angle:innerRadius:)` (бублик).
-6. Выбор пальцем: `.chartXSelection(value: $selectedDay)` и подсказка.
-
-**Разобрать в Buzz.** Четыре графика статистики: кофеин по дням с линией лимита, распределение по часам, любимые бренды, траты по неделям.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 26. График настроения и кофеина.** На экране статистики самочувствия нарисуй `BarMark` с кофеином по дням и `LineMark` с настроением, плюс `RuleMark` со средним настроением. Подсмотри: `StatsView.swift`. *Готово, когда:* видно, совпадают ли плохие дни с днями, когда было много кофеина.
-
 **Документация.** [Swift Charts](https://developer.apple.com/documentation/charts), [Creating a chart using Swift Charts](https://developer.apple.com/documentation/charts/creating-a-chart-using-swift-charts)
 
 **Код в Buzz.** [`iOS/Modules/StatsFeature/Sources/StatsView.swift:47`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L47) (Bar + Rule), [`:126`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L126) (Sector), [`:170`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L170) (Line + Point); данные в [`iOS/Modules/StatsFeature/Sources/StatsCalculator.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsCalculator.swift).
@@ -687,16 +434,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Экран рендерится прямо в Xcode без запуска приложения, с любыми фейковыми данными, языком и темой.
 
 **Было → стало.** запуск на симуляторе и проход до нужного экрана → `#Preview { MyView(model: .fake) }`.
-
-**Руками.**
-1. Сделай несколько превью одного экрана: `#Preview("Пусто")`, `#Preview("С данными")`, `#Preview("Ошибка")`.
-2. Для SwiftData: in-memory контейнер `ModelContainer(for: X.self, configurations: .init(isStoredInMemoryOnly: true))` и `.modelContainer(container)`.
-3. Превью на двух языках через `.environment(\.locale, Locale(identifier: "ru"))` и в тёмной теме через `.preferredColorScheme(.dark)`.
-
-**Разобрать в Buzz.** Превью каждого экрана в трёх состояниях на фейковых репозиториях.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 3. Первая вьюха и превью.** Задание в карточке B1, эта тема в нём тоже нужна.
 
 **Документация.** [Previews in Xcode](https://developer.apple.com/documentation/swiftui/previews-in-xcode)
 
@@ -717,16 +454,6 @@ cont.yield("привет"); cont.finish()
 | UIKit-вью в SwiftUI | `UIViewRepresentable` (+ `Coordinator` для делегатов) |
 | UIKit-контроллер в SwiftUI | `UIViewControllerRepresentable` |
 
-**Руками.**
-1. В UIKit-проекте запушь `UIHostingController(rootView: Text("Привет"))` в `UINavigationController`. Поставь в SwiftUI `.navigationTitle` и проверь, что он попал в навбар.
-2. В существующей коллекции на Diffable перепиши одну ячейку на `UIHostingConfiguration`, не трогая data source. Сравни объём кода.
-3. Оберни `UITextView` в `UIViewRepresentable` с `@Binding var text` и `Coordinator` как делегатом.
-
-**Разобрать в Buzz.** Все экраны Buzz показываются через хостинг из координаторов; на работе — одна ячейка на `UIHostingConfiguration`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 9. Новая вкладка через координатор.** Задание в карточке E2, эта тема в нём тоже нужна.
-
 **Документация.** [UIHostingController](https://developer.apple.com/documentation/swiftui/uihostingcontroller), [UIHostingConfiguration](https://developer.apple.com/documentation/swiftui/uihostingconfiguration), [UIViewRepresentable](https://developer.apple.com/documentation/swiftui/uiviewrepresentable)
 
 **Код в Buzz.** хостинг экранов в [`iOS/App/Sources/AppDependencies.swift:89`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L89), координатор [`iOS/App/Sources/Coordinators/TodayCoordinator.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/TodayCoordinator.swift); `UIHostingConfiguration` и `Representable` в Buzz не используются, пробуй на работе.
@@ -741,22 +468,33 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** `UIColor(named:)` + `traitCollectionDidChange`, `appearance()`-прокси → `Color("Name")`, `.tint`, `Color(.systemGroupedBackground)`, `Font.system(.title, design: .rounded)`.
 
-**Руками.**
-1. Добавь в Assets Color Set с двумя вариантами и используй `Color("BuzzAccent")`.
-2. Поставь `.tint(.purple)` на корень и посмотри, какие контролы перекрасились сами.
-3. Сделай `ViewModifier` «карточка» и `extension View { func card() }`.
-4. Включи в симуляторе крупный шрифт (Environment Overrides в Xcode) и проверь вёрстку.
-
-**Разобрать в Buzz.** `Theme.swift` в модуле `DesignSystem` и выбор основного цвета через `@AppStorage` + `.tint`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 10. Цвет, анимация, хаптик.** Задание в карточке B9, эта тема в нём тоже нужна.
-
 **Документация.** [Color](https://developer.apple.com/documentation/swiftui/color), [Human Interface Guidelines: Color](https://developer.apple.com/design/human-interface-guidelines/color), [Dynamic Type](https://developer.apple.com/documentation/swiftui/dynamictypesize)
 
 **Код в Buzz.** [`iOS/Modules/DesignSystem/Sources/Theme.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Theme.swift#L13), выбор акцента [`iOS/Modules/DesignSystem/Sources/AccentChoice.swift:15`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/AccentChoice.swift#L15) и [`:44`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/AccentChoice.swift#L44).
 
 **Описание.** [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md); макеты: [холст Buzz](https://claude.ai/artifact/DBEh5DEASJSWRzgj8Bvp2W).
+
+---
+
+## B14. Доступность: VoiceOver и Dynamic Type
+
+**Что и зачем.** VoiceOver читает экран вслух, Dynamic Type увеличивает шрифты. В SwiftUI многое работает само: системные шрифты масштабируются, `Button` и `Toggle` уже озвучиваются. Помогать руками нужно там, где картинка или свой компонент: склеить элементы в один (`accessibilityElement(children: .combine)`), дать понятную подпись (`accessibilityLabel`), отметить состояние (`accessibilityAddTraits(.isSelected)`), спрятать декор (`accessibilityHidden`).
+
+**Было → стало (UIKit).** `isAccessibilityElement`, `accessibilityLabel`, `accessibilityTraits` на `UIView` и `adjustsFontForContentSizeCategory` → модификаторы SwiftUI; шрифты `.font(.body)` масштабируются сами.
+
+**Что проверять.**
+- Каждая картинка без текста рядом либо подписана, либо скрыта.
+- Карточка из нескольких `Text` читается одной фразой, а не пятью.
+- На самом крупном размере шрифта ничего не обрезается.
+- Цвет — не единственный признак состояния: «лимит превышен» сказано и словами.
+
+**Инструменты.** Accessibility Inspector (Xcode → Open Developer Tool), переключатель Dynamic Type в канвасе превью, VoiceOver в симуляторе (Settings → Accessibility).
+
+**Документация.** [Accessibility fundamentals](https://developer.apple.com/documentation/swiftui/accessibility-fundamentals), [accessibilityElement(children:)](https://developer.apple.com/documentation/swiftui/view/accessibilityelement(children:)), [Scaling fonts automatically](https://developer.apple.com/documentation/uikit/scaling-fonts-automatically), [HIG: Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility)
+
+**Код в Buzz.** кольцо кофеина одной фразой [`iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift:49`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift#L49), выбранный цвет с `.isSelected` [`iOS/Modules/SettingsFeature/Sources/SettingsView.swift:90`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/SettingsView.swift#L90), значок «не отправлено» [`iOS/Modules/TodayFeature/Sources/TodayView.swift:125`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift#L125), скрытый декор [`iOS/Modules/DesignSystem/Sources/Components/BrandTile.swift:19`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/BrandTile.swift#L19).
+
+**Описание.** [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md).
 
 ---
 
@@ -767,17 +505,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Тонкий клиент без Alamofire: `try await session.data(for:)` и `Codable`.
 
 **Было → стало.** `dataTask` + колбэк + `DispatchQueue.main.async` → `async throws`; тип ответа зашит в описание эндпоинта (`Endpoint<Response>`).
-
-**Руками.**
-1. Сделай `struct Endpoint<Response: Decodable>` с `method`, `path`, `body`.
-2. Метод `func send<R>(_ e: Endpoint<R>) async throws -> R`: собрать `URLRequest`, вызвать `session.data(for:)`, проверить статус, декодировать.
-3. Вынеси `send` в протокол и сделай фейк для превью и тестов.
-4. Проверь отмену: запусти запрос в `.task` и уйди с экрана.
-
-**Разобрать в Buzz.** Модуль `Networking` с `APIClient` и эндпоинтами из `app/backend/API.md`; ошибки сервера разбираются в `APIErrorCode` из `Shared`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 33. Клиент к API.** Добавь в `Endpoint.swift` и `APIClient.swift` методы `fetchCheckins()` и `send(_:)`. Ошибки сервера мапь в свой `enum`. Подсмотри: `DTOMapping.swift`. *Готово, когда:* приложение с локальным бэкендом показывает отметки с сервера.
 
 **Документация.** [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable)
 
@@ -793,21 +520,7 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** `.xcdatamodeld` + `NSManagedObject` + `NSFetchedResultsController` → `@Model` класс, `ModelContainer`, `@Query` (живой запрос, сам обновляет UI) или `FetchDescriptor` + `#Predicate`.
 
-**Руками.**
-1. `@Model final class Note { var text: String; var createdAt: Date; init(...) }`.
-2. На `WindowGroup` повесь `.modelContainer(for: Note.self)`.
-3. Во View `@Query(sort: \Note.createdAt, order: .reverse) var notes: [Note]` и `@Environment(\.modelContext) var context`; кнопка `context.insert(Note(...))`.
-4. Фильтр: `#Predicate<Note> { $0.text.contains("a") }` через `Query(filter:sort:)` в `init`.
-5. Добавь поле в модель, потом сделай явную миграцию через `VersionedSchema` + `SchemaMigrationPlan`.
-6. `@Attribute(.unique)` на `id` и проверь, что вставка с тем же id обновляет запись.
-
 **Правила.** `@Model` не `Sendable`: между потоками передавай DTO/структуры или `PersistentIdentifier`. DTO и `@Model` — разные типы. Enum в `#Predicate` ненадёжен, храни строкой.
-
-**Разобрать в Buzz.** `DrinkModel` и `EntryModel`, сид каталога при первом запуске, «Сегодня» фильтрует записи за день.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 11. Модель SwiftData.** В `Persistence/Sources/Models/` создай `@Model final class CheckinModel` пока без заметки (её сохранение добавишь в день 13) и добавь его в схему в `PersistenceContainer.swift`. Напиши маппинг `CheckinModel` ↔ `Checkin`. Подсмотри: `EntryModel.swift`. *Готово, когда:* отметка переживает перезапуск приложения.
-- **День 13. Миграция схемы.** Добавь в `CheckinModel` поле `note: String`, чтобы заметка из формы сохранялась. Сначала без значения по умолчанию: запусти поверх старых данных и посмотри, что будет. Потом оформи `SchemaV1`/`SchemaV2` (`VersionedSchema`) и `SchemaMigrationPlan` со стадией, которая заполняет `note` пустой строкой. *Готово, когда:* старые отметки на месте, у новых есть заметка.
 
 **Документация.** [SwiftData](https://developer.apple.com/documentation/swiftdata), [Preserving your app's model data across launches](https://developer.apple.com/documentation/swiftdata/preserving-your-apps-model-data-across-launches)
 
@@ -822,16 +535,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Макрос `@ModelActor` делает актор со своим `ModelContext`, работающим не на главном потоке. Так репозиторий читает и пишет в фоне, а наружу отдаёт `Sendable`-структуры.
 
 **Было → стало.** `NSPersistentContainer.performBackgroundTask`, дочерние контексты → `@ModelActor actor Repo`.
-
-**Руками.**
-1. `@ModelActor actor NoteRepository { func all() throws -> [NoteDTO] { try modelContext.fetch(FetchDescriptor<Note>()).map { ... } } }`.
-2. Создай его как `NoteRepository(modelContainer: container)` и вызови из `@MainActor`-модели через `await`.
-3. Попробуй вернуть наружу сам `Note` и прочитай ошибку компилятора про `Sendable`.
-
-**Разобрать в Buzz.** `SwiftDataEntryRepository` и `SyncStore` в модуле `Persistence`/`Sync`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 12. Репозиторий в фоне.** Напиши `SwiftDataCheckinRepository` как `@ModelActor`-актор, реализующий `CheckinRepository`. Наружу отдавай только `Checkin` (Sendable), никогда `CheckinModel`. Подключи его в `AppDependencies.swift`. Подсмотри: `SwiftDataEntryRepository.swift`. *Готово, когда:* сборка без предупреждений Swift 6 о `Sendable`; попробуй вернуть `CheckinModel` наружу и прочитай ошибку.
 
 **Документация.** [ModelActor](https://developer.apple.com/documentation/swiftdata/modelactor)
 
@@ -855,17 +558,7 @@ cont.yield("привет"); cont.finish()
 - Конфликт: побеждает более свежий `updatedAt`.
 - Два одновременных запуска склеиваются в «ещё один проход», а не идут параллельно.
 
-**Руками.**
-1. Нарисуй на бумаге состояния записи и переходы между ними.
-2. Напиши `actor SyncEngine` с методом `syncNow()` и флагами `isRunning`/`needsAnotherPass`. Проверь тестом, что два параллельных вызова не дают параллельных проходов.
-3. Напиши `apply(delta)` и тест «pending-запись не перезаписывается свежей версией с сервера».
-
 **Подвох: бесконечный цикл (исправлено в PR #9).** Движок синхронизации слушал тот же сигнал «данные изменились», который сам и отправлял после `apply`, поэтому каждый проход через ~2 секунды запускал следующий, и статус мигал. Решение: отдельный сигнал `localEdits` (`Broadcaster<Void>`), который шлёт только репозиторий при правке пользователя и слушает только движок; пустой ответ `/sync` больше ничего не сохраняет. Урок: у события должен быть один смысл, «экран, перерисуйся» и «надо отправить» — разные сигналы. Код: [`iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:17`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift#L17), подключение в [`iOS/App/Sources/AppDependencies.swift:77`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L77).
-
-**Разобрать в Buzz.** Модуль `Sync` целиком, по шагам из раздела 7 `sync.md`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 35. Офлайн-синхронизация.** Добавь в `CheckinModel` поле `syncState` (`pending`/`synced`), а в `SyncEngine` и `SyncStore` отправку pending-отметок и приём новых с сервера. Правило: не перетирать то, что ещё не отправлено. Подсмотри: `SyncStore.swift`, `SyncEngine.swift`, тесты синхронизации. *Готово, когда:* отметка, сделанная на одном симуляторе, появляется на другом под тем же пользователем.
 
 **Документация.** Готового фреймворка нет, это паттерн. Полезно: [WWDC23 «Sync to iCloud with CKSyncEngine»](https://developer.apple.com/videos/play/wwdc2023/10188/) для сравнения с тем, как Apple решает ту же задачу.
 
@@ -881,16 +574,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** Reachability (сторонняя) → `NWPathMonitor` из Network.framework.
 
-**Руками.**
-1. Создай `NWPathMonitor()`, задай `pathUpdateHandler`, вызови `start(queue:)`.
-2. Переведи колбэк в `AsyncStream<Bool>` (см. A4) и читай его `for await`.
-3. Включи и выключи Wi-Fi на Mac при запущенном симуляторе, посмотри на события.
-
-**Разобрать в Buzz.** Переход `.unsatisfied → .satisfied` запускает `syncNow()`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 36. Сеть пропала и вернулась.** Выключи сеть, добавь три отметки, включи сеть. Проследи, как `NetworkMonitor` запускает синхронизацию. Добавь в UI значок «не отправлено» для pending-отметок. *Готово, когда:* после включения сети значки исчезают сами.
-
 **Документация.** [NWPathMonitor](https://developer.apple.com/documentation/network/nwpathmonitor)
 
 **Код в Buzz.** [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:15`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L15), возврат из фона [`iOS/App/Sources/SceneDelegate.swift:53`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/SceneDelegate.swift#L53).
@@ -904,16 +587,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** `@AppStorage("key")` — обёртка над `UserDefaults`, которая обновляет View при изменении. Токен авторизации хранится в Keychain, не в `UserDefaults`.
 
 **Было → стало.** `UserDefaults.standard.set` + ручное обновление UI → `@AppStorage`; Keychain остаётся Keychain (Security framework).
-
-**Руками.**
-1. `@AppStorage("limit") var limit = 400` и `Stepper` к нему; перезапусти приложение.
-2. `@AppStorage` с `enum: String` (`RawRepresentable`).
-3. Напиши маленькую обёртку над `SecItemAdd` / `SecItemCopyMatching` / `SecItemDelete` для строки-токена.
-
-**Разобрать в Buzz.** Лимит и выбранный цвет в `@AppStorage`; токен в Keychain после логина.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 15. Настройки в @AppStorage.** Добавь два параметра: время напоминания и «показывать кофеин на графике». Храни их в `@AppStorage`, время — как `Double` (секунды от полуночи). Подсмотри: `AccentChoice.swift`. *Готово, когда:* значения сохраняются после перезапуска и меняют экран сразу.
 
 **Документация.** [AppStorage](https://developer.apple.com/documentation/swiftui/appstorage), [Keychain services](https://developer.apple.com/documentation/security/keychain-services)
 
@@ -929,24 +602,34 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** OHHTTPStubs, отдельный таргет «Mock», `#if DEBUG` по всему коду → протокол `APIClient` с двумя реализациями и выбор в одном месте сборки зависимостей.
 
-**Руками.**
-1. Вынеси сетевой вызов за протокол и сделай фейковую реализацию, которая хранит данные в словаре.
-2. В Xcode: Product → Scheme → Edit Scheme → Run → Arguments → Environment Variables, добавь `MY_MOCK = 1`.
-3. В точке сборки зависимостей прочитай `ProcessInfo.processInfo.environment["MY_MOCK"]` и выбери реализацию.
-4. Запусти приложение с переменной и без неё, проверь, что экраны работают в обоих случаях.
-
-**Разобрать в Buzz.** Запустить приложение с `BUZZ_MOCK_API = 1` (любой email и пароль от 8 символов) и `BUZZ_IN_MEMORY = 1`; найти, где выбирается реализация, и добавить в фейковый сервер задержку ответа, чтобы увидеть индикаторы загрузки.
-
 **Адрес сервера (PR #9).** На iPhone `localhost` — это сам телефон, поэтому адрес бэкенда зашивается в сборку. В `mise.local.toml` (не в git) пишешь `TUIST_API_URL = "https://<сервис>.onrender.com"`, `mise run generate` кладёт его в `Info.plist` под ключом `BuzzAPIURL`, и приложение ходит на Render даже при запуске с иконки. По умолчанию устройство и TestFlight-сборка ходят на `https://buzz-backend-latest.onrender.com`, симулятор на `http://localhost:8080`, а `TUIST_API_URL` это переопределяет. Порядок выбора в `AppDependencies`: `BUZZ_MOCK_API = 1` (фейковый сервер) → `BUZZ_API_URL` из схемы (разовое переопределение, только из Xcode) → `BuzzAPIURL` из `Info.plist` → `http://localhost:8080`. Чтобы iPhone ходил на бэкенд, запущенный на Mac, в `TUIST_API_URL` можно указать IP Mac в той же Wi-Fi сети, например `http://192.168.1.5:8080` (в документах проекта этого нет, проверь сам; по http iOS может потребовать исключение ATS). Как это сделано: в [`iOS/Project.swift:81`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift#L81) build setting `BUZZ_SERVER_URL` имеет два значения, обычное и `[sdk=iphonesimulator*]` (условие по SDK, приём Xcode из xcconfig), а `Info.plist` подставляет его через `$(BUZZ_SERVER_URL)` ([`:48`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift#L48)). Порядок выбора в коде: [`iOS/App/Sources/AppDependencies.swift:49`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L49). Описание в [`docs/infra/SETUP.md`](https://github.com/disavle/buzz/blob/main/docs/infra/SETUP.md), шаг 6.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 34. Фейковый сервер.** Научи `MockAPIClient` хранить отметки в памяти, чтобы экран работал с `BUZZ_MOCK_API = 1` без бэкенда. Добавь задержку ответа, чтобы увидеть индикатор загрузки. *Готово, когда:* экран полностью работает без сервера и без интернета.
 
 **Документация.** [Customizing the build schemes for a project](https://developer.apple.com/documentation/xcode/customizing-the-build-schemes-for-a-project), [ProcessInfo.environment](https://developer.apple.com/documentation/foundation/processinfo/environment)
 
 **Код в Buzz.** выбор реализации в [`iOS/App/Sources/AppDependencies.swift:54`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L54), фейковый сервер [`iOS/Modules/Networking/Sources/MockAPIClient.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/MockAPIClient.swift#L13), in-memory репозитории и данные для превью [`iOS/Modules/Domain/Sources/Fakes/`](https://github.com/disavle/buzz/tree/main/iOS/Modules/Domain/Sources/Fakes), примеры запросов и ответов [`Mocks/api/`](https://github.com/disavle/buzz/tree/main/Mocks/api), каталог [`Mocks/catalog.json`](https://github.com/disavle/buzz/blob/main/Mocks/catalog.json).
 
 **Описание.** [`Mocks/README.md`](https://github.com/disavle/buzz/blob/main/Mocks/README.md).
+
+---
+
+## C8. Codable, JSON и деньги в Decimal
+
+**Что и зачем.** `Codable` превращает структуру в JSON и обратно без ручного разбора словарей. Клиент и сервер Buzz договорились об одном формате дат (ISO 8601) и держат его в одном месте: `JSONEncoder.buzz` и `JSONDecoder.buzz` в пакете `Shared`. Деньги хранятся в `Decimal`, а не в `Double`: в `Double` `0.1 + 0.2` не равно `0.3`, а копейки должны сходиться.
+
+**Было → стало (UIKit).** `JSONSerialization` и `as? [String: Any]` или ObjectMapper → `Codable` с общими стратегиями кодирования; `NSDecimalNumber` → `Decimal` и `.currency(code:)` для вывода.
+
+**Ключевые идеи.**
+- Ключи JSON совпадают с именами свойств; если нет, помогает `CodingKeys`.
+- Стратегия дат задаётся один раз на кодировщике (`.iso8601`), а не в каждой модели.
+- Необязательные поля — `Optional`, тогда их отсутствие в JSON не ошибка.
+- `DecodingError` подробно говорит, какой ключ и почему не подошёл: печатай ошибку целиком.
+- `Decimal` в JSON кодируется числом; в Postgres для денег подходит тип `numeric`.
+
+**Документация.** [Encoding and Decoding Custom Types](https://developer.apple.com/documentation/foundation/encoding-and-decoding-custom-types), [JSONDecoder.DateDecodingStrategy](https://developer.apple.com/documentation/foundation/jsondecoder/datedecodingstrategy), [Decimal](https://developer.apple.com/documentation/foundation/decimal), [Vapor: Content](https://docs.vapor.codes/basics/content/)
+
+**Код в Buzz.** общие кодировщики [`Shared/Sources/Shared/Coding.swift:4`](https://github.com/disavle/buzz/blob/main/Shared/Sources/Shared/Coding.swift#L4), цена в `Decimal` [`iOS/Modules/Domain/Sources/Models/Entry.swift:16`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Models/Entry.swift#L16), траты в статистике [`Shared/Sources/Shared/StatsDTO.swift:82`](https://github.com/disavle/buzz/blob/main/Shared/Sources/Shared/StatsDTO.swift#L82), DTO становятся `Content` на сервере в [`Backend/Sources/App/DTOs/Shared+Content.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/DTOs/Shared+Content.swift).
+
+**Описание.** [`docs/backend/API.md`](https://github.com/disavle/buzz/blob/main/docs/backend/API.md).
 
 ---
 
@@ -957,18 +640,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Один файл `Localizable.xcstrings` вместо `.strings` и `.stringsdict`. Xcode сам собирает в него строки из кода, показывает процент перевода и формы множественного числа.
 
 **Было → стало.** `NSLocalizedString` + `.strings` + `.stringsdict` (XML для плюралов) → String Catalog с редактором.
-
-**Руками.**
-1. File → New → String Catalog. Добавь язык Russian.
-2. В коде `Text("cans.count \(n)")`, собери проект: ключ появится в каталоге как `cans.count %lld`.
-3. В каталоге правый клик → **Vary by Plural**, заполни `one/few/many/other` для ru и `one/other` для en.
-4. Схема → Run → Options → App Language: Russian, проверь «1 банка, 3 банки, 5 банок».
-5. Попробуй псевдоязык Double-Length.
-
-**Разобрать в Buzz.** Все строки фич в каталогах модулей; семантические ключи вида `today.empty.title`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 23. Строки и плюрализация.** Вынеси все строки экрана в `Localizable.xcstrings` модуля, используй `Text("wellbeing.title", bundle: .module)`. Добавь строку с формами множественного числа «N дней подряд» для ru и en. Подсмотри строки `StatsFeature`. *Готово, когда:* в русской схеме видно «1 день», «3 дня», «5 дней».
 
 **Документация.** [Localizing and varying text with a string catalog](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog), [LocalizedStringResource](https://developer.apple.com/documentation/foundation/localizedstringresource)
 
@@ -981,17 +652,6 @@ cont.yield("привет"); cont.finish()
 ## D2. Строки в модулях: bundle .module и генерация символов
 
 **Что и зачем.** В модуле `Text("key")` ищет строку в главном бандле приложения, а не в модуле, и перевод «пропадает». Нужно явно указывать `bundle: .module` или включить генерацию символов (Xcode 26), тогда строка вызывается как `Text(.todayTitle)` и опечатки ловит компилятор.
-
-**Руками.**
-1. В Swift-пакете или Tuist-модуле с ресурсами положи каталог и вызови `Text("hello")`. Убедись, что перевода нет.
-2. Исправь на `Text("hello", bundle: .module)`.
-3. Включи Build Settings → Generate String Catalog Symbols и перепиши на сгенерированный символ.
-4. ViewModel отдаёт `LocalizedStringResource`, а не `String`: перевод делает View.
-
-**Разобрать в Buzz.** Ошибки домена (`AddEntryError`) и коды сервера (`APIErrorCode`) переводятся в Presentation через `var message: LocalizedStringResource`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 23. Строки и плюрализация.** Задание в карточке D1, эта тема в нём тоже нужна.
 
 **Документация.** [Bundle.module и ресурсы пакетов](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package)
 
@@ -1006,17 +666,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** Числа, единицы, валюта и даты форматируются по локали одной цепочкой `.formatted(...)`. Никакой склейки `"\(value) мг"`.
 
 **Было → стало.** `NumberFormatter`, `DateFormatter`, `MeasurementFormatter` (создать, настроить, закэшировать) → `value.formatted(.number.precision(.fractionLength(0)))`.
-
-**Руками.**
-1. `Measurement(value: 160, unit: UnitMass.milligrams).formatted(.measurement(width: .abbreviated))` в ru и en.
-2. `Date.now.formatted(date: .omitted, time: .shortened)` и `.formatted(.relative(presentation: .named))`.
-3. `0.42.formatted(.percent)`, `Decimal(99.9).formatted(.currency(code: "RUB"))`.
-4. Тест на Swift Testing с `.locale(Locale(identifier: "ru_RU"))`, который фиксирует «160 мг».
-
-**Разобрать в Buzz.** Все мг, мл, проценты, цены и время на экранах через `FormatStyle`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 24. Форматы.** Показывай сон как `Measurement<UnitDuration>` («7,5 ч» / «7.5 hr»), даты как относительные («вчера») через `FormatStyle`. Никаких `DateFormatter` и ручной склейки строк. Подсмотри: `DesignSystem/Sources/Formatting.swift`. *Готово, когда:* смена языка устройства меняет формат без правок кода.
 
 **Документация.** [FormatStyle](https://developer.apple.com/documentation/foundation/formatstyle), [Measurement](https://developer.apple.com/documentation/foundation/measurement)
 
@@ -1034,18 +683,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** MVVM с Combine/RxSwift и биндингами → MVVM на Observation, без `@Published` и подписок.
 
-**Руками.**
-1. Модель с `enum State { case loading, loaded([Item]), failed(String) }` и `func load() async`.
-2. View делает `switch model.state`.
-3. Зависимости через `init`, `@ObservationIgnored`.
-4. Навигация уходит наружу через `Output`-замыкания (`addTapped: () -> Void`), модель не знает, кто её показывает.
-5. Тест модели с фейковым репозиторием.
-
-**Разобрать в Buzz.** `TodayFeature`, `CatalogFeature`, `StatsFeature`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 4. ViewModel на @Observable.** Задание в карточке B2, эта тема в нём тоже нужна.
-
 **Документация.** [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
 
 **Код в Buzz.** [`iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayViewModel.swift#L13), [`iOS/Modules/TodayFeature/Sources/TodayView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift), тесты [`iOS/Modules/TodayFeature/Tests/TodayViewModelTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Tests/TodayViewModelTests.swift).
@@ -1058,17 +695,6 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** Навигацию держит знакомый UIKit (координаторы, `UITabBarController`, `UINavigationController`), каждый экран — `UIHostingController` со SwiftUI-View. Так учишь новое по одному слою.
 
-**Руками.**
-1. `SceneDelegate` создаёт `AppCoordinator` с `UITabBarController` и четырьмя `UINavigationController`.
-2. Координатор вкладки создаёт ViewModel с `Output`-замыканиями и пушит `UIHostingController(rootView: View(model:))`.
-3. Шит: `vc.sheetPresentationController?.detents = [.medium(), .large()]`.
-4. Общий `environment` прокидывай в одном месте (`deps.host(view)`): каждый хостинг — отдельный корень SwiftUI.
-
-**Разобрать в Buzz.** App-таргет с координаторами и четырьмя вкладками.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 9. Новая вкладка через координатор.** Создай `WellbeingCoordinator` по образцу `StatsCoordinator`: `UIHostingController` с `WellbeingView` внутри `UINavigationController`. Добавь вкладку в `AppCoordinator`. Добавь диплинк `buzz://checkin/new`, который открывает форму, и тест в `DeepLinkTests.swift`. *Готово, когда:* в приложении есть вкладка «Самочувствие», `xcrun simctl openurl booted buzz://checkin/new` открывает форму.
-
 **Документация.** [UIHostingController](https://developer.apple.com/documentation/swiftui/uihostingcontroller), [UISheetPresentationController](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller)
 
 **Код в Buzz.** [`iOS/App/Sources/SceneDelegate.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/SceneDelegate.swift), [`iOS/App/Sources/Coordinators/AppCoordinator.swift:11`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/AppCoordinator.swift#L11), [`iOS/App/Sources/Coordinators/TodayCoordinator.swift:7`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/TodayCoordinator.swift#L7), [`iOS/App/Sources/AppDependencies.swift:89`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L89), диплинки [`iOS/App/Tests/DeepLinkTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Tests/DeepLinkTests.swift).
@@ -1080,18 +706,6 @@ cont.yield("привет"); cont.finish()
 ## E3. Clean Architecture в одной фиче
 
 **Что и зачем.** Слои View → ViewModel → UseCase → Repository. Бизнес-правила живут в use case-ах без UI и базы и тестируются чистыми функциями. Время (`now`) тоже зависимость.
-
-**Руками.**
-1. Чистая функция расчёта (без зависимостей) и её тест.
-2. Протокол use case-а и реализация поверх протоколов репозиториев.
-3. ViewModel знает только use case-ы.
-4. Модуль-фабрика `enum XModule { static func make(deps:output:) -> some View }`.
-5. Честно посчитай, сколько use case-ов оказались пустым пробросом.
-
-**Разобрать в Buzz.** `AddEntryFeature`: `NutritionCalculator`, `AddEntryUseCase` с валидацией и проверкой лимита.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 21. Use case по Clean.** Вынеси сохранение в `SaveCheckinUseCase`: проверка «одна отметка в день», «сон от 0 до 24», вызов репозитория. ViewModel зовёт только use case. Подсмотри: `AddEntryFeature/Sources/Domain/UseCases.swift`. *Готово, когда:* вторая отметка за день не сохраняется и показывает понятную ошибку.
 
 **Документация.** Это паттерн, официальной документации нет. Первоисточник: статья Robert C. Martin [«The Clean Architecture»](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
 
@@ -1107,17 +721,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** разбросанное по VC состояние → один `switch` со всем сценарием экрана. TCA — промышленная версия того же с макросами `@Reducer`, `@ObservableState` и `TestStore`.
 
-**Руками.**
-1. Напиши мини-фреймворк сам: `Effect`, `Reducer`, `@Observable Store` с `send(_:)` и `binding(_:send:)` (около 40 строк).
-2. Счётчик на нём: `increment`, `decrement`, `loadRandom` (эффект с `Task.sleep`).
-3. Тесты reducer-а без async.
-4. Потом подключи [TCA](https://github.com/pointfreeco/swift-composable-architecture) и перепиши тот же счётчик, сравни.
-
-**Разобрать в Buzz.** `SettingsFeature` на своём Redux; позже перевод на TCA как эксперимент.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 22. Мини-Redux для настроек.** Перенеси настройки напоминания в маленький стор: `State`, `enum Action`, чистая функция `reduce`. Подсмотри: `SettingsFeature/Sources/Redux/Store.swift` и `SettingsReducer.swift`. Сравни с тем, как то же сделано в MVVM, и запиши выводы в журнал. *Готово, когда:* reducer покрыт тестом без UI и без моков.
-
 **Документация.** [TCA](https://github.com/pointfreeco/swift-composable-architecture), [документация TCA](https://pointfreeco.github.io/swift-composable-architecture/main/documentation/composablearchitecture/)
 
 **Код в Buzz.** [`iOS/Modules/SettingsFeature/Sources/Redux/Store.swift:18`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/Redux/Store.swift#L18) и [`:38`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/Redux/Store.swift#L38), [`iOS/Modules/SettingsFeature/Sources/SettingsReducer.swift:6`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/SettingsReducer.swift#L6), [`iOS/Modules/SettingsFeature/Sources/SettingsState.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/SettingsState.swift), тесты [`iOS/Modules/SettingsFeature/Tests/SettingsReducerTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Tests/SettingsReducerTests.swift).
@@ -1132,18 +735,7 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** один таргет с папками → модули (Tuist-таргеты или SPM-пакет).
 
-**Руками.**
-1. Сделай локальный Swift-пакет с двумя таргетами `Domain` и `FeatureA`, подключи к приложению (File → Add Package Dependencies → Add Local).
-2. Попробуй импортировать в `FeatureA` то, что не объявлено в зависимостях.
-3. Сделай типы в `Domain` `public` и посмотри, что без этого ничего не видно.
-4. Потом то же самое через Tuist (H1) и `tuist inspect implicit-imports`.
-
-**Разобрать в Buzz.** 10 модулей по графу из `docs/infra/README.md`, раздел 2.
-
 **Зачем столько таргетов.** Фича-модулей всего пять, по одному на экран, остальное — слои и тесты. Хелпер [`Module`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/ProjectDescriptionHelpers/Module.swift) создаёт на каждый модуль два таргета (код и тесты): 10 × 2 + приложение с тестами + пакет `Shared` = 23. Плюсы: границы проверяет компилятор, правка в одной фиче пересобирает только её, тесты модуля идут за секунды, и это любят спрашивать на собеседованиях. Минусы: много `public`, свой `Bundle.module` у каждого модуля, больше церемоний при новом экране. Для продукта такого размера хватило бы 4–5 таргетов, для учебника текущая разбивка полезна.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 2. Модель в Domain.** В `Domain/Sources/Models/` создай `public struct Checkin: Identifiable, Hashable, Sendable` с полями `id`, `day: Date`, `mood: Int` (1–5), `sleepHours: Double`, `note: String`, `updatedAt`. В `Repositories.swift` добавь `public protocol CheckinRepository: Sendable` с `all()`, `save(_:)`, `delete(id:)`. В `Fakes/InMemoryRepositories.swift` напиши `InMemoryCheckinRepository`. Подсмотри: `Entry.swift`, `EntryRepository`. *Готово, когда:* `WellbeingFeature` видит `Checkin`, но не может `import SwiftData` (проверь, что сборка падает, и убери импорт).
 
 **Документация.** [Swift packages](https://developer.apple.com/documentation/xcode/swift-packages), [Organizing code with local packages](https://developer.apple.com/documentation/xcode/organizing-your-code-with-local-packages)
 
@@ -1161,18 +753,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** `XCTestCase`, `XCTAssertEqual`, `XCTestExpectation` → `@Test`, `#expect`, `#require`, `confirmation`. UI-тесты и замеры производительности пока остаются в XCTest.
 
-**Руками.**
-1. `import Testing`, `@Test func sum() { #expect(1 + 1 == 2) }`. Сломай тест и посмотри, как подробно выводится разница.
-2. `@Test(arguments: [(300.0, false), (450.0, true)])` для параметризации.
-3. `let x = try #require(optional)` вместо `XCTUnwrap`.
-4. `await #expect(throws: MyError.bad) { try await f() }`.
-5. `@Suite` со свойствами (общая настройка в `init`), трейты `.tags`, `.disabled`, `.serialized`.
-
-**Разобрать в Buzz.** Тесты `NutritionCalculator`, use case-а «Добавить», reducer-а «Настроек», `SyncEngine` (список сценариев в `sync.md`, раздел 6).
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 25. Тесты на Swift Testing.** Напиши тесты для `SaveCheckinUseCase` и `WellbeingViewModel`: `@Test`, `#expect`, `#require`, параметризованный `@Test(arguments: [-1, 0, 24, 25])` для часов сна. Подсмотри: `AddEntryUseCaseTests.swift`, `CatalogViewModelTests.swift`. *Готово, когда:* `mise run test` зелёный, в отчёте видно 4 прогона параметризованного теста.
-
 **Документация.** [Swift Testing](https://developer.apple.com/documentation/testing), [Migrating a test from XCTest](https://developer.apple.com/documentation/testing/migratingfromxctest)
 
 **Код в Buzz.** тесты клиента `iOS/Modules/<Модуль>/Tests/` (например [`iOS/Modules/Sync/Tests/SyncEngineTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Tests/SyncEngineTests.swift)), сервера [`Backend/Tests/AppTests/AppTests.swift:50`](https://github.com/disavle/buzz/blob/main/Backend/Tests/AppTests/AppTests.swift#L50).
@@ -1189,17 +769,6 @@ cont.yield("привет"); cont.finish()
 
 **Аналогии.** `@main App` → `entrypoint.swift` + `configure.swift`; `UIViewController` → `RouteCollection`; `URLSession` отправляет запрос → Vapor принимает `Request`; SwiftData → Fluent.
 
-**Руками.**
-1. `brew install vapor`, `vapor new Hello -n`, `cd Hello && swift run`.
-2. `curl http://127.0.0.1:8080/hello`.
-3. Открой `Package.swift` в Xcode и запусти схему; поставь брейкпоинт в обработчике и дерни его curl-ом.
-4. Не учи `EventLoopFuture`, `.map`, `.flatMap`: это стиль до async.
-
-**Разобрать в Buzz.** Запустить `Backend/` у себя на Mac (`swift run App serve` или `mise run backend:run`) и пройти curl-сценарий из `docs/backend/README.md`, раздел 8.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 28. Первый эндпоинт.** Задание в карточке G2, эта тема в нём тоже нужна.
-
 **Документация.** [Vapor docs](https://docs.vapor.codes), [Getting started](https://docs.vapor.codes/getting-started/hello-world/), [swift.org: Server](https://www.swift.org/documentation/server/)
 
 **Код в Buzz.** [`Backend/Sources/App/entrypoint.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/entrypoint.swift), [`Backend/Sources/App/configure.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift); путеводитель с упражнениями [`docs/backend/STEPS.md`](https://github.com/disavle/buzz/blob/main/docs/backend/STEPS.md).
@@ -1209,18 +778,6 @@ cont.yield("привет"); cont.finish()
 ---
 
 ## G2. Роуты, контроллеры, Content
-
-**Руками.**
-1. `app.get("hello", ":name") { req async throws -> String in ... }`, достань параметр `req.parameters.get("name")`.
-2. `struct Greeting: Content { let text: String }` и верни его из POST-роута, тело читай `try req.content.decode(...)`.
-3. Query: `try req.query.decode(Filter.self)`.
-4. Вынеси роуты в `struct HelloController: RouteCollection` и зарегистрируй `try app.register(collection:)`.
-5. Валидация: `extension Greeting: Validatable` и `try Greeting.validate(content: req)`.
-
-**Разобрать в Buzz.** Прочитать `routes.swift` и `MeController`, затем самому написать `DrinkController` и сравнить с каркасом.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 28. Первый эндпоинт.** Запусти бэкенд `mise run backend:run`. Создай `CheckinController` с `GET /checkins`, который пока отдаёт пустой массив, и зарегистрируй его в `routes.swift`. Подсмотри: `EntryController.swift`. *Готово, когда:* `curl localhost:8080/checkins` отвечает `[]`.
 
 **Документация.** [Routing](https://docs.vapor.codes/basics/routing/), [Content](https://docs.vapor.codes/basics/content/), [Controllers](https://docs.vapor.codes/basics/controllers/), [Validation](https://docs.vapor.codes/basics/validation/)
 
@@ -1234,19 +791,6 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** ORM Vapor. Модель — класс с обёртками `@ID`, `@Field`, `@Parent`, `@Timestamp`. В отличие от SwiftData, схема создаётся миграциями: каждое изменение — новая миграция, старые не трогаются.
 
-**Руками.**
-1. Модель `Todo` с `@ID`, `@Field(key: "title")`, `@Timestamp(key: "created_at", on: .create)`.
-2. Миграция `CreateTodo: AsyncMigration` с `prepare` и `revert`; `app.migrations.add(CreateTodo())`, `swift run App migrate`.
-3. Запрос: `Todo.query(on: req.db).filter(\.$title == "x").sort(\.$createdAt, .descending).all()`.
-4. Связь `@Parent`/`@Children` и подгрузка `.with(\.$parent)`.
-5. Мягкое удаление `@Timestamp(on: .delete)` и `.withDeleted()`.
-6. Добавь поле новой миграцией, а не правкой старой.
-
-**Разобрать в Buzz.** Модели `Drink` (с `@OptionalParent` владельца), `Entry` (id от клиента, деньги в копейках), упражнение из README: переписать статистику «по дням» на SQL `GROUP BY` через SQLKit.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 29. Таблица в базе.** Создай Fluent-модель `Checkin` и миграцию `CreateCheckin` со ссылкой на пользователя, добавь её в `configure.swift`. `POST /checkins` сохраняет запись, `GET` отдаёт записи из базы. Подсмотри: `Models/Entry.swift`, `Migrations/CreateEntry.swift`. *Готово, когда:* отправленная через `curl` отметка возвращается в `GET`.
-
 **Документация.** [Fluent overview](https://docs.vapor.codes/fluent/overview/), [Model](https://docs.vapor.codes/fluent/model/), [Migrations](https://docs.vapor.codes/fluent/migration/), [Query](https://docs.vapor.codes/fluent/query/)
 
 **Код в Buzz.** [`Backend/Sources/App/Models/Entry.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Models/Entry.swift), [`Backend/Sources/App/Migrations/CreateEntry.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Migrations/CreateEntry.swift), `withDeleted` в [`Backend/Sources/App/Controllers/EntryController.swift:47`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/EntryController.swift#L47), упражнение с SQLKit в [`Backend/Sources/App/Controllers/StatsController.swift:20`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/StatsController.swift#L20).
@@ -1259,17 +803,6 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** При логине сервер создаёт случайный токен и сохраняет его (`UserToken`). Клиент шлёт `Authorization: Bearer <token>`, middleware находит пользователя.
 
-**Руками.**
-1. `User: ModelAuthenticatable` (email + хеш пароля через `Bcrypt`).
-2. `UserToken: ModelTokenAuthenticatable`.
-3. `/login` с `User.authenticator()` (basic) отдаёт новый токен.
-4. Группа роутов `app.grouped(UserToken.authenticator(), User.guardMiddleware())`, внутри `try req.auth.require(User.self)`.
-
-**Разобрать в Buzz.** Прочитать `AuthController`; затем добавить срок жизни токена (упражнение из README).
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 31. Авторизация и коды ошибок.** Закрой `/checkins` проверкой bearer-токена и отдавай только записи текущего пользователя. Для второй отметки за день отвечай кодом `checkin_duplicate_day` через `APIError`. Подсмотри: `Errors/APIError.swift`, `APIErrorMiddleware.swift`. *Готово, когда:* без токена приходит 401, дубль дня приходит как понятный код ошибки.
-
 **Документация.** [Authentication](https://docs.vapor.codes/security/authentication/), [Passwords](https://docs.vapor.codes/security/passwords/)
 
 **Код в Buzz.** [`Backend/Sources/App/Models/UserToken.swift:30`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Models/UserToken.swift#L30), [`Backend/Sources/App/Controllers/AuthController.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/AuthController.swift), [`Backend/Sources/App/routes.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/routes.swift).
@@ -1281,17 +814,6 @@ cont.yield("привет"); cont.finish()
 ## G5. Ошибки кодами и свой middleware
 
 **Что и зачем.** Сервер не пишет тексты для людей: отдаёт машинный код `{"error": "limit_invalid", "reason": "..."}`, а клиент переводит его через String Catalog. Неизвестный код раскодируется в `.unknown`, и старое приложение не падает.
-
-**Руками.**
-1. Брось `Abort(.notFound)` и посмотри на стандартный ответ.
-2. Напиши свой `AsyncMiddleware`, который ловит ошибки из `next.respond(to:)` и превращает их в свой JSON.
-3. Замени стандартный `ErrorMiddleware` своим в `configure.swift`.
-4. В enum кодов реализуй `init(from:)` с запасным `.unknown`.
-
-**Разобрать в Buzz.** Прочитать `Errors/` и `Shared/APIError.swift`; добавить новый код ошибки на обеих сторонах.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 31. Авторизация и коды ошибок.** Задание в карточке G4, эта тема в нём тоже нужна.
 
 **Документация.** [Errors](https://docs.vapor.codes/basics/errors/), [Middleware](https://docs.vapor.codes/advanced/middleware/)
 
@@ -1307,16 +829,6 @@ cont.yield("привет"); cont.finish()
 
 **Правила.** `Shared` зависит только от Foundation; типы `Codable`, `Sendable`, `Hashable`; на сервере `extension XDTO: @retroactive Content {}`; общие `JSONEncoder`/`JSONDecoder` с ISO 8601; модель БД и DTO — разные типы.
 
-**Руками.**
-1. File → New → Package `Shared` с одной структурой.
-2. Подключи его локально в приложение и в Vapor-проект.
-3. Переименуй поле и посмотри, как компилятор подсветил обе стороны.
-
-**Разобрать в Buzz.** Посмотреть, как `Shared/` подключён к Tuist в `iOS/Tuist/Package.swift` и к Vapor в `Backend/Package.swift`; добавить поле в DTO и пройти по ошибкам компиляции на обеих сторонах.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 30. Общий DTO.** Создай `CheckinDTO` в `Shared/Sources/Shared/` и используй его и в контроллере Vapor, и в приложении. Подсмотри: `EntryDTO.swift`, `DTOs/Shared+Content.swift`. *Готово, когда:* переименуй поле в DTO и убедись, что не собираются обе стороны.
-
 **Документация.** [Creating a standalone Swift package](https://developer.apple.com/documentation/xcode/creating-a-standalone-swift-package-with-xcode). Альтернатива: [swift-openapi-generator](https://github.com/apple/swift-openapi-generator) + [swift-openapi-vapor](https://github.com/swift-server/swift-openapi-vapor).
 
 **Код в Buzz.** [`Shared/Sources/Shared/`](https://github.com/disavle/buzz/tree/main/Shared/Sources/Shared), на сервере [`Backend/Sources/App/DTOs/Shared+Content.swift:6`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/DTOs/Shared+Content.swift#L6), на клиенте [`iOS/Modules/Networking/Sources/DTOMapping.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/DTOMapping.swift).
@@ -1326,17 +838,6 @@ cont.yield("привет"); cont.finish()
 ---
 
 ## G7. Тесты Vapor (VaporTesting)
-
-**Руками.**
-1. Хелпер, который поднимает приложение в памяти с in-memory SQLite, мигрирует и откатывает.
-2. `try await app.testing().test(.GET, "hello", afterResponse: { res in #expect(res.status == .ok) })`.
-3. Тест с телом и заголовком `bearerAuthorization`.
-4. В тестах `app.passwords.use(.plaintext)`, чтобы не ждать Bcrypt.
-
-**Разобрать в Buzz.** Прочитать 8 тестов в `AppTests.swift`, затем написать тест на новый код ошибки из G5.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 32. Тесты сервера.** Напиши тесты VaporTesting: создание, чтение, 401 без токена, дубль дня. Подсмотри тесты в `Backend/Tests`. *Готово, когда:* `mise run backend:test` зелёный.
 
 **Документация.** [Testing](https://docs.vapor.codes/advanced/testing/)
 
@@ -1351,17 +852,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** SQLite для старта, PostgreSQL для настоящего сервера. Переход — замена драйвера и одной строки в `configure.swift`. Деплой — Docker-образ из шаблона Vapor на VPS или Fly.io.
 
 **Куда деплоить бесплатно.** Ветка «Бесплатный хостинг бэкенда» рекомендует Render (Docker-образ с Vapor) и Neon (управляемый Postgres), оба без привязки карты. GitHub сам бэкенд не хостит. Как это устроено, смотри в G9. Документация: [Render: Docker](https://render.com/docs/docker), [Neon](https://neon.tech/docs).
-
-**Руками.**
-1. Установи Docker Desktop (или OrbStack), `docker run -e POSTGRES_PASSWORD=... -p 5432:5432 postgres`.
-2. Подключи `FluentPostgresDriver`, читай настройки из переменных окружения (`Environment.get`).
-3. `docker compose up` из шаблона `vapor new` с Postgres.
-4. Собери образ из `Dockerfile` шаблона и запусти локально.
-
-**Разобрать в Buzz.** Шаг 7 из README бэкенда: Postgres в Docker, затем деплой.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 37. Postgres локально.** Подними Postgres в Docker, запусти бэкенд с `DATABASE_URL` и проверь, что миграция `CreateCheckin` проходит на Postgres так же, как на SQLite. *Готово, когда:* таблица `checkins` видна в `psql`.
 
 **Документация.** [Docker deploy](https://docs.vapor.codes/deploy/docker/), [Fluent: Postgres](https://docs.vapor.codes/fluent/overview/#postgresql), [Environment](https://docs.vapor.codes/basics/environment/)
 
@@ -1389,19 +879,7 @@ cont.yield("привет"); cont.finish()
 - *Deploy hook*: секретный URL Render; POST-запрос на него с `imgURL` запускает выкатку нужного образа. Хранится в секрете `RENDER_DEPLOY_HOOK`.
 - *12-factor config*: всё, что меняется между окружениями (`DATABASE_URL`, `PORT`, `AUTO_MIGRATE`), читается из env, а не зашивается в код.
 
-**Руками.**
-1. Напиши `Dockerfile` в две стадии для игрушечного Vapor-приложения: `FROM swift:6.x AS build` → `swift build -c release`, потом `FROM swift:6.x-slim` и `COPY --from=build` бинарника.
-2. `docker build -t hello .` и `docker run -p 8080:8080 -e PORT=8080 hello`, проверь `curl localhost:8080`.
-3. В `configure.swift` прочитай `Environment.get("DATABASE_URL")` и подключи Postgres через `app.databases.use(try .postgres(url: ...), as: .psql)`.
-4. Заведи бесплатную базу на Neon, передай её URL в `docker run -e DATABASE_URL=...` и убедись, что миграции прошли.
-5. По желанию: создай сервис на Render из образа и дёрни его deploy hook через `curl -X POST`.
-
 **Деплой не на каждый пуш.** Job `deploy` запускается только когда пуш в `main` меняет `Backend/Sources`, `Backend/Package.*`, `Backend/Dockerfile` или `Shared/` (фильтр `deploy` в `dorny/paths-filter`, PR #8). Тесты, документы и сам workflow сервер не перевыкатывают. Ещё деплой можно запустить руками: Actions → CI → Run workflow (`workflow_dispatch`, PR #7).
-
-**Разобрать в Buzz.** `Backend/Dockerfile` (две стадии и почему контекст — корень), `.dockerignore`, ветку с `DATABASE_URL` в `configure.swift`, job `deploy` в `ci.yml` и пошаговую инструкцию `docs/backend/DEPLOY.md`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 39. Деплой.** После слияния бэкенд выкатится на Render сам: посмотри job `deploy` в Actions и проверь новый эндпоинт на сервере. Прочитай `renovate.json` и найди, какие обновления вливаются сами. *Готово, когда:* приложение на iPhone сохраняет отметку на сервер в Render.
 
 **Документация.** [Docker: multi-stage builds](https://docs.docker.com/build/building/multi-stage/), [Vapor: Docker](https://docs.vapor.codes/deploy/docker/), [GitHub: Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry), [Render: Deploy hooks](https://render.com/docs/deploy-hooks), [Render: Free](https://render.com/docs/free), [Neon: Connect](https://neon.tech/docs/connect/connect-from-any-app), [The Twelve-Factor App: Config](https://12factor.net/config)
 
@@ -1419,20 +897,6 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** клики в Xcode и конфликты pbxproj → `tuist generate`.
 
-**Руками.**
-1. Поставь Tuist через mise (H2): `mise use tuist@latest`.
-2. `tuist init` в пустой папке, открой `Project.swift`, `tuist generate`.
-3. `tuist edit`: манифесты открываются в Xcode с автодополнением.
-4. Добавь второй таргет-фреймворк и зависимость `.target(name:)`.
-5. Вынеси создание модуля в хелпер в `Tuist/ProjectDescriptionHelpers/`.
-6. `tuist graph`, `tuist inspect implicit-imports`.
-
-**Разобрать в Buzz.** Прочитать `iOS/Project.swift` и `Module.swift`, добавить пустой модуль одной строкой и выполнить `tuist graph`. Для сборки с нуля руками есть `docs/infra/HANDS-ON.md`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 1. Ветка и пустой модуль.** Создай ветку `learn/wellbeing` от `main`. В `iOS/Project.swift` добавь модуль `WellbeingFeature` по образцу `StatsFeature` (те же `featureDeps`, `resources: true`, `tests: true`) и подключи его к таргету приложения. Создай файл `Sources/WellbeingView.swift` с `Text("Самочувствие")`. Выполни `mise run generate`. *Готово, когда:* проект собирается, в Xcode появились таргеты `WellbeingFeature` и `WellbeingFeatureTests`.
-- **День 2. Модель в Domain.** Задание в карточке E5, эта тема в нём тоже нужна.
-
 **Документация.** [Tuist docs](https://docs.tuist.dev)
 
 **Код в Buzz.** [`iOS/Project.swift`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift), [`iOS/Tuist.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist.swift), [`iOS/Tuist/Package.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/Package.swift), [`iOS/Tuist/ProjectDescriptionHelpers/Module.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/ProjectDescriptionHelpers/Module.swift); пошаговый разбор [`docs/infra/HANDS-ON.md`](https://github.com/disavle/buzz/blob/main/docs/infra/HANDS-ON.md).
@@ -1445,21 +909,9 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** Один файл `mise.toml` в репозитории фиксирует версии tuist, ruby, swiftlint и описывает задачи. Те же версии у тебя и в CI. Замена brew для проектных инструментов и Makefile для команд.
 
-**Руками.**
-1. `brew install mise`, добавь активацию в shell (`mise activate zsh`).
-2. В пустой папке `mise use tuist@latest` и посмотри, что записалось в `mise.toml`.
-3. Добавь задачу `[tasks.hello] run = "echo hi"` и вызови `mise run hello`.
-4. Задача с зависимостями `depends = [...]`.
-5. Секреты в `mise.local.toml` (в `.gitignore`).
-
 **Подвох.** `mise generate` — встроенная команда mise, поэтому своя задача вызывается как `mise run generate`.
 
 **Алиасы zsh.** Файл `scripts/buzz.zsh` подключается строкой `source <путь>/scripts/buzz.zsh` в `~/.zshrc` и даёт команды `buzz-ios` (приложение в симуляторе через новую задачу `mise run ios` = `tuist run Buzz`), `buzz-api` (бэкенд), `buzz-dev` (бэкенд в фоне плюс приложение), `buzz-stop`, а также `buzz`, `buzz-gen`, `buzz-open`, `buzz-test`, `buzz-lint`. Репозиторий скрипт находит по своему пути (`${${(%):-%x}:A:h:h}`) и вызывает `mise -C <репо>`, поэтому команды работают из любой папки. Чтобы разобраться, напиши свою функцию `myproj-run() { mise -C ~/code/myproj run dev }` в `~/.zshrc` и сравни со скриптом.
-
-**Разобрать в Buzz.** Прочитать `mise.toml` и после клона репозитория поднять всё одной `mise run generate`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 1. Ветка и пустой модуль.** Задание в карточке H1, эта тема в нём тоже нужна.
 
 **Документация.** [mise](https://mise.jdx.dev), [Tasks](https://mise.jdx.dev/tasks/)
 
@@ -1473,16 +925,6 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** fastlane описывает сборку и выкладку как Ruby-скрипт с «дорожками» (lanes). match хранит сертификаты и профили в отдельном приватном git-репозитории, зашифрованными. API-ключ App Store Connect даёт доступ без Apple ID и двухфакторки.
 
-**Руками.**
-1. `Gemfile` с fastlane, `bundle install`, всегда запускай через `bundle exec fastlane`.
-2. Lane `test` с `run_tests(scheme:)`.
-3. Когда будет Apple Developer Program: `match` в режиме `development`, затем `appstore`; `app_store_connect_api_key`; lane `beta` с `build_app` и `upload_to_testflight`.
-
-**Разобрать в Buzz.** Lane `test` локально; `certs` и `beta` после покупки Developer Program.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 40. Выпуск и итоги.** Задание в карточке H7, эта тема в нём тоже нужна.
-
 **Документация.** [fastlane docs](https://docs.fastlane.tools), [match](https://docs.fastlane.tools/actions/match/), [App Store Connect API](https://docs.fastlane.tools/app-store-connect-api/)
 
 **Код в Buzz.** [`iOS/fastlane/Fastfile`](https://github.com/disavle/buzz/blob/main/iOS/fastlane/Fastfile), [`iOS/fastlane/Matchfile`](https://github.com/disavle/buzz/blob/main/iOS/fastlane/Matchfile), [`iOS/Gemfile`](https://github.com/disavle/buzz/blob/main/iOS/Gemfile).
@@ -1494,19 +936,6 @@ cont.yield("привет"); cont.finish()
 ## H4. GitHub Actions
 
 **Что и зачем.** CI в том же репозитории: YAML-файлы в `.github/workflows/`, запуск на PR и тегах.
-
-**Руками.**
-1. Workflow на `pull_request`, job на `macos-26`, шаги `actions/checkout`, `jdx/mise-action`, `mise run test`.
-2. Фильтр `paths:`, чтобы iOS-job не запускался на изменения бэкенда.
-3. Job на тег `ios-v*`, зависящий от тестов (`needs:`).
-4. Секреты в Settings → Secrets and variables → Actions.
-5. Бэкенд на Linux в контейнере `swift:6.2` с `swift test`.
-6. `dorny/paths-filter` внутри одного workflow: job `changes` отдаёт флаги `ios`/`backend`/`deploy`, остальные job смотрят на них в `if:`. Плюс `workflow_dispatch` для ручного запуска.
-
-**Разобрать в Buzz.** Зелёный CI на пустом проекте (шаг 4 порядка внедрения).
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 38. Линт и CI.** Задание в карточке H5, эта тема в нём тоже нужна.
 
 **Документация.** [GitHub Actions](https://docs.github.com/actions)
 
@@ -1520,16 +949,7 @@ cont.yield("привет"); cont.finish()
 
 **Что и зачем.** swift-format — официальный форматтер, с Xcode 16 входит в тулчейн (`xcrun swift-format`). SwiftLint оставлен только для смысловых правил. Pre-commit хук запускает линт перед коммитом.
 
-**Руками.**
-1. `xcrun swift-format format -i -r Sources/` и посмотри дифф.
-2. `swiftlint` в корне проекта с конфигом `.swiftlint.yml`.
-3. `mise generate git-pre-commit --write --task=lint` и попробуй закоммитить плохой код.
-4. Вариант без генератора: положи скрипт `pre-commit` в папку `.githooks/` в репозитории и включи её командой `git config core.hooksPath .githooks`. Так хуки лежат в git и одинаковы у всех.
-
 **В Buzz (PR #9).** Хуки `pre-commit` и `pre-push` в `.githooks/` запускают `mise run lint`; коммит, где только документация, линт пропускает. Включаются задачей `mise run setup:hooks`, она уже входит в `mise run generate`. Повод: CI падал на swift-format, теперь это ловится до пуша. Код: [`.githooks/pre-commit`](https://github.com/disavle/buzz/blob/main/.githooks/pre-commit), [`.githooks/run-lint`](https://github.com/disavle/buzz/blob/main/.githooks/run-lint), задача [`mise.toml:46`](https://github.com/disavle/buzz/blob/main/mise.toml#L46).
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 38. Линт и CI.** Закоммить и запушь ветку. Хуки из `.githooks/` прогонят линт; почини замечания swift-format и SwiftLint. Открой PR и посмотри, какие job запустил `Changes` в `ci.yml`. *Готово, когда:* все проверки в PR зелёные.
 
 **Документация.** [swift-format](https://github.com/swiftlang/swift-format), [SwiftLint](https://github.com/realm/SwiftLint), [mise generate git-pre-commit](https://mise.jdx.dev/cli/generate/git-pre-commit.html)
 
@@ -1542,11 +962,6 @@ cont.yield("привет"); cont.finish()
 ## H6. Renovate
 
 **Что и зачем.** Бот раз в неделю открывает PR с обновлениями версий в `mise.toml`, Gemfile, GitHub Actions и SPM. В отличие от Dependabot, понимает `mise.toml`.
-
-**Руками.** Установи GitHub App Renovate на репозиторий, положи `renovate.json`, дождись первого PR «Configure Renovate».
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 39. Деплой.** Задание в карточке G9, эта тема в нём тоже нужна.
 
 **Документация.** [Renovate docs](https://docs.renovatebot.com)
 
@@ -1562,20 +977,7 @@ cont.yield("привет"); cont.finish()
 
 **Было → стало.** Git Flow с `develop`/`release`/`hotfix`, ручная дисциплина «не пушим в master» → GitHub Flow + ruleset, который проверяет правила за тебя.
 
-**Руками.**
-1. В тестовом репозитории: Settings → General → Pull Requests, оставь только **Allow squash merging**, включи **Allow auto-merge** и **Automatically delete head branches**.
-2. Settings → Rules → Rulesets → New branch ruleset на `main`: **Require a pull request**, **Require status checks to pass**, **Block force pushes**.
-3. Попробуй `git push origin main` напрямую и прочитай отказ.
-4. Сделай ветку `feature/test`, открой PR, дождись зелёного CI, влей через **Squash and merge** и посмотри историю `main`.
-5. Поставь тег `git tag v0.0.1 && git push origin v0.0.1` и проверь, что workflow с фильтром по тегам запустился.
-
 **Ревью до пуша (с 2026-10-16).** Ветки Claude ничего не пушат в `disavle/buzz`, пока ты не посмотрел код. Изменения лежат патчем в `/mnt/project-files/review/` с коротким пояснением. Посмотреть и применить у себя: `git apply --stat x.patch` (что меняется), `git apply --check x.patch` (ляжет ли), `git am x.patch` (применить с сообщением коммита). Потом ты пишешь «ок», и ветка пушит и открывает PR.
-
-**Разобрать в Buzz.** Пройти первый блок `SETUP.md` («Сейчас (бесплатно)»): поставить Renovate, настроить слияние и ruleset на `main`. Затем сделать первую свою правку в Buzz через ветку и PR по `CONTRIBUTING.md`.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 1. Ветка и пустой модуль.** Задание в карточке H1, эта тема в нём тоже нужна.
-- **День 40. Выпуск и итоги.** Влей PR через squash и посмотри историю `main`. Нарисуй на бумаге путь отметки от нажатия «Сохранить» до строки в Postgres и обратно на второе устройство. Запиши в журнал 5 строк для резюме. Бонус, когда будет аккаунт разработчика: lane `beta` в fastlane и тег `ios-v*`. *Готово, когда:* фича «Самочувствие» в `main`, схема пути данных нарисована.
 
 **Документация.** [GitHub Flow](https://docs.github.com/get-started/using-github/github-flow), [Rulesets](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets), [Squash merging](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/configuring-commit-squashing-for-pull-requests), [Auto-merge](https://docs.github.com/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request)
 
@@ -1608,17 +1010,6 @@ cont.yield("привет"); cont.finish()
 - [ ] Ruleset на `main`: обязательный PR, проверки `iOS` и `Backend`, запрет force push.
 - [ ] Позже, с Apple Developer Program: секреты для CI и match (шаги 8–13 в `SETUP.md`).
 
-**Руками.**
-1. Заведи пустой тестовый репозиторий на GitHub с README, лицензией MIT и `.gitignore` Swift прямо из формы создания.
-2. Добавь `README.ru.md` и ссылки-переключатели языка в начале обоих файлов.
-3. Заполни About и topics, посмотри, как репозиторий стал находиться в поиске по topic.
-4. Пройди шаги из H7 (ruleset, squash) и H6 (Renovate).
-
-**Разобрать в Buzz.** Отметить галочки в списке выше по мере настройки и сравнить, что в Buzz сделано файлами, а что только кнопками в Settings.
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 40. Выпуск и итоги.** Задание в карточке H7, эта тема в нём тоже нужна.
-
 **Документация.** [About README](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes), [Licensing a repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), [Contributor guidelines](https://docs.github.com/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors), [Topics](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics)
 
 **Код в Buzz.** корень репозитория [disavle/buzz](https://github.com/disavle/buzz).
@@ -1632,18 +1023,6 @@ cont.yield("привет"); cont.finish()
 **Что и зачем.** `CHANGELOG.md` — человеческий список изменений по версиям в формате Keep a Changelog: сверху `[Unreleased]`, ниже версии с датой, внутри разделы. Версии по SemVer (`MAJOR.MINOR.PATCH`). Тег `v*` запускает workflow, который берёт раздел нужной версии из `CHANGELOG.md` и создаёт **черновик** GitHub Release; ты проверяешь текст и жмёшь «Publish release». Тег `ios-v*` — отдельная история, он отправляет сборку в TestFlight (H4), так что релиз на GitHub ничего не выкладывает в Apple.
 
 **Было → стало.** Release notes вручную в App Store Connect и в чате команды → один файл в репозитории, из которого текст попадает в релиз автоматически.
-
-**Руками.**
-1. В тестовом репозитории заведи `CHANGELOG.md` с разделами `## [Unreleased]` и `## [0.1.0] - <дата>`.
-2. Вырежи раздел одной версии командой `awk` из workflow Buzz и проверь вывод в терминале.
-3. Сделай workflow на `push: tags: ["v*"]` с `permissions: contents: write` и шагом `gh release create "$GITHUB_REF_NAME" --draft --notes-file notes.md`.
-4. `git tag v0.1.0 && git push origin v0.1.0`, открой Releases и опубликуй черновик.
-5. Добавь пункт в `[Unreleased]`, перенеси его в новую версию `0.1.1` и выпусти её.
-
-**Разобрать в Buzz.** Прочитать `CHANGELOG.md` (английская и русская части в каждой версии) и `release.yml`. Что будет, если поставить тег версии, которой нет в `CHANGELOG.md`?
-
-**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
-- **День 40. Выпуск и итоги.** Задание в карточке H7. Здесь добавь в `[Unreleased]` строку про «Самочувствие» (EN и RU), перенеси её в версию `0.2.0`, поставь тег `v0.2.0` и опубликуй черновик релиза.
 
 **Документация.** [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), [Semantic Versioning](https://semver.org/lang/ru/), [GitHub: About releases](https://docs.github.com/repositories/releasing-projects-on-github/about-releases), [gh release create](https://cli.github.com/manual/gh_release_create)
 
@@ -1669,3 +1048,4 @@ cont.yield("привет"); cont.finish()
 - **2026-10-18.** PR #9 и #10 влиты: у A8 (Combine), C4 (`localEdits`), C7 (адрес сервера, условие `[sdk=iphonesimulator*]`), H5 (git-хуки) появились ссылки на код. Ссылки на строки во всём конспекте перепроверены по текущему `main` и сдвинуты там, где код поменялся.
 - **2026-10-18.** Отдельный план обучения (`plan.md`) убран по просьбе пользователя. Вместо него в начале справочника курс на 40 будних дней: каждый день пишешь кусочек новой фичи «Самочувствие» в Buzz, задание дня лежит в разделе «Уроки курса» нужной карточки. Объяснение «Зачем столько таргетов» перенесено в E5.
 - **2026-10-18.** Новая карточка H9: `CHANGELOG.md` по Keep a Changelog и черновик GitHub Release по тегу `v*` (PR #13). В день 40 добавлен выпуск версии `v0.2.0` с фичей «Самочувствие».
+- **2026-10-18.** Справочник и курс разделены по просьбе пользователя. Отсюда убраны шаги «Руками», «Разобрать в Buzz» и уроки, они переехали в [course.md](course.md). Новые карточки: A9 (Mutex), B14 (доступность), C8 (Codable, JSON, Decimal).
