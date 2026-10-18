@@ -59,7 +59,7 @@ buzz/
 ├── Backend/             сервер на Vapor
 ├── Shared/              DTO, общие для приложения и сервера
 ├── Mocks/               каталог и примеры JSON ответов API
-├── docs/                дизайн, архитектура, API, план обучения
+├── docs/                дизайн, архитектура, API, справочник и курс
 └── mise.toml            инструменты и задачи
 ```
 
@@ -100,7 +100,7 @@ mise run open        # открывает проект в Xcode
 - [Бэкенд](docs/backend/README.md), [API](docs/backend/API.md), [по шагам](docs/backend/STEPS.md), [бесплатный деплой: Render + Neon](docs/backend/DEPLOY.md)
 - [Инфраструктура: Tuist, mise, CI](docs/infra/README.md), [практика](docs/infra/HANDS-ON.md)
 - [Дизайн-токены](docs/design/README.md) и [все экраны](docs/design/screens/) (светлая, тёмная тема, английский); исходники холста в [docs/design/canvas](docs/design/canvas/)
-- [План обучения](docs/learning/plan.md) и [справочник по новым технологиям](docs/learning/handbook.md)
+- [Справочник по новым технологиям и курс на 40 дней](docs/learning/handbook.md)
 
 Документы — снимок на момент создания репозитория. Какие-то примеры кода в них написаны раньше реального кода и могут от него отличаться: правда в коде.
 

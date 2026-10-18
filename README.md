@@ -59,7 +59,7 @@ buzz/
 ├── Backend/             Vapor server
 ├── Shared/              DTOs shared by the app and the server
 ├── Mocks/               catalog and example API JSON
-├── docs/                design, architecture, API, study plan (in Russian)
+├── docs/                design, architecture, API, handbook and course (in Russian)
 └── mise.toml            tools and tasks
 ```
 
@@ -102,7 +102,7 @@ The documentation is in Russian (my native language):
 - [Backend](docs/backend/README.md), [API](docs/backend/API.md), [step by step](docs/backend/STEPS.md), [free deploy: Render + Neon](docs/backend/DEPLOY.md)
 - [Infrastructure: Tuist, mise, CI](docs/infra/README.md), [hands-on](docs/infra/HANDS-ON.md)
 - [Design tokens](docs/design/README.md) and [all screens](docs/design/screens/) (light, dark, English); source of the design canvas in [docs/design/canvas](docs/design/canvas/)
-- [Study plan](docs/learning/plan.md) and [handbook of new technologies](docs/learning/handbook.md)
+- [Handbook of new technologies with a 40-day course](docs/learning/handbook.md)
 
 The docs are a snapshot from the day the repository was created. Some code samples in them were written before the real code and may differ from it: the code is the source of truth.
 
