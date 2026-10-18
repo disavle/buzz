@@ -11,7 +11,7 @@
 # ================================
 # Stage 1: build
 # ================================
-FROM swift:6.2-noble AS build
+FROM swift:6.4-noble AS build
 
 # jemalloc is a faster memory allocator for servers on Linux
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
