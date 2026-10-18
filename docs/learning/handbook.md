@@ -7,7 +7,7 @@
 - **Было → стало.** Что это заменяет из UIKit-стека.
 - **Руками.** Короткая инструкция: шаги в пустой песочнице и минимальный пример на игрушечном коде (счётчик, `Item`), чтобы понять инструмент отдельно от Buzz.
 - **Разобрать в Buzz.** Что посмотреть и попробовать поправить в коде Buzz. Код пишут ветки проекта, а ты потом изучаешь и правишь его сам; эта строка подсказывает, на что смотреть.
-- **Код в Buzz**: файлы и строки, где это используется. Пути от корня репозитория Buzz (`iOS/`, `Backend/`, `Shared/`, `Mocks/`, `docs/`). Пока репозиторий не опубликован, его копия лежит в проекте как git bundle: `git clone /mnt/project-files/repo/buzz.bundle buzz`.
+- **Код в Buzz**: файлы и строки, где это используется. Ссылки ведут в репозиторий [disavle/buzz](https://github.com/disavle/buzz), ветка `main`; клонировать: `git clone https://github.com/disavle/buzz.git`.
 - **Описание** и **документация**: документ проекта в `docs/` и официальная документация.
 
 Видео WWDC по темам собраны в [plan.md](plan.md), здесь только ссылки на документацию.
@@ -26,6 +26,7 @@
 - [ ] A5. Мост со старым кодом: continuation
 - [ ] A6. Typed throws
 - [ ] A7. Макросы
+- [ ] A8. Combine: Subject, операторы, AnyCancellable
 
 **B. Интерфейс на SwiftUI**
 - [ ] B1. Мышление SwiftUI: UI как функция от состояния
@@ -75,6 +76,7 @@
 - [ ] G6. Общий пакет Shared с DTO
 - [ ] G7. Тесты Vapor (VaporTesting)
 - [ ] G8. Postgres в Docker и деплой
+- [ ] G9. Деплой: Docker multi-stage, GHCR, deploy hook, 12-factor
 
 **H. Инфраструктура**
 - [ ] H1. Tuist: проект как код
@@ -83,6 +85,8 @@
 - [ ] H4. GitHub Actions
 - [ ] H5. swift-format, SwiftLint, pre-commit
 - [ ] H6. Renovate
+- [ ] H7. GitHub Flow и защита main (rulesets)
+- [ ] H8. Заведение репозитория: чек-лист
 
 ---
 
@@ -117,9 +121,9 @@ task.cancel()
 
 **Документация.** [Swift Book: Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/), [Task](https://developer.apple.com/documentation/swift/task)
 
-**Код в Buzz.** `iOS/Modules/Networking/Sources/APIClient.swift:37` (`send` на async/await), обработчики `Backend/Sources/App/Controllers/EntryController.swift`.
+**Код в Buzz.** [`iOS/Modules/Networking/Sources/APIClient.swift:37`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/APIClient.swift#L37) (`send` на async/await), обработчики [`Backend/Sources/App/Controllers/EntryController.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/EntryController.swift).
 
-**Описание.** `docs/client/README.md`, раздел 4 (сеть); весь бэкенд (`docs/backend/README.md`, раздел 7).
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), раздел 4 (сеть); весь бэкенд ([`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 7).
 
 ---
 
@@ -146,9 +150,9 @@ let total = try await withThrowingTaskGroup(of: Int.self) { group in
 
 **Документация.** [Swift Book: Concurrency → Calling Asynchronous Functions in Parallel](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/), [TaskGroup](https://developer.apple.com/documentation/swift/taskgroup)
 
-**Код в Buzz.** в коде пока не используется; удобное место попробовать `async let`: загрузка данных в `iOS/Modules/StatsFeature/Sources/StatsViewModel.swift`.
+**Код в Buzz.** в коде пока не используется; удобное место попробовать `async let`: загрузка данных в [`iOS/Modules/StatsFeature/Sources/StatsViewModel.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsViewModel.swift).
 
-**Описание.** `docs/learning/plan.md`, тема 1, упражнение 3.
+**Описание.** [`docs/learning/plan.md`](https://github.com/disavle/buzz/blob/main/docs/learning/plan.md), тема 1, упражнение 3.
 
 ---
 
@@ -178,9 +182,9 @@ actor Counter {
 
 **Документация.** [Swift Book: Actors](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Actors), [Swift 6 migration guide](https://www.swift.org/migration/documentation/migrationguide/), [Sendable](https://developer.apple.com/documentation/swift/sendable)
 
-**Код в Buzz.** `actor SyncEngine` в `iOS/Modules/Sync/Sources/SyncEngine.swift:12`, `actor SyncStore` в `iOS/Modules/Sync/Sources/SyncStore.swift:12`, `actor KeychainTokenStore` в `iOS/Modules/Networking/Sources/TokenStore.swift:17`, `@MainActor` ViewModel в `iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`, `Sendable`-класс `iOS/Modules/Domain/Sources/Broadcaster.swift:12`.
+**Код в Buzz.** `actor SyncEngine` в [`iOS/Modules/Sync/Sources/SyncEngine.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncEngine.swift#L12), `actor SyncStore` в [`iOS/Modules/Sync/Sources/SyncStore.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncStore.swift#L12), `actor KeychainTokenStore` в [`iOS/Modules/Networking/Sources/TokenStore.swift:17`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/TokenStore.swift#L17), `@MainActor` ViewModel в [`iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayViewModel.swift#L13), `Sendable`-класс [`iOS/Modules/Domain/Sources/Broadcaster.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Broadcaster.swift#L12).
 
-**Описание.** Все ViewModel `@MainActor` (`docs/client/architecture.md`, раздел 5); `actor SyncEngine` (`docs/client/sync.md`); модели Fluent `@unchecked Sendable` (`docs/backend/README.md`, раздел 7); Swift 6 strict на весь проект (`docs/infra/README.md`, раздел 3).
+**Описание.** Все ViewModel `@MainActor` ([`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 5); `actor SyncEngine` ([`docs/client/sync.md`](https://github.com/disavle/buzz/blob/main/docs/client/sync.md)); модели Fluent `@unchecked Sendable` ([`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 7); Swift 6 strict на весь проект ([`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 3).
 
 ---
 
@@ -206,9 +210,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [AsyncStream](https://developer.apple.com/documentation/swift/asyncstream), [AsyncSequence](https://developer.apple.com/documentation/swift/asyncsequence)
 
-**Код в Buzz.** `iOS/Modules/Sync/Sources/NetworkMonitor.swift:28` (колбэк → `AsyncStream`), `iOS/Modules/Sync/Sources/SyncEngine.swift:48` и `:63`, `iOS/Modules/Domain/Sources/Broadcaster.swift:12` (один источник, много подписчиков).
+**Код в Buzz.** [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:28`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L28) (колбэк → `AsyncStream`), [`iOS/Modules/Sync/Sources/SyncEngine.swift:48`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncEngine.swift#L48) и [`:66`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncEngine.swift#L66), [`iOS/Modules/Domain/Sources/Broadcaster.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Broadcaster.swift#L12) (один источник, много подписчиков).
 
-**Описание.** `docs/client/sync.md`, разделы 2–3 и 5.
+**Описание.** [`docs/client/sync.md`](https://github.com/disavle/buzz/blob/main/docs/client/sync.md), разделы 2–3 и 5.
 
 ---
 
@@ -227,9 +231,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [withCheckedThrowingContinuation](https://developer.apple.com/documentation/swift/withcheckedthrowingcontinuation(isolation:function:_:))
 
-**Код в Buzz.** `withCheckedContinuation` в коде нет; похожий мост «колбэк → async» сделан через `AsyncStream` в `iOS/Modules/Sync/Sources/NetworkMonitor.swift:7`.
+**Код в Buzz.** `withCheckedContinuation` в коде нет; похожий мост «колбэк → async» сделан через `AsyncStream` в [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:7`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L7).
 
-**Описание.** `docs/learning/plan.md`, тема 1.
+**Описание.** [`docs/learning/plan.md`](https://github.com/disavle/buzz/blob/main/docs/learning/plan.md), тема 1.
 
 ---
 
@@ -248,9 +252,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [SE-0413 Typed throws](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0413-typed-throws.md), [Swift Book: Error Handling](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 
-**Код в Buzz.** `throws(APIError)` в `iOS/Modules/Networking/Sources/APIClient.swift:19`, use case в `iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift:10`.
+**Код в Buzz.** `throws(APIError)` в [`iOS/Modules/Networking/Sources/APIClient.swift:19`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/APIClient.swift#L19), use case в [`iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift:10`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift#L10).
 
-**Описание.** `docs/client/architecture-experiments.md`, раздел 2 (`SettingsEnvironment`).
+**Описание.** [`docs/client/architecture-experiments.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture-experiments.md), раздел 2 (`SettingsEnvironment`).
 
 ---
 
@@ -269,9 +273,40 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Swift Book: Macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/), [swift-syntax](https://github.com/swiftlang/swift-syntax)
 
-**Код в Buzz.** `@Observable` в `iOS/Modules/Domain/Sources/EntryStore.swift:13`, `@Model` в `iOS/Modules/Persistence/Sources/Models/EntryModel.swift:6`, `#Predicate` в `iOS/Modules/Sync/Sources/SyncStore.swift:48`; что генерирует `@ModelActor`, расписано руками в `iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:10`.
+**Код в Buzz.** `@Observable` в [`iOS/Modules/Domain/Sources/EntryStore.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/EntryStore.swift#L13), `@Model` в [`iOS/Modules/Persistence/Sources/Models/EntryModel.swift:6`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/Models/EntryModel.swift#L6), `#Predicate` в [`iOS/Modules/Sync/Sources/SyncStore.swift:48`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncStore.swift#L48); что генерирует `@ModelActor`, расписано руками в [`iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:10`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift#L10).
 
-**Описание.** `docs/learning/plan.md`, тема 8.
+**Описание.** [`docs/learning/plan.md`](https://github.com/disavle/buzz/blob/main/docs/learning/plan.md), тема 8.
+
+---
+
+## A8. Combine: Subject, операторы, AnyCancellable
+
+**Что и зачем.** Combine — реактивный фреймворк Apple (iOS 13+): значения текут по цепочке «издатель → операторы → подписчик». Новый код Buzz живёт на async/await и `@Observable`, но Combine до сих пор встречается в большинстве рабочих проектов и на собеседованиях. Поэтому один экран (поиск в каталоге) специально переведён на Combine, а «Добавить банку» оставлен на `.task(id:)` (B5). Два подхода к одной задаче лежат рядом, их удобно сравнить.
+
+**Было → стало (UIKit).** `UISearchBar` delegate + `NSObject.cancelPreviousPerformRequests` / `Timer` для задержки → `PassthroughSubject` + `debounce` + `removeDuplicates` + `sink`. Если ты знаешь RxSwift: `Subject` ≈ `PublishSubject`, `AnyCancellable` ≈ `DisposeBag`.
+
+**Ключевые идеи.**
+- `PassthroughSubject<String, Never>` — «трубка», в которую код сам кладёт значения через `send`. `CurrentValueSubject` ещё и помнит последнее значение.
+- Операторы: `map` (преобразовать), `debounce(for:scheduler:)` (ждать паузу в вводе), `removeDuplicates` (не повторять тот же запрос).
+- `sink` подписывается и возвращает `AnyCancellable`. Пока он хранится в свойстве, подписка жива; освободился — подписка отменилась.
+- Мост в async/await: в `sink` запускается `Task { await repository.search(...) }`, а прошлая задача отменяется, чтобы медленный старый ответ не перетёр новый.
+- С `@Observable` нет `@Published`, поэтому значение в subject отправляется из `didSet` свойства `query`.
+- В Swift 6 `debounce` на `DispatchQueue.main` не доказывает компилятору главный поток, отсюда `MainActor.assumeIsolated` внутри `sink`.
+
+**Руками.**
+1. В Playground: `let subject = PassthroughSubject<String, Never>()`, `let c = subject.sink { print($0) }`, потом `subject.send("a")`. Убери `c`, отправь ещё раз и убедись, что ничего не печатается.
+2. Добавь `.debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)` и быстро отправь «c», «co», «col». Должно напечататься только «col».
+3. Вставь `.removeDuplicates()` и отправь одно и то же дважды с паузой.
+4. Напиши ViewModel с `var query = "" { didSet { subject.send(query) } }` и подпиской в `init`, которая вызывает async-метод через `Task`.
+5. Тест: шпион считает вызовы поиска, быстрый ввод даёт ровно один вызов (debounce в тесте сделай 50 мс через параметр `init`).
+
+**Разобрать в Buzz.** Сравни `CatalogViewModel` (Combine) с `AddEntryView` (`.task(id:)`): что короче, где проще отмена, как каждое тестируется. Куда ещё можно потренироваться (в Buzz не сделано): `NotificationCenter.default.publisher(for:)` для возврата из фона, `NetworkMonitor` на `CurrentValueSubject`, `Timer.publish` для снека.
+
+**Документация.** [Combine](https://developer.apple.com/documentation/combine), [Receiving and Handling Events with Combine](https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine), [debounce](https://developer.apple.com/documentation/combine/publisher/debounce(for:scheduler:options:)), [AnyCancellable](https://developer.apple.com/documentation/combine/anycancellable), [Using Combine (книга, бесплатно)](https://heckj.github.io/swiftui-notes/)
+
+**Код в Buzz.** subject [`iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift:40`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L40), `didSet` [`:28`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L28), `AnyCancellable` [`:45`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L45), цепочка с `debounce` [`:70`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L70), `sink` и `assumeIsolated` [`:75`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L75), отмена прошлого поиска [`:88`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L88); тест «быстрый ввод = один поиск» [`iOS/Modules/CatalogFeature/Tests/CatalogViewModelTests.swift:58`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Tests/CatalogViewModelTests.swift#L58). Влито в PR #10.
+
+**Описание.** комментарии в самом `CatalogViewModel.swift`, они написаны как пошаговый разбор.
 
 ---
 
@@ -293,9 +328,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [SwiftUI](https://developer.apple.com/documentation/swiftui), [Туториалы SwiftUI](https://developer.apple.com/tutorials/swiftui)
 
-**Код в Buzz.** `iOS/Modules/TodayFeature/Sources/TodayView.swift`, `Identifiable`-модели в `iOS/Modules/Domain/Sources/Models/Entry.swift`.
+**Код в Buzz.** [`iOS/Modules/TodayFeature/Sources/TodayView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift), `Identifiable`-модели в [`iOS/Modules/Domain/Sources/Models/Entry.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Models/Entry.swift).
 
-**Описание.** `docs/client/README.md`, раздел 6 (таблица UIKit → SwiftUI).
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), раздел 6 (таблица UIKit → SwiftUI).
 
 ---
 
@@ -316,9 +351,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Observation](https://developer.apple.com/documentation/observation), [Миграция с ObservableObject](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
 
-**Код в Buzz.** `iOS/Modules/Domain/Sources/EntryStore.swift:13`, `iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`, `iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift:7`.
+**Код в Buzz.** [`iOS/Modules/Domain/Sources/EntryStore.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/EntryStore.swift#L13), [`iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayViewModel.swift#L13), [`iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogViewModel.swift#L12).
 
-**Описание.** `docs/client/README.md`, раздел 2; `docs/client/architecture.md`, раздел 5.
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), раздел 2; [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 5.
 
 ---
 
@@ -345,9 +380,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Model data](https://developer.apple.com/documentation/swiftui/model-data), [Entry()](https://developer.apple.com/documentation/swiftui/entry())
 
-**Код в Buzz.** биндинг в `@Observable` `$model.query` в `iOS/Modules/CatalogFeature/Sources/CatalogView.swift:45`; зависимости через `init` из `iOS/App/Sources/AppDependencies.swift:13` (`@Entry` в коде не используется).
+**Код в Buzz.** биндинг в `@Observable` `$model.query` в [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:49`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L49); зависимости через `init` из [`iOS/App/Sources/AppDependencies.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L13) (`@Entry` в коде не используется).
 
-**Описание.** `docs/client/README.md`, разделы 2 и 4.
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), разделы 2 и 4.
 
 ---
 
@@ -371,9 +406,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Lists](https://developer.apple.com/documentation/swiftui/lists), [LazyVGrid](https://developer.apple.com/documentation/swiftui/lazyvgrid), [scrollTargetBehavior](https://developer.apple.com/documentation/swiftui/view/scrolltargetbehavior(_:))
 
-**Код в Buzz.** `LazyVGrid` в `iOS/Modules/CatalogFeature/Sources/CatalogView.swift:29`, `List` в `iOS/Modules/TodayFeature/Sources/TodayView.swift`.
+**Код в Buzz.** `LazyVGrid` в [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:29`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L29), `List` в [`iOS/Modules/TodayFeature/Sources/TodayView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift).
 
-**Описание.** `docs/client/screens.md`, разделы 4.1–4.3 и 5.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), разделы 4.1–4.3 и 5.
 
 ---
 
@@ -388,13 +423,13 @@ cont.yield("привет"); cont.finish()
 2. Сделай поле поиска и `.task(id: text) { try? await Task.sleep(for: .milliseconds(300)); ... }`. Печатай в консоль, сколько раз реально выполнился поиск при быстром наборе.
 3. Попробуй `.onChange(of: value, initial: true) { }` для синхронной реакции.
 
-**Разобрать в Buzz.** Поиск по каталогу с debounce 300 мс.
+**Разобрать в Buzz.** Поиск по каталогу с debounce 300 мс. Поиск каталога переведён на Combine (A8), а на `.task(id:)` остался экран «Добавить банку». Сравни два подхода.
 
 **Документация.** [task(id:priority:_:)](https://developer.apple.com/documentation/swiftui/view/task(id:priority:_:)), [onChange](https://developer.apple.com/documentation/swiftui/view/onchange(of:initial:_:))
 
-**Код в Buzz.** debounce в `iOS/Modules/CatalogFeature/Sources/CatalogView.swift:47` и `iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:35`, автоскрытие снека в `iOS/Modules/DesignSystem/Sources/Components/SnackView.swift:70`.
+**Код в Buzz.** debounce через `.task(id:)` в [`iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:35`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift#L35), автоскрытие снека в [`iOS/Modules/DesignSystem/Sources/Components/SnackView.swift:70`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/SnackView.swift#L70).
 
-**Описание.** `docs/client/screens.md`, раздел 4.3.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 4.3.
 
 ---
 
@@ -411,9 +446,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [searchable](https://developer.apple.com/documentation/swiftui/view/searchable(text:placement:prompt:)), [refreshable](https://developer.apple.com/documentation/swiftui/view/refreshable(action:)), [ContentUnavailableView](https://developer.apple.com/documentation/swiftui/contentunavailableview)
 
-**Код в Buzz.** `iOS/Modules/CatalogFeature/Sources/CatalogView.swift:41` и `:45`, `iOS/Modules/TodayFeature/Sources/TodayView.swift:43` и `:63`, `iOS/Modules/StatsFeature/Sources/StatsView.swift:44`.
+**Код в Buzz.** [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:45`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L45) и [`:49`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L49), [`iOS/Modules/TodayFeature/Sources/TodayView.swift:43`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift#L43) и [`:71`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift#L71), [`iOS/Modules/StatsFeature/Sources/StatsView.swift:44`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L44).
 
-**Описание.** `docs/client/screens.md`, раздел 4; `docs/design/README.md`, раздел «Синхронизация в интерфейсе».
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 4; [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md), раздел «Синхронизация в интерфейсе».
 
 ---
 
@@ -433,9 +468,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Form](https://developer.apple.com/documentation/swiftui/form), [TextField](https://developer.apple.com/documentation/swiftui/textfield), [FocusState](https://developer.apple.com/documentation/swiftui/focusstate)
 
-**Код в Buzz.** `TextField(value:format:)` в `iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:137` и `iOS/Modules/CatalogFeature/Sources/CustomDrinkForm.swift:43`, форма входа `iOS/Modules/SettingsFeature/Sources/LoginView.swift`.
+**Код в Buzz.** `TextField(value:format:)` в [`iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:151`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift#L151) и [`iOS/Modules/CatalogFeature/Sources/CustomDrinkForm.swift:47`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CustomDrinkForm.swift#L47), форма входа [`iOS/Modules/SettingsFeature/Sources/LoginView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/LoginView.swift).
 
-**Описание.** `docs/client/screens.md`, разделы 4.2–4.5; `docs/client/localization.md`, раздел 4.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), разделы 4.2–4.5; [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), раздел 4.
 
 ---
 
@@ -457,9 +492,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Navigation](https://developer.apple.com/documentation/swiftui/navigation), [NavigationStack](https://developer.apple.com/documentation/swiftui/navigationstack), [TabView](https://developer.apple.com/documentation/swiftui/tabview)
 
-**Код в Buzz.** навигация на координаторах `iOS/App/Sources/Coordinators/`, шит в `iOS/App/Sources/Coordinators/TodayCoordinator.swift:54`; `NavigationStack` только для заголовка шита в `iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:13`.
+**Код в Buzz.** навигация на координаторах [`iOS/App/Sources/Coordinators/`](https://github.com/disavle/buzz/tree/main/iOS/App/Sources/Coordinators), шит в [`iOS/App/Sources/Coordinators/TodayCoordinator.swift:54`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/TodayCoordinator.swift#L54); `NavigationStack` только для заголовка шита в [`iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift#L13).
 
-**Описание.** `docs/client/README.md`, раздел 3; `docs/client/architecture.md`, разделы 1 и 7.
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), раздел 3; [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), разделы 1 и 7.
 
 ---
 
@@ -487,9 +522,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Animations](https://developer.apple.com/documentation/swiftui/animations), [sensoryFeedback](https://developer.apple.com/documentation/swiftui/view/sensoryfeedback(_:trigger:)), [navigationTransition](https://developer.apple.com/documentation/swiftui/view/navigationtransition(_:))
 
-**Код в Buzz.** `iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift:36` (numericText) и `:45` (хаптик), `iOS/Modules/DesignSystem/Sources/Components/SnackView.swift:59` и `:62`.
+**Код в Buzz.** [`iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift:38`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift#L38) (numericText) и [`:47`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/CaffeineRing.swift#L47) (хаптик), [`iOS/Modules/DesignSystem/Sources/Components/SnackView.swift:59`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/SnackView.swift#L59) и [`:62`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Components/SnackView.swift#L62).
 
-**Описание.** `docs/client/screens.md`, раздел 4.1; `docs/design/README.md`, разделы «Типографика» и «Снек»; эксперимент с зумом в `docs/client/architecture.md`, раздел 7.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 4.1; [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md), разделы «Типографика» и «Снек»; эксперимент с зумом в [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 7.
 
 ---
 
@@ -511,9 +546,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Swift Charts](https://developer.apple.com/documentation/charts), [Creating a chart using Swift Charts](https://developer.apple.com/documentation/charts/creating-a-chart-using-swift-charts)
 
-**Код в Buzz.** `iOS/Modules/StatsFeature/Sources/StatsView.swift:47` (Bar + Rule), `:122` (Sector), `:163` (Line + Point); данные в `iOS/Modules/StatsFeature/Sources/StatsCalculator.swift`.
+**Код в Buzz.** [`iOS/Modules/StatsFeature/Sources/StatsView.swift:47`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L47) (Bar + Rule), [`:126`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L126) (Sector), [`:170`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L170) (Line + Point); данные в [`iOS/Modules/StatsFeature/Sources/StatsCalculator.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsCalculator.swift).
 
-**Описание.** `docs/client/screens.md`, раздел 4.4; `docs/client/localization.md`, раздел 5.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 4.4; [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), раздел 5.
 
 ---
 
@@ -532,9 +567,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Previews in Xcode](https://developer.apple.com/documentation/swiftui/previews-in-xcode)
 
-**Код в Buzz.** `iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:195`, `iOS/Modules/CatalogFeature/Sources/CatalogView.swift:108`; фейковые данные `iOS/Modules/Domain/Sources/Fakes/`.
+**Код в Buzz.** [`iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:212`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift#L212), [`iOS/Modules/CatalogFeature/Sources/CatalogView.swift:115`](https://github.com/disavle/buzz/blob/main/iOS/Modules/CatalogFeature/Sources/CatalogView.swift#L115); фейковые данные [`iOS/Modules/Domain/Sources/Fakes/`](https://github.com/disavle/buzz/tree/main/iOS/Modules/Domain/Sources/Fakes).
 
-**Описание.** `docs/client/screens.md`, раздел 3; `docs/client/localization.md`, раздел 7.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 3; [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), раздел 7.
 
 ---
 
@@ -558,9 +593,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [UIHostingController](https://developer.apple.com/documentation/swiftui/uihostingcontroller), [UIHostingConfiguration](https://developer.apple.com/documentation/swiftui/uihostingconfiguration), [UIViewRepresentable](https://developer.apple.com/documentation/swiftui/uiviewrepresentable)
 
-**Код в Buzz.** хостинг экранов в `iOS/App/Sources/AppDependencies.swift:72`, координатор `iOS/App/Sources/Coordinators/TodayCoordinator.swift`; `UIHostingConfiguration` и `Representable` в Buzz не используются, пробуй на работе.
+**Код в Buzz.** хостинг экранов в [`iOS/App/Sources/AppDependencies.swift:89`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L89), координатор [`iOS/App/Sources/Coordinators/TodayCoordinator.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/TodayCoordinator.swift); `UIHostingConfiguration` и `Representable` в Buzz не используются, пробуй на работе.
 
-**Описание.** `docs/client/architecture.md`, раздел 6 (тонкости гибрида); `docs/learning/plan.md`, тема 5.
+**Описание.** [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 6 (тонкости гибрида); [`docs/learning/plan.md`](https://github.com/disavle/buzz/blob/main/docs/learning/plan.md), тема 5.
 
 ---
 
@@ -580,9 +615,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Color](https://developer.apple.com/documentation/swiftui/color), [Human Interface Guidelines: Color](https://developer.apple.com/design/human-interface-guidelines/color), [Dynamic Type](https://developer.apple.com/documentation/swiftui/dynamictypesize)
 
-**Код в Buzz.** `iOS/Modules/DesignSystem/Sources/Theme.swift:13`, выбор акцента `iOS/Modules/DesignSystem/Sources/AccentChoice.swift:15` и `:44`.
+**Код в Buzz.** [`iOS/Modules/DesignSystem/Sources/Theme.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Theme.swift#L13), выбор акцента [`iOS/Modules/DesignSystem/Sources/AccentChoice.swift:15`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/AccentChoice.swift#L15) и [`:44`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/AccentChoice.swift#L44).
 
-**Описание.** `docs/design/README.md`; макеты: [холст Buzz](https://claude.ai/artifact/DBEh5DEASJSWRzgj8Bvp2W).
+**Описание.** [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md); макеты: [холст Buzz](https://claude.ai/artifact/DBEh5DEASJSWRzgj8Bvp2W).
 
 ---
 
@@ -600,13 +635,13 @@ cont.yield("привет"); cont.finish()
 3. Вынеси `send` в протокол и сделай фейк для превью и тестов.
 4. Проверь отмену: запусти запрос в `.task` и уйди с экрана.
 
-**Разобрать в Buzz.** Модуль `Networking` с `APIClient` и эндпоинтами из `docs/backend/API.md`; ошибки сервера разбираются в `APIErrorCode` из `Shared`.
+**Разобрать в Buzz.** Модуль `Networking` с `APIClient` и эндпоинтами из `app/backend/API.md`; ошибки сервера разбираются в `APIErrorCode` из `Shared`.
 
 **Документация.** [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable)
 
-**Код в Buzz.** `iOS/Modules/Networking/Sources/APIClient.swift:26`, `iOS/Modules/Networking/Sources/Endpoint.swift:9`, маппинг DTO `iOS/Modules/Networking/Sources/DTOMapping.swift`.
+**Код в Buzz.** [`iOS/Modules/Networking/Sources/APIClient.swift:26`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/APIClient.swift#L26), [`iOS/Modules/Networking/Sources/Endpoint.swift:9`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/Endpoint.swift#L9), маппинг DTO [`iOS/Modules/Networking/Sources/DTOMapping.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/DTOMapping.swift).
 
-**Описание.** `docs/client/README.md`, раздел 4; `docs/backend/API.md`.
+**Описание.** [`docs/client/README.md`](https://github.com/disavle/buzz/blob/main/docs/client/README.md), раздел 4; [`docs/backend/API.md`](https://github.com/disavle/buzz/blob/main/docs/backend/API.md).
 
 ---
 
@@ -630,9 +665,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [SwiftData](https://developer.apple.com/documentation/swiftdata), [Preserving your app's model data across launches](https://developer.apple.com/documentation/swiftdata/preserving-your-apps-model-data-across-launches)
 
-**Код в Buzz.** `iOS/Modules/Persistence/Sources/Models/EntryModel.swift:6`, `iOS/Modules/Persistence/Sources/Models/DrinkModel.swift:9`, контейнер `iOS/Modules/Persistence/Sources/PersistenceContainer.swift:14` (миграций схемы пока нет).
+**Код в Buzz.** [`iOS/Modules/Persistence/Sources/Models/EntryModel.swift:6`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/Models/EntryModel.swift#L6), [`iOS/Modules/Persistence/Sources/Models/DrinkModel.swift:9`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/Models/DrinkModel.swift#L9), контейнер [`iOS/Modules/Persistence/Sources/PersistenceContainer.swift:14`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/PersistenceContainer.swift#L14) (миграций схемы пока нет).
 
-**Описание.** `docs/client/screens.md`, раздел 3; `docs/client/architecture.md`, раздел 5 (SwiftData за протоколом репозитория).
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 3; [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 5 (SwiftData за протоколом репозитория).
 
 ---
 
@@ -651,9 +686,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [ModelActor](https://developer.apple.com/documentation/swiftdata/modelactor)
 
-**Код в Buzz.** `iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:13`, `iOS/Modules/Sync/Sources/SyncStore.swift:12`.
+**Код в Buzz.** [`iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift#L13), [`iOS/Modules/Sync/Sources/SyncStore.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncStore.swift#L12).
 
-**Описание.** `docs/client/architecture.md`, раздел 5; `docs/client/sync.md`, раздел 3.
+**Описание.** [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), раздел 5; [`docs/client/sync.md`](https://github.com/disavle/buzz/blob/main/docs/client/sync.md), раздел 3.
 
 ---
 
@@ -676,13 +711,15 @@ cont.yield("привет"); cont.finish()
 2. Напиши `actor SyncEngine` с методом `syncNow()` и флагами `isRunning`/`needsAnotherPass`. Проверь тестом, что два параллельных вызова не дают параллельных проходов.
 3. Напиши `apply(delta)` и тест «pending-запись не перезаписывается свежей версией с сервера».
 
+**Подвох: бесконечный цикл (исправлено в PR #9).** Движок синхронизации слушал тот же сигнал «данные изменились», который сам и отправлял после `apply`, поэтому каждый проход через ~2 секунды запускал следующий, и статус мигал. Решение: отдельный сигнал `localEdits` (`Broadcaster<Void>`), который шлёт только репозиторий при правке пользователя и слушает только движок; пустой ответ `/sync` больше ничего не сохраняет. Урок: у события должен быть один смысл, «экран, перерисуйся» и «надо отправить» — разные сигналы. Код: [`iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift:17`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/SwiftDataEntryRepository.swift#L17), подключение в [`iOS/App/Sources/AppDependencies.swift:77`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L77).
+
 **Разобрать в Buzz.** Модуль `Sync` целиком, по шагам из раздела 7 `sync.md`.
 
 **Документация.** Готового фреймворка нет, это паттерн. Полезно: [WWDC23 «Sync to iCloud with CKSyncEngine»](https://developer.apple.com/videos/play/wwdc2023/10188/) для сравнения с тем, как Apple решает ту же задачу.
 
-**Код в Buzz.** `iOS/Modules/Sync/Sources/SyncEngine.swift:31` (`syncNow`), `iOS/Modules/Sync/Sources/SyncStore.swift:94` (`apply`), `iOS/Modules/Persistence/Sources/Models/SyncState.swift`, тесты `iOS/Modules/Sync/Tests/SyncEngineTests.swift`; сервер `Backend/Sources/App/Controllers/SyncController.swift:24`.
+**Код в Buzz.** [`iOS/Modules/Sync/Sources/SyncEngine.swift:31`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncEngine.swift#L31) (`syncNow`), [`iOS/Modules/Sync/Sources/SyncStore.swift:96`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/SyncStore.swift#L96) (`apply`), [`iOS/Modules/Persistence/Sources/Models/SyncState.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/Models/SyncState.swift), тесты [`iOS/Modules/Sync/Tests/SyncEngineTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Tests/SyncEngineTests.swift); сервер [`Backend/Sources/App/Controllers/SyncController.swift:24`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/SyncController.swift#L24).
 
-**Описание.** `docs/idea.md`, «Зачем синхронизация»; `docs/client/sync.md`; сервер: `/sync` в `docs/backend/API.md`.
+**Описание.** [`docs/idea.md`](https://github.com/disavle/buzz/blob/main/docs/idea.md), «Зачем синхронизация»; [`docs/client/sync.md`](https://github.com/disavle/buzz/blob/main/docs/client/sync.md); сервер: `/sync` в [`docs/backend/API.md`](https://github.com/disavle/buzz/blob/main/docs/backend/API.md).
 
 ---
 
@@ -701,9 +738,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [NWPathMonitor](https://developer.apple.com/documentation/network/nwpathmonitor)
 
-**Код в Buzz.** `iOS/Modules/Sync/Sources/NetworkMonitor.swift:15`, возврат из фона `iOS/App/Sources/SceneDelegate.swift:49`.
+**Код в Buzz.** [`iOS/Modules/Sync/Sources/NetworkMonitor.swift:15`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Sources/NetworkMonitor.swift#L15), возврат из фона [`iOS/App/Sources/SceneDelegate.swift:53`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/SceneDelegate.swift#L53).
 
-**Описание.** `docs/client/sync.md`, раздел 4. Дальше, вне MVP: [BackgroundTasks](https://developer.apple.com/documentation/backgroundtasks) (`BGAppRefreshTask`).
+**Описание.** [`docs/client/sync.md`](https://github.com/disavle/buzz/blob/main/docs/client/sync.md), раздел 4. Дальше, вне MVP: [BackgroundTasks](https://developer.apple.com/documentation/backgroundtasks) (`BGAppRefreshTask`).
 
 ---
 
@@ -722,9 +759,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [AppStorage](https://developer.apple.com/documentation/swiftui/appstorage), [Keychain services](https://developer.apple.com/documentation/security/keychain-services)
 
-**Код в Buzz.** Keychain `iOS/Modules/Networking/Sources/TokenStore.swift:17`, `@AppStorage` `iOS/Modules/DesignSystem/Sources/AccentChoice.swift:39`, лимит `iOS/Modules/Persistence/Sources/UserDefaultsSettingsRepository.swift:9`.
+**Код в Buzz.** Keychain [`iOS/Modules/Networking/Sources/TokenStore.swift:17`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/TokenStore.swift#L17), `@AppStorage` [`iOS/Modules/DesignSystem/Sources/AccentChoice.swift:39`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/AccentChoice.swift#L39), лимит [`iOS/Modules/Persistence/Sources/UserDefaultsSettingsRepository.swift:9`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Persistence/Sources/UserDefaultsSettingsRepository.swift#L9).
 
-**Описание.** `docs/client/screens.md`, раздел 3; `docs/design/README.md`, «Основной цвет»; `docs/learning/plan.md`, тема 10.
+**Описание.** [`docs/client/screens.md`](https://github.com/disavle/buzz/blob/main/docs/client/screens.md), раздел 3; [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md), «Основной цвет»; [`docs/learning/plan.md`](https://github.com/disavle/buzz/blob/main/docs/learning/plan.md), тема 10.
 
 ---
 
@@ -742,11 +779,13 @@ cont.yield("привет"); cont.finish()
 
 **Разобрать в Buzz.** Запустить приложение с `BUZZ_MOCK_API = 1` (любой email и пароль от 8 символов) и `BUZZ_IN_MEMORY = 1`; найти, где выбирается реализация, и добавить в фейковый сервер задержку ответа, чтобы увидеть индикаторы загрузки.
 
+**Адрес сервера (PR #9).** На iPhone `localhost` — это сам телефон, поэтому адрес бэкенда зашивается в сборку. В `mise.local.toml` (не в git) пишешь `TUIST_API_URL = "https://<сервис>.onrender.com"`, `mise run generate` кладёт его в `Info.plist` под ключом `BuzzAPIURL`, и приложение ходит на Render даже при запуске с иконки. По умолчанию устройство и TestFlight-сборка ходят на `https://buzz-backend-latest.onrender.com`, симулятор на `http://localhost:8080`, а `TUIST_API_URL` это переопределяет. Порядок выбора в `AppDependencies`: `BUZZ_MOCK_API = 1` (фейковый сервер) → `BUZZ_API_URL` из схемы (разовое переопределение, только из Xcode) → `BuzzAPIURL` из `Info.plist` → `http://localhost:8080`. Чтобы iPhone ходил на бэкенд, запущенный на Mac, в `TUIST_API_URL` можно указать IP Mac в той же Wi-Fi сети, например `http://192.168.1.5:8080` (в документах проекта этого нет, проверь сам; по http iOS может потребовать исключение ATS). Как это сделано: в [`iOS/Project.swift:81`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift#L81) build setting `BUZZ_SERVER_URL` имеет два значения, обычное и `[sdk=iphonesimulator*]` (условие по SDK, приём Xcode из xcconfig), а `Info.plist` подставляет его через `$(BUZZ_SERVER_URL)` ([`:48`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift#L48)). Порядок выбора в коде: [`iOS/App/Sources/AppDependencies.swift:49`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L49). Описание в [`docs/infra/SETUP.md`](https://github.com/disavle/buzz/blob/main/docs/infra/SETUP.md), шаг 6.
+
 **Документация.** [Customizing the build schemes for a project](https://developer.apple.com/documentation/xcode/customizing-the-build-schemes-for-a-project), [ProcessInfo.environment](https://developer.apple.com/documentation/foundation/processinfo/environment)
 
-**Код в Buzz.** выбор реализации в `iOS/App/Sources/AppDependencies.swift:43`, фейковый сервер `iOS/Modules/Networking/Sources/MockAPIClient.swift:13`, in-memory репозитории и данные для превью `iOS/Modules/Domain/Sources/Fakes/`, примеры запросов и ответов `Mocks/api/`, каталог `Mocks/catalog.json`.
+**Код в Buzz.** выбор реализации в [`iOS/App/Sources/AppDependencies.swift:54`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L54), фейковый сервер [`iOS/Modules/Networking/Sources/MockAPIClient.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/MockAPIClient.swift#L13), in-memory репозитории и данные для превью [`iOS/Modules/Domain/Sources/Fakes/`](https://github.com/disavle/buzz/tree/main/iOS/Modules/Domain/Sources/Fakes), примеры запросов и ответов [`Mocks/api/`](https://github.com/disavle/buzz/tree/main/Mocks/api), каталог [`Mocks/catalog.json`](https://github.com/disavle/buzz/blob/main/Mocks/catalog.json).
 
-**Описание.** `Mocks/README.md`.
+**Описание.** [`Mocks/README.md`](https://github.com/disavle/buzz/blob/main/Mocks/README.md).
 
 ---
 
@@ -769,9 +808,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Localizing and varying text with a string catalog](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog), [LocalizedStringResource](https://developer.apple.com/documentation/foundation/localizedstringresource)
 
-**Код в Buzz.** каталоги `iOS/App/Resources/Localizable.xcstrings` и `iOS/Modules/<Модуль>/Resources/Localizable.xcstrings`.
+**Код в Buzz.** каталоги [`iOS/App/Resources/Localizable.xcstrings`](https://github.com/disavle/buzz/blob/main/iOS/App/Resources/Localizable.xcstrings) и `iOS/Modules/<Модуль>/Resources/Localizable.xcstrings`.
 
-**Описание.** `docs/client/localization.md`, разделы 1–3.
+**Описание.** [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), разделы 1–3.
 
 ---
 
@@ -789,9 +828,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Bundle.module и ресурсы пакетов](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package)
 
-**Код в Buzz.** `bundle: .module` в `iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:19`, в Charts `iOS/Modules/StatsFeature/Sources/StatsView.swift:65`.
+**Код в Buzz.** `bundle: .module` в [`iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift:19`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Presentation/AddEntryView.swift#L19), в Charts [`iOS/Modules/StatsFeature/Sources/StatsView.swift:67`](https://github.com/disavle/buzz/blob/main/iOS/Modules/StatsFeature/Sources/StatsView.swift#L67).
 
-**Описание.** `docs/client/localization.md`, разделы 1–2.
+**Описание.** [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), разделы 1–2.
 
 ---
 
@@ -811,9 +850,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [FormatStyle](https://developer.apple.com/documentation/foundation/formatstyle), [Measurement](https://developer.apple.com/documentation/foundation/measurement)
 
-**Код в Buzz.** `iOS/Modules/DesignSystem/Sources/Formatting.swift:10`, тесты `iOS/Modules/DesignSystem/Tests/DesignSystemTests.swift`.
+**Код в Buzz.** [`iOS/Modules/DesignSystem/Sources/Formatting.swift:10`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Sources/Formatting.swift#L10), тесты [`iOS/Modules/DesignSystem/Tests/DesignSystemTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/DesignSystem/Tests/DesignSystemTests.swift).
 
-**Описание.** `docs/client/localization.md`, раздел 4; `docs/design/README.md`, «Языки в макетах».
+**Описание.** [`docs/client/localization.md`](https://github.com/disavle/buzz/blob/main/docs/client/localization.md), раздел 4; [`docs/design/README.md`](https://github.com/disavle/buzz/blob/main/docs/design/README.md), «Языки в макетах».
 
 ---
 
@@ -836,9 +875,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Managing model data in your app](https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app)
 
-**Код в Buzz.** `iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`, `iOS/Modules/TodayFeature/Sources/TodayView.swift`, тесты `iOS/Modules/TodayFeature/Tests/TodayViewModelTests.swift`.
+**Код в Buzz.** [`iOS/Modules/TodayFeature/Sources/TodayViewModel.swift:13`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayViewModel.swift#L13), [`iOS/Modules/TodayFeature/Sources/TodayView.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Sources/TodayView.swift), тесты [`iOS/Modules/TodayFeature/Tests/TodayViewModelTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/TodayFeature/Tests/TodayViewModelTests.swift).
 
-**Описание.** `docs/client/architecture.md`, разделы 2–5.
+**Описание.** [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), разделы 2–5.
 
 ---
 
@@ -856,9 +895,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [UIHostingController](https://developer.apple.com/documentation/swiftui/uihostingcontroller), [UISheetPresentationController](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller)
 
-**Код в Buzz.** `iOS/App/Sources/SceneDelegate.swift`, `iOS/App/Sources/Coordinators/AppCoordinator.swift:11`, `iOS/App/Sources/Coordinators/TodayCoordinator.swift:7`, `iOS/App/Sources/AppDependencies.swift:72`, диплинки `iOS/App/Tests/DeepLinkTests.swift`.
+**Код в Buzz.** [`iOS/App/Sources/SceneDelegate.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/SceneDelegate.swift), [`iOS/App/Sources/Coordinators/AppCoordinator.swift:11`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/AppCoordinator.swift#L11), [`iOS/App/Sources/Coordinators/TodayCoordinator.swift:7`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/Coordinators/TodayCoordinator.swift#L7), [`iOS/App/Sources/AppDependencies.swift:89`](https://github.com/disavle/buzz/blob/main/iOS/App/Sources/AppDependencies.swift#L89), диплинки [`iOS/App/Tests/DeepLinkTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/App/Tests/DeepLinkTests.swift).
 
-**Описание.** `docs/client/architecture.md`, разделы 1, 3 и 6.
+**Описание.** [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), разделы 1, 3 и 6.
 
 ---
 
@@ -877,9 +916,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** Это паттерн, официальной документации нет. Первоисточник: статья Robert C. Martin [«The Clean Architecture»](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
 
-**Код в Buzz.** `iOS/Modules/AddEntryFeature/Sources/Domain/NutritionCalculator.swift:12`, `iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift`, `iOS/Modules/AddEntryFeature/Sources/AddEntryModule.swift`, тесты `iOS/Modules/AddEntryFeature/Tests/AddEntryUseCaseTests.swift`.
+**Код в Buzz.** [`iOS/Modules/AddEntryFeature/Sources/Domain/NutritionCalculator.swift:12`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Domain/NutritionCalculator.swift#L12), [`iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/Domain/UseCases.swift), [`iOS/Modules/AddEntryFeature/Sources/AddEntryModule.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Sources/AddEntryModule.swift), тесты [`iOS/Modules/AddEntryFeature/Tests/AddEntryUseCaseTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/AddEntryFeature/Tests/AddEntryUseCaseTests.swift).
 
-**Описание.** `docs/client/architecture-experiments.md`, раздел 1.
+**Описание.** [`docs/client/architecture-experiments.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture-experiments.md), раздел 1.
 
 ---
 
@@ -899,9 +938,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [TCA](https://github.com/pointfreeco/swift-composable-architecture), [документация TCA](https://pointfreeco.github.io/swift-composable-architecture/main/documentation/composablearchitecture/)
 
-**Код в Buzz.** `iOS/Modules/SettingsFeature/Sources/Redux/Store.swift:18` и `:38`, `iOS/Modules/SettingsFeature/Sources/SettingsReducer.swift:6`, `iOS/Modules/SettingsFeature/Sources/SettingsState.swift`, тесты `iOS/Modules/SettingsFeature/Tests/SettingsReducerTests.swift`.
+**Код в Buzz.** [`iOS/Modules/SettingsFeature/Sources/Redux/Store.swift:18`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/Redux/Store.swift#L18) и [`:38`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/Redux/Store.swift#L38), [`iOS/Modules/SettingsFeature/Sources/SettingsReducer.swift:6`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/SettingsReducer.swift#L6), [`iOS/Modules/SettingsFeature/Sources/SettingsState.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Sources/SettingsState.swift), тесты [`iOS/Modules/SettingsFeature/Tests/SettingsReducerTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/SettingsFeature/Tests/SettingsReducerTests.swift).
 
-**Описание.** `docs/client/architecture-experiments.md`, раздел 2.
+**Описание.** [`docs/client/architecture-experiments.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture-experiments.md), раздел 2.
 
 ---
 
@@ -921,9 +960,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Swift packages](https://developer.apple.com/documentation/xcode/swift-packages), [Organizing code with local packages](https://developer.apple.com/documentation/xcode/organizing-your-code-with-local-packages)
 
-**Код в Buzz.** `iOS/Project.swift`, `iOS/Tuist/ProjectDescriptionHelpers/Module.swift`, протоколы в `iOS/Modules/Domain/Sources/Repositories.swift:11`.
+**Код в Buzz.** [`iOS/Project.swift`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift), [`iOS/Tuist/ProjectDescriptionHelpers/Module.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/ProjectDescriptionHelpers/Module.swift), протоколы в [`iOS/Modules/Domain/Sources/Repositories.swift:11`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Domain/Sources/Repositories.swift#L11).
 
-**Описание.** `docs/client/architecture.md`, разделы 3–4; `docs/infra/README.md`, разделы 1–3.
+**Описание.** [`docs/client/architecture.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture.md), разделы 3–4; [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), разделы 1–3.
 
 ---
 
@@ -946,9 +985,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Swift Testing](https://developer.apple.com/documentation/testing), [Migrating a test from XCTest](https://developer.apple.com/documentation/testing/migratingfromxctest)
 
-**Код в Buzz.** тесты клиента `iOS/Modules/<Модуль>/Tests/` (например `iOS/Modules/Sync/Tests/SyncEngineTests.swift`), сервера `Backend/Tests/AppTests/AppTests.swift:50`.
+**Код в Buzz.** тесты клиента `iOS/Modules/<Модуль>/Tests/` (например [`iOS/Modules/Sync/Tests/SyncEngineTests.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Sync/Tests/SyncEngineTests.swift)), сервера [`Backend/Tests/AppTests/AppTests.swift:50`](https://github.com/disavle/buzz/blob/main/Backend/Tests/AppTests/AppTests.swift#L50).
 
-**Описание.** `docs/client/architecture-experiments.md` (тесты обоих экспериментов).
+**Описание.** [`docs/client/architecture-experiments.md`](https://github.com/disavle/buzz/blob/main/docs/client/architecture-experiments.md) (тесты обоих экспериментов).
 
 ---
 
@@ -970,9 +1009,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Vapor docs](https://docs.vapor.codes), [Getting started](https://docs.vapor.codes/getting-started/hello-world/), [swift.org: Server](https://www.swift.org/documentation/server/)
 
-**Код в Buzz.** `Backend/Sources/App/entrypoint.swift`, `Backend/Sources/App/configure.swift`; путеводитель с упражнениями `docs/backend/STEPS.md`.
+**Код в Buzz.** [`Backend/Sources/App/entrypoint.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/entrypoint.swift), [`Backend/Sources/App/configure.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift); путеводитель с упражнениями [`docs/backend/STEPS.md`](https://github.com/disavle/buzz/blob/main/docs/backend/STEPS.md).
 
-**Описание.** `docs/backend/README.md`, разделы 1, 2 и 8; путеводитель по коду бэкенда с упражнениями: `docs/backend/STEPS.md`.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), разделы 1, 2 и 8; путеводитель по коду бэкенда с упражнениями: [`docs/backend/STEPS.md`](https://github.com/disavle/buzz/blob/main/docs/backend/STEPS.md).
 
 ---
 
@@ -989,9 +1028,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Routing](https://docs.vapor.codes/basics/routing/), [Content](https://docs.vapor.codes/basics/content/), [Controllers](https://docs.vapor.codes/basics/controllers/), [Validation](https://docs.vapor.codes/basics/validation/)
 
-**Код в Buzz.** `Backend/Sources/App/routes.swift`, `Backend/Sources/App/Controllers/`.
+**Код в Buzz.** [`Backend/Sources/App/routes.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/routes.swift), [`Backend/Sources/App/Controllers/`](https://github.com/disavle/buzz/tree/main/Backend/Sources/App/Controllers).
 
-**Описание.** `docs/backend/README.md`, раздел 3.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 3.
 
 ---
 
@@ -1011,9 +1050,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Fluent overview](https://docs.vapor.codes/fluent/overview/), [Model](https://docs.vapor.codes/fluent/model/), [Migrations](https://docs.vapor.codes/fluent/migration/), [Query](https://docs.vapor.codes/fluent/query/)
 
-**Код в Buzz.** `Backend/Sources/App/Models/Entry.swift`, `Backend/Sources/App/Migrations/CreateEntry.swift`, `withDeleted` в `Backend/Sources/App/Controllers/EntryController.swift:46`, упражнение с SQLKit в `Backend/Sources/App/Controllers/StatsController.swift:20`.
+**Код в Buzz.** [`Backend/Sources/App/Models/Entry.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Models/Entry.swift), [`Backend/Sources/App/Migrations/CreateEntry.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Migrations/CreateEntry.swift), `withDeleted` в [`Backend/Sources/App/Controllers/EntryController.swift:47`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/EntryController.swift#L47), упражнение с SQLKit в [`Backend/Sources/App/Controllers/StatsController.swift:20`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/StatsController.swift#L20).
 
-**Описание.** `docs/backend/README.md`, раздел 4.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 4.
 
 ---
 
@@ -1031,9 +1070,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Authentication](https://docs.vapor.codes/security/authentication/), [Passwords](https://docs.vapor.codes/security/passwords/)
 
-**Код в Buzz.** `Backend/Sources/App/Models/UserToken.swift:30`, `Backend/Sources/App/Controllers/AuthController.swift`, `Backend/Sources/App/routes.swift`.
+**Код в Buzz.** [`Backend/Sources/App/Models/UserToken.swift:30`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Models/UserToken.swift#L30), [`Backend/Sources/App/Controllers/AuthController.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Controllers/AuthController.swift), [`Backend/Sources/App/routes.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/routes.swift).
 
-**Описание.** `docs/backend/README.md`, раздел 3.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 3.
 
 ---
 
@@ -1051,9 +1090,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Errors](https://docs.vapor.codes/basics/errors/), [Middleware](https://docs.vapor.codes/advanced/middleware/)
 
-**Код в Buzz.** `Backend/Sources/App/Errors/APIErrorMiddleware.swift:6`, коды `Shared/Sources/Shared/APIError.swift`.
+**Код в Buzz.** [`Backend/Sources/App/Errors/APIErrorMiddleware.swift:6`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/Errors/APIErrorMiddleware.swift#L6), коды [`Shared/Sources/Shared/APIError.swift`](https://github.com/disavle/buzz/blob/main/Shared/Sources/Shared/APIError.swift).
 
-**Описание.** `docs/backend/README.md`, раздел 6; `docs/backend/API.md`, «Ошибки и языки».
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 6; [`docs/backend/API.md`](https://github.com/disavle/buzz/blob/main/docs/backend/API.md), «Ошибки и языки».
 
 ---
 
@@ -1072,9 +1111,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Creating a standalone Swift package](https://developer.apple.com/documentation/xcode/creating-a-standalone-swift-package-with-xcode). Альтернатива: [swift-openapi-generator](https://github.com/apple/swift-openapi-generator) + [swift-openapi-vapor](https://github.com/swift-server/swift-openapi-vapor).
 
-**Код в Buzz.** `Shared/Sources/Shared/`, на сервере `Backend/Sources/App/DTOs/Shared+Content.swift:6`, на клиенте `iOS/Modules/Networking/Sources/DTOMapping.swift`.
+**Код в Buzz.** [`Shared/Sources/Shared/`](https://github.com/disavle/buzz/tree/main/Shared/Sources/Shared), на сервере [`Backend/Sources/App/DTOs/Shared+Content.swift:6`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/DTOs/Shared+Content.swift#L6), на клиенте [`iOS/Modules/Networking/Sources/DTOMapping.swift`](https://github.com/disavle/buzz/blob/main/iOS/Modules/Networking/Sources/DTOMapping.swift).
 
-**Описание.** `docs/backend/README.md`, раздел 5; `docs/infra/README.md`, раздел 2.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 5; [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 2.
 
 ---
 
@@ -1090,15 +1129,17 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Testing](https://docs.vapor.codes/advanced/testing/)
 
-**Код в Buzz.** `Backend/Tests/AppTests/AppTests.swift:28`.
+**Код в Buzz.** [`Backend/Tests/AppTests/AppTests.swift:28`](https://github.com/disavle/buzz/blob/main/Backend/Tests/AppTests/AppTests.swift#L28).
 
-**Описание.** `docs/backend/README.md`, раздел 9.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), раздел 9.
 
 ---
 
 ## G8. Postgres в Docker и деплой
 
 **Что и зачем.** SQLite для старта, PostgreSQL для настоящего сервера. Переход — замена драйвера и одной строки в `configure.swift`. Деплой — Docker-образ из шаблона Vapor на VPS или Fly.io.
+
+**Куда деплоить бесплатно.** Ветка «Бесплатный хостинг бэкенда» рекомендует Render (Docker-образ с Vapor) и Neon (управляемый Postgres), оба без привязки карты. GitHub сам бэкенд не хостит. Как это устроено, смотри в G9. Документация: [Render: Docker](https://render.com/docs/docker), [Neon](https://neon.tech/docs).
 
 **Руками.**
 1. Установи Docker Desktop (или OrbStack), `docker run -e POSTGRES_PASSWORD=... -p 5432:5432 postgres`.
@@ -1110,9 +1151,46 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Docker deploy](https://docs.vapor.codes/deploy/docker/), [Fluent: Postgres](https://docs.vapor.codes/fluent/overview/#postgresql), [Environment](https://docs.vapor.codes/basics/environment/)
 
-**Код в Buzz.** пока не сделано; база выбирается в `Backend/Sources/App/configure.swift`.
+**Код в Buzz.** пока не сделано; база выбирается в [`Backend/Sources/App/configure.swift`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift).
 
-**Описание.** `docs/backend/README.md`, разделы 4 и 10.
+**Описание.** [`docs/backend/README.md`](https://github.com/disavle/buzz/blob/main/docs/backend/README.md), разделы 4 и 10.
+
+---
+
+## G9. Деплой: Docker multi-stage, GHCR, deploy hook, 12-factor
+
+**Что и зачем.** Бэкенд живёт бесплатно на связке Render + Neon. CI собирает Docker-образ, кладёт его в GitHub Container Registry и дёргает Render, а тот скачивает образ и перезапускает сервер. Настройки сервер берёт из переменных окружения, поэтому один и тот же образ работает и локально, и в облаке.
+
+**Было → стало (UIKit).** В iOS ты собирал `.ipa` и отдавал в TestFlight. Здесь то же самое: Docker-образ — это «сборка» сервера, GHCR — «TestFlight» для образов, а deploy hook — кнопка «выпустить».
+
+**Ограничения бесплатных тарифов.**
+- Render Free: Docker без карты, 750 часов в месяц, засыпает после 15 минут без запросов (первый запрос после сна идёт долго). Диск временный, поэтому SQLite там не подходит. Свой бесплатный Postgres у Render удаляется через 30 дней, его не используем.
+- Neon Free: Postgres на 1 ГБ и 100 CU-часов, засыпает после 5 минут простоя.
+- GitHub бэкенд не хостит: Pages только для статики, Codespaces и Actions не для постоянного сервера.
+
+**Новые понятия.**
+- *Multi-stage build*: первая стадия собирает Swift-код в тяжёлом образе с компилятором, вторая копирует только готовый бинарник в лёгкий образ. Итоговый образ маленький.
+- *Контекст сборки = корень репо*: бэкенду нужен пакет `Shared/`, поэтому `docker build` запускается из корня, а лишнее отсекает `.dockerignore`.
+- *GitHub Container Registry (ghcr.io)*: хранилище Docker-образов при репозитории, в CI пушится по `GITHUB_TOKEN`.
+- *Deploy hook*: секретный URL Render; POST-запрос на него с `imgURL` запускает выкатку нужного образа. Хранится в секрете `RENDER_DEPLOY_HOOK`.
+- *12-factor config*: всё, что меняется между окружениями (`DATABASE_URL`, `PORT`, `AUTO_MIGRATE`), читается из env, а не зашивается в код.
+
+**Руками.**
+1. Напиши `Dockerfile` в две стадии для игрушечного Vapor-приложения: `FROM swift:6.x AS build` → `swift build -c release`, потом `FROM swift:6.x-slim` и `COPY --from=build` бинарника.
+2. `docker build -t hello .` и `docker run -p 8080:8080 -e PORT=8080 hello`, проверь `curl localhost:8080`.
+3. В `configure.swift` прочитай `Environment.get("DATABASE_URL")` и подключи Postgres через `app.databases.use(try .postgres(url: ...), as: .psql)`.
+4. Заведи бесплатную базу на Neon, передай её URL в `docker run -e DATABASE_URL=...` и убедись, что миграции прошли.
+5. По желанию: создай сервис на Render из образа и дёрни его deploy hook через `curl -X POST`.
+
+**Деплой не на каждый пуш.** Job `deploy` запускается только когда пуш в `main` меняет `Backend/Sources`, `Backend/Package.*`, `Backend/Dockerfile` или `Shared/` (фильтр `deploy` в `dorny/paths-filter`, PR #8). Тесты, документы и сам workflow сервер не перевыкатывают. Ещё деплой можно запустить руками: Actions → CI → Run workflow (`workflow_dispatch`, PR #7).
+
+**Разобрать в Buzz.** `Backend/Dockerfile` (две стадии и почему контекст — корень), `.dockerignore`, ветку с `DATABASE_URL` в `configure.swift`, job `deploy` в `ci.yml` и пошаговую инструкцию `docs/backend/DEPLOY.md`.
+
+**Документация.** [Docker: multi-stage builds](https://docs.docker.com/build/building/multi-stage/), [Vapor: Docker](https://docs.vapor.codes/deploy/docker/), [GitHub: Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry), [Render: Deploy hooks](https://render.com/docs/deploy-hooks), [Render: Free](https://render.com/docs/free), [Neon: Connect](https://neon.tech/docs/connect/connect-from-any-app), [The Twelve-Factor App: Config](https://12factor.net/config)
+
+**Код в Buzz.** стадии сборки [`Backend/Dockerfile:14`](https://github.com/disavle/buzz/blob/main/Backend/Dockerfile#L14) и [`:51`](https://github.com/disavle/buzz/blob/main/Backend/Dockerfile#L51); `DATABASE_URL` [`Backend/Sources/App/configure.swift:17`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift#L17), `PORT` [`:27`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift#L27), `AUTO_MIGRATE` [`:50`](https://github.com/disavle/buzz/blob/main/Backend/Sources/App/configure.swift#L50); фильтр [`.github/workflows/ci.yml:46`](https://github.com/disavle/buzz/blob/main/.github/workflows/ci.yml#L46) и job `deploy` [`:90`](https://github.com/disavle/buzz/blob/main/.github/workflows/ci.yml#L90).
+
+**Описание.** [`docs/backend/DEPLOY.md`](https://github.com/disavle/buzz/blob/main/docs/backend/DEPLOY.md).
 
 ---
 
@@ -1136,9 +1214,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Tuist docs](https://docs.tuist.dev)
 
-**Код в Buzz.** `iOS/Project.swift`, `iOS/Tuist.swift`, `iOS/Tuist/Package.swift`, `iOS/Tuist/ProjectDescriptionHelpers/Module.swift`; пошаговый разбор `docs/infra/HANDS-ON.md`.
+**Код в Buzz.** [`iOS/Project.swift`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift), [`iOS/Tuist.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist.swift), [`iOS/Tuist/Package.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/Package.swift), [`iOS/Tuist/ProjectDescriptionHelpers/Module.swift`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/ProjectDescriptionHelpers/Module.swift); пошаговый разбор [`docs/infra/HANDS-ON.md`](https://github.com/disavle/buzz/blob/main/docs/infra/HANDS-ON.md).
 
-**Описание.** `docs/infra/README.md`, разделы 1–3.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), разделы 1–3.
 
 ---
 
@@ -1155,13 +1233,15 @@ cont.yield("привет"); cont.finish()
 
 **Подвох.** `mise generate` — встроенная команда mise, поэтому своя задача вызывается как `mise run generate`.
 
+**Алиасы zsh.** Файл `scripts/buzz.zsh` подключается строкой `source <путь>/scripts/buzz.zsh` в `~/.zshrc` и даёт команды `buzz-ios` (приложение в симуляторе через новую задачу `mise run ios` = `tuist run Buzz`), `buzz-api` (бэкенд), `buzz-dev` (бэкенд в фоне плюс приложение), `buzz-stop`, а также `buzz`, `buzz-gen`, `buzz-open`, `buzz-test`, `buzz-lint`. Репозиторий скрипт находит по своему пути (`${${(%):-%x}:A:h:h}`) и вызывает `mise -C <репо>`, поэтому команды работают из любой папки. Чтобы разобраться, напиши свою функцию `myproj-run() { mise -C ~/code/myproj run dev }` в `~/.zshrc` и сравни со скриптом.
+
 **Разобрать в Buzz.** Прочитать `mise.toml` и после клона репозитория поднять всё одной `mise run generate`.
 
 **Документация.** [mise](https://mise.jdx.dev), [Tasks](https://mise.jdx.dev/tasks/)
 
-**Код в Buzz.** `mise.toml`; `docs/infra/HANDS-ON.md`, шаг 1.
+**Код в Buzz.** [`mise.toml`](https://github.com/disavle/buzz/blob/main/mise.toml), задача `ios` [`mise.toml:82`](https://github.com/disavle/buzz/blob/main/mise.toml#L82), алиасы [`scripts/buzz.zsh:13`](https://github.com/disavle/buzz/blob/main/scripts/buzz.zsh#L13), `buzz-dev` [`:23`](https://github.com/disavle/buzz/blob/main/scripts/buzz.zsh#L23); [`docs/infra/HANDS-ON.md`](https://github.com/disavle/buzz/blob/main/docs/infra/HANDS-ON.md), шаг 1.
 
-**Описание.** `docs/infra/README.md`, раздел 4.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 4.
 
 ---
 
@@ -1178,9 +1258,9 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [fastlane docs](https://docs.fastlane.tools), [match](https://docs.fastlane.tools/actions/match/), [App Store Connect API](https://docs.fastlane.tools/app-store-connect-api/)
 
-**Код в Buzz.** `iOS/fastlane/Fastfile`, `iOS/fastlane/Matchfile`, `iOS/Gemfile`.
+**Код в Buzz.** [`iOS/fastlane/Fastfile`](https://github.com/disavle/buzz/blob/main/iOS/fastlane/Fastfile), [`iOS/fastlane/Matchfile`](https://github.com/disavle/buzz/blob/main/iOS/fastlane/Matchfile), [`iOS/Gemfile`](https://github.com/disavle/buzz/blob/main/iOS/Gemfile).
 
-**Описание.** `docs/infra/README.md`, раздел 5.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 5.
 
 ---
 
@@ -1194,14 +1274,15 @@ cont.yield("привет"); cont.finish()
 3. Job на тег `ios-v*`, зависящий от тестов (`needs:`).
 4. Секреты в Settings → Secrets and variables → Actions.
 5. Бэкенд на Linux в контейнере `swift:6.2` с `swift test`.
+6. `dorny/paths-filter` внутри одного workflow: job `changes` отдаёт флаги `ios`/`backend`/`deploy`, остальные job смотрят на них в `if:`. Плюс `workflow_dispatch` для ручного запуска.
 
 **Разобрать в Buzz.** Зелёный CI на пустом проекте (шаг 4 порядка внедрения).
 
 **Документация.** [GitHub Actions](https://docs.github.com/actions)
 
-**Код в Buzz.** `.github/workflows/ci.yml`.
+**Код в Buzz.** [`.github/workflows/ci.yml`](https://github.com/disavle/buzz/blob/main/.github/workflows/ci.yml): job `Changes` решает, что запускать, `iOS` и `Backend` гоняют тесты, `TestFlight` только на теги `ios-v*`, `deploy` выкатывает бэкенд (см. G9).
 
-**Описание.** `docs/infra/README.md`, раздел 6.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 6.
 
 ---
 
@@ -1213,12 +1294,15 @@ cont.yield("привет"); cont.finish()
 1. `xcrun swift-format format -i -r Sources/` и посмотри дифф.
 2. `swiftlint` в корне проекта с конфигом `.swiftlint.yml`.
 3. `mise generate git-pre-commit --write --task=lint` и попробуй закоммитить плохой код.
+4. Вариант без генератора: положи скрипт `pre-commit` в папку `.githooks/` в репозитории и включи её командой `git config core.hooksPath .githooks`. Так хуки лежат в git и одинаковы у всех.
+
+**В Buzz (PR #9).** Хуки `pre-commit` и `pre-push` в `.githooks/` запускают `mise run lint`; коммит, где только документация, линт пропускает. Включаются задачей `mise run setup:hooks`, она уже входит в `mise run generate`. Повод: CI падал на swift-format, теперь это ловится до пуша. Код: [`.githooks/pre-commit`](https://github.com/disavle/buzz/blob/main/.githooks/pre-commit), [`.githooks/run-lint`](https://github.com/disavle/buzz/blob/main/.githooks/run-lint), задача [`mise.toml:46`](https://github.com/disavle/buzz/blob/main/mise.toml#L46).
 
 **Документация.** [swift-format](https://github.com/swiftlang/swift-format), [SwiftLint](https://github.com/realm/SwiftLint), [mise generate git-pre-commit](https://mise.jdx.dev/cli/generate/git-pre-commit.html)
 
-**Код в Buzz.** `.swift-format`, `.swiftlint.yml`, задачи `lint` в `mise.toml`.
+**Код в Buzz.** [`.swift-format`](https://github.com/disavle/buzz/blob/main/.swift-format), [`.swiftlint.yml`](https://github.com/disavle/buzz/blob/main/.swiftlint.yml), задачи `lint` в [`mise.toml`](https://github.com/disavle/buzz/blob/main/mise.toml).
 
-**Описание.** `docs/infra/README.md`, раздел 4a.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 4a.
 
 ---
 
@@ -1230,9 +1314,73 @@ cont.yield("привет"); cont.finish()
 
 **Документация.** [Renovate docs](https://docs.renovatebot.com)
 
-**Код в Buzz.** `renovate.json`.
+**Код в Buzz.** [`renovate.json`](https://github.com/disavle/buzz/blob/main/renovate.json).
 
-**Описание.** `docs/infra/README.md`, раздел 4a.
+**Описание.** [`docs/infra/README.md`](https://github.com/disavle/buzz/blob/main/docs/infra/README.md), раздел 4a.
+
+---
+
+## H7. GitHub Flow и защита main (rulesets)
+
+**Что и зачем.** Простой процесс для одной ветки `main`: любая работа идёт в короткой ветке (`feature/…`, `fix/…`, `chore/…`), через PR с зелёным CI и вливается squash-коммитом, так что в `main` один коммит на задачу. Релиз — тег `ios-v*`. Ruleset на `main` запрещает прямой пуш и вливание без зелёных проверок, а Renovate с auto-merge сам вливает мелкие обновления.
+
+**Было → стало.** Git Flow с `develop`/`release`/`hotfix`, ручная дисциплина «не пушим в master» → GitHub Flow + ruleset, который проверяет правила за тебя.
+
+**Руками.**
+1. В тестовом репозитории: Settings → General → Pull Requests, оставь только **Allow squash merging**, включи **Allow auto-merge** и **Automatically delete head branches**.
+2. Settings → Rules → Rulesets → New branch ruleset на `main`: **Require a pull request**, **Require status checks to pass**, **Block force pushes**.
+3. Попробуй `git push origin main` напрямую и прочитай отказ.
+4. Сделай ветку `feature/test`, открой PR, дождись зелёного CI, влей через **Squash and merge** и посмотри историю `main`.
+5. Поставь тег `git tag v0.0.1 && git push origin v0.0.1` и проверь, что workflow с фильтром по тегам запустился.
+
+**Ревью до пуша (с 2026-10-16).** Ветки Claude ничего не пушат в `disavle/buzz`, пока ты не посмотрел код. Изменения лежат патчем в `/mnt/project-files/review/` с коротким пояснением. Посмотреть и применить у себя: `git apply --stat x.patch` (что меняется), `git apply --check x.patch` (ляжет ли), `git am x.patch` (применить с сообщением коммита). Потом ты пишешь «ок», и ветка пушит и открывает PR.
+
+**Разобрать в Buzz.** Пройти первый блок `SETUP.md` («Сейчас (бесплатно)»): поставить Renovate, настроить слияние и ruleset на `main`. Затем сделать первую свою правку в Buzz через ветку и PR по `CONTRIBUTING.md`.
+
+**Документация.** [GitHub Flow](https://docs.github.com/get-started/using-github/github-flow), [Rulesets](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets), [Squash merging](https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/configuring-commit-squashing-for-pull-requests), [Auto-merge](https://docs.github.com/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request)
+
+**Код в Buzz.** [`CONTRIBUTING.md`](https://github.com/disavle/buzz/blob/main/CONTRIBUTING.md) (ветки, цикл PR, коммиты), [`.github/workflows/ci.yml`](https://github.com/disavle/buzz/blob/main/.github/workflows/ci.yml), [`renovate.json`](https://github.com/disavle/buzz/blob/main/renovate.json).
+
+**Описание.** [`docs/infra/SETUP.md`](https://github.com/disavle/buzz/blob/main/docs/infra/SETUP.md) (чек-лист ручных шагов).
+
+---
+
+## H8. Заведение репозитория: чек-лист
+
+**Что и зачем.** Список того, что делается один раз при создании репозитория, чтобы проект выглядел и работал как настоящий: описание, лицензия, правила работы, CI, защита веток, автообновления. В новом проекте повторяй по этому списку.
+
+**Было → стало.** Репозиторий «просто с кодом» → репозиторий, который сам проверяет PR, обновляет зависимости и объясняет новичку, как запустить проект одной командой.
+
+**Что уже сделано в Buzz (коммитами).**
+- [x] README на двух языках: [`README.md`](https://github.com/disavle/buzz/blob/main/README.md) (английский) и [`README.ru.md`](https://github.com/disavle/buzz/blob/main/README.ru.md), ссылки друг на друга вверху.
+- [x] Лицензия [`LICENSE`](https://github.com/disavle/buzz/blob/main/LICENSE).
+- [x] Правила работы [`CONTRIBUTING.md`](https://github.com/disavle/buzz/blob/main/CONTRIBUTING.md): GitHub Flow, префиксы веток, squash, формат коммитов.
+- [x] `.gitignore` без `*.xcodeproj` (проект генерирует Tuist).
+- [x] Единый CI [`.github/workflows/ci.yml`](https://github.com/disavle/buzz/blob/main/.github/workflows/ci.yml).
+- [x] Линтеры [`.swift-format`](https://github.com/disavle/buzz/blob/main/.swift-format), [`.swiftlint.yml`](https://github.com/disavle/buzz/blob/main/.swiftlint.yml) и pre-commit хук через mise.
+- [x] Версии инструментов и задачи в [`mise.toml`](https://github.com/disavle/buzz/blob/main/mise.toml), конфиг Renovate [`renovate.json`](https://github.com/disavle/buzz/blob/main/renovate.json).
+- [x] Документация в [`docs/`](https://github.com/disavle/buzz/tree/main/docs), моки в [`Mocks/`](https://github.com/disavle/buzz/tree/main/Mocks).
+
+**Что делается руками в настройках GitHub** (коммитом не сделать, подробности в [`docs/infra/SETUP.md`](https://github.com/disavle/buzz/blob/main/docs/infra/SETUP.md)):
+- [ ] About: описание, сайт, topics (`ios`, `swiftui`, `vapor`, `swift`, `tuist`). Кнопка ⚙ справа от About на главной странице репозитория.
+- [ ] Установить GitHub App Renovate на репозиторий.
+- [ ] Settings → General → Pull Requests: только Squash merging, Allow auto-merge, Automatically delete head branches.
+- [ ] Ruleset на `main`: обязательный PR, проверки `iOS` и `Backend`, запрет force push.
+- [ ] Позже, с Apple Developer Program: секреты для CI и match (шаги 8–13 в `SETUP.md`).
+
+**Руками.**
+1. Заведи пустой тестовый репозиторий на GitHub с README, лицензией MIT и `.gitignore` Swift прямо из формы создания.
+2. Добавь `README.ru.md` и ссылки-переключатели языка в начале обоих файлов.
+3. Заполни About и topics, посмотри, как репозиторий стал находиться в поиске по topic.
+4. Пройди шаги из H7 (ruleset, squash) и H6 (Renovate).
+
+**Разобрать в Buzz.** Отметить галочки в списке выше по мере настройки и сравнить, что в Buzz сделано файлами, а что только кнопками в Settings.
+
+**Документация.** [About README](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes), [Licensing a repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), [Contributor guidelines](https://docs.github.com/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors), [Topics](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics)
+
+**Код в Buzz.** корень репозитория [disavle/buzz](https://github.com/disavle/buzz).
+
+**Описание.** [`docs/infra/SETUP.md`](https://github.com/disavle/buzz/blob/main/docs/infra/SETUP.md).
 
 ---
 
@@ -1240,3 +1388,13 @@ cont.yield("привет"); cont.finish()
 
 - **2026-10-15.** Первая версия: 49 карточек по материалам веток «План изучения», «Идея», «SwiftUI-клиент», «Бэкенд на Vapor», «Дизайн», «Архитектура и инфраструктура».
 - **2026-10-15.** Появился настоящий код Buzz (ветка «Публичный репозиторий Buzz»): во всех карточках «Где в Buzz» заменено на «Код в Buzz» с путями и строками в репозитории. Новая карточка C7 про моки и фейковый сервер.
+- **2026-10-15.** Репозиторий опубликован: пути в «Код в Buzz» стали ссылками на GitHub.
+- **2026-10-15.** Ветка «Архитектура и инфраструктура»: карточка H7 про GitHub Flow, squash и rulesets; в H4 отмечен переход на единый `ci.yml` (PR #1).
+- **2026-10-15.** PR #1 влит: H4 и H7 ссылаются на `ci.yml`, `CONTRIBUTING.md` и `docs/infra/SETUP.md` в `main`. Новая карточка H8: чек-лист заведения репозитория (что сделано файлами, что руками в Settings).
+- **2026-10-15.** G8: добавлена рекомендация по бесплатному хостингу (Render + Neon), пока без деплоя.
+- **2026-10-15.** H2: алиасы zsh `buzz-ios`/`buzz-api`/`buzz-dev` и задача `mise run ios` (PR #4, пока открыт).
+- **2026-10-15.** Новая карточка G9: бесплатный деплой бэкенда (Render + Neon), Docker multi-stage, GHCR, deploy hook, конфиг через env (PR #5, пока открыт).
+- **2026-10-16.** PR #4, #5, #7, #8 влиты: G9 и H2 со ссылками на код; G9 и H4: деплой только при изменениях `Backend/` и `Shared/`, ручной запуск. C7: адрес сервера для iPhone (`TUIST_API_URL`, `BUZZ_API_URL`). C4: подвох с бесконечной синхронизацией и `localEdits`. H7: ревью патчей до пуша. Последние два пункта пока на ревью.
+- **2026-10-16.** H5: git-хуки в `.githooks/` и `mise run setup:hooks`. C7: адрес сервера по умолчанию для устройства и симулятора. Оба пункта на ревью.
+- **2026-10-18.** Новая карточка A8: Combine (Subject, debounce, removeDuplicates, AnyCancellable, мост в async/await) на примере поиска каталога. В B5 отмечено сравнение. Пока на ревью.
+- **2026-10-18.** PR #9 и #10 влиты: у A8 (Combine), C4 (`localEdits`), C7 (адрес сервера, условие `[sdk=iphonesimulator*]`), H5 (git-хуки) появились ссылки на код. Ссылки на строки во всём конспекте перепроверены по текущему `main` и сдвинуты там, где код поменялся.
