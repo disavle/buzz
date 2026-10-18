@@ -9,6 +9,30 @@ GitHub release with the notes of that version from this file.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-18
+
+### English
+
+Documentation only: the app and the server are the same as in 0.1.0.
+
+**Docs**
+- New course `docs/learning/course.md`: build a new "Wellbeing" feature in
+  Buzz by hand, in blocks of about 30 minutes, touching every part of the
+  stack from Tuist and SwiftUI to Vapor, CI and releases.
+- The handbook is theory only again; the course links to it.
+- README (EN + RU) links the course and the handbook separately.
+
+### Русский
+
+Только документация: приложение и сервер такие же, как в 0.1.0.
+
+**Документация**
+- Новый курс `docs/learning/course.md`: своими руками пишешь в Buzz новую
+  фичу «Самочувствие» блоками примерно по 30 минут и проходишь весь стек,
+  от Tuist и SwiftUI до Vapor, CI и релизов.
+- Справочник снова только про теорию, курс ссылается на него.
+- README (EN и RU) ссылается на курс и справочник отдельно.
+
 ## [0.1.1] - 2026-10-18
 
 ### English
@@ -91,6 +115,7 @@ Swift backend. This is a learning project, see the README.
 - Документы на русском: дизайн, архитектура, API, деплой, инфраструктура.
 - Справочник по новому стеку iOS с курсом на 40 дней на примере этого приложения.
 
-[Unreleased]: https://github.com/disavle/buzz/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/disavle/buzz/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/disavle/buzz/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/disavle/buzz/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/disavle/buzz/releases/tag/v0.1.0
