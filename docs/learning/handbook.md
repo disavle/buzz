@@ -93,7 +93,7 @@
 - [ ] День 37. Postgres локально (G8)
 - [ ] День 38. Линт и CI (H5, H4)
 - [ ] День 39. Деплой (G9, H6)
-- [ ] День 40. Выпуск и итоги (H7, H3, H8)
+- [ ] День 40. Выпуск и итоги (H7, H3, H8, H9)
 
 ---
 
@@ -168,6 +168,7 @@
 - [ ] H6. Renovate
 - [ ] H7. GitHub Flow и защита main (rulesets)
 - [ ] H8. Заведение репозитория: чек-лист
+- [ ] H9. Релизы: CHANGELOG и GitHub Release по тегу
 
 ---
 
@@ -1626,6 +1627,32 @@ cont.yield("привет"); cont.finish()
 
 ---
 
+## H9. Релизы: CHANGELOG и GitHub Release по тегу
+
+**Что и зачем.** `CHANGELOG.md` — человеческий список изменений по версиям в формате Keep a Changelog: сверху `[Unreleased]`, ниже версии с датой, внутри разделы. Версии по SemVer (`MAJOR.MINOR.PATCH`). Тег `v*` запускает workflow, который берёт раздел нужной версии из `CHANGELOG.md` и создаёт **черновик** GitHub Release; ты проверяешь текст и жмёшь «Publish release». Тег `ios-v*` — отдельная история, он отправляет сборку в TestFlight (H4), так что релиз на GitHub ничего не выкладывает в Apple.
+
+**Было → стало.** Release notes вручную в App Store Connect и в чате команды → один файл в репозитории, из которого текст попадает в релиз автоматически.
+
+**Руками.**
+1. В тестовом репозитории заведи `CHANGELOG.md` с разделами `## [Unreleased]` и `## [0.1.0] - <дата>`.
+2. Вырежи раздел одной версии командой `awk` из workflow Buzz и проверь вывод в терминале.
+3. Сделай workflow на `push: tags: ["v*"]` с `permissions: contents: write` и шагом `gh release create "$GITHUB_REF_NAME" --draft --notes-file notes.md`.
+4. `git tag v0.1.0 && git push origin v0.1.0`, открой Releases и опубликуй черновик.
+5. Добавь пункт в `[Unreleased]`, перенеси его в новую версию `0.1.1` и выпусти её.
+
+**Разобрать в Buzz.** Прочитать `CHANGELOG.md` (английская и русская части в каждой версии) и `release.yml`. Что будет, если поставить тег версии, которой нет в `CHANGELOG.md`?
+
+**Уроки курса** (фича «Самочувствие», см. «Курс» в начале).
+- **День 40. Выпуск и итоги.** Задание в карточке H7. Здесь добавь в `[Unreleased]` строку про «Самочувствие» (EN и RU), перенеси её в версию `0.2.0`, поставь тег `v0.2.0` и опубликуй черновик релиза.
+
+**Документация.** [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), [Semantic Versioning](https://semver.org/lang/ru/), [GitHub: About releases](https://docs.github.com/repositories/releasing-projects-on-github/about-releases), [gh release create](https://cli.github.com/manual/gh_release_create)
+
+**Код в Buzz.** [`CHANGELOG.md`](https://github.com/disavle/buzz/blob/main/CHANGELOG.md), [`.github/workflows/release.yml`](https://github.com/disavle/buzz/blob/main/.github/workflows/release.yml): вырезка раздела через `awk` [`:31`](https://github.com/disavle/buzz/blob/main/.github/workflows/release.yml#L31), черновик релиза [`:45`](https://github.com/disavle/buzz/blob/main/.github/workflows/release.yml#L45). Первый релиз — `v0.1.0` (PR #13).
+
+**Описание.** комментарии в начале `release.yml` и в шапке `CHANGELOG.md`.
+
+---
+
 ## Журнал изменений
 
 - **2026-10-15.** Первая версия: 49 карточек по материалам веток «План изучения», «Идея», «SwiftUI-клиент», «Бэкенд на Vapor», «Дизайн», «Архитектура и инфраструктура».
@@ -1641,3 +1668,4 @@ cont.yield("привет"); cont.finish()
 - **2026-10-18.** Новая карточка A8: Combine (Subject, debounce, removeDuplicates, AnyCancellable, мост в async/await) на примере поиска каталога. В B5 отмечено сравнение. Пока на ревью.
 - **2026-10-18.** PR #9 и #10 влиты: у A8 (Combine), C4 (`localEdits`), C7 (адрес сервера, условие `[sdk=iphonesimulator*]`), H5 (git-хуки) появились ссылки на код. Ссылки на строки во всём конспекте перепроверены по текущему `main` и сдвинуты там, где код поменялся.
 - **2026-10-18.** Отдельный план обучения (`plan.md`) убран по просьбе пользователя. Вместо него в начале справочника курс на 40 будних дней: каждый день пишешь кусочек новой фичи «Самочувствие» в Buzz, задание дня лежит в разделе «Уроки курса» нужной карточки. Объяснение «Зачем столько таргетов» перенесено в E5.
+- **2026-10-18.** Новая карточка H9: `CHANGELOG.md` по Keep a Changelog и черновик GitHub Release по тегу `v*` (PR #13). В день 40 добавлен выпуск версии `v0.2.0` с фичей «Самочувствие».
