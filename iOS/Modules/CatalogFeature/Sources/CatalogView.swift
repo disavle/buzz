@@ -47,12 +47,9 @@ public struct CatalogView: View {
         }
         // `.searchable` puts a search bar into the navigation bar (UISearchController in UIKit).
         .searchable(text: $model.query, prompt: Text("catalog.search", bundle: .module))
-        // Debounce: wait 300 ms after the last key press. A new key press cancels this task.
-        .task(id: model.query) {
-            if !model.query.isEmpty { try? await Task.sleep(for: .milliseconds(300)) }
-            guard !Task.isCancelled else { return }
-            await model.load()
-        }
+        // The first load. Search after that goes through the Combine pipeline in the view model
+        // (debounce lives there now, not in a `.task(id:)` here).
+        .task { await model.load() }
         .navigationTitle(Text("catalog.title", bundle: .module))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
