@@ -9,6 +9,24 @@ GitHub release with the notes of that version from this file.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-18
+
+### English
+
+Documentation only: the app and the server are the same as in 0.1.0.
+
+**Docs**
+- The handbook has a new card about releases: how CHANGELOG.md, `v*` tags
+  and the Release workflow in this repository work together.
+
+### Русский
+
+Только документация: приложение и сервер такие же, как в 0.1.0.
+
+**Документация**
+- В справочнике новая карточка про релизы: как в этом репозитории вместе
+  работают CHANGELOG.md, теги `v*` и workflow Release.
+
 ## [0.1.0] - 2026-10-18
 
 The first version of Buzz: an energy drink tracker for iPhone and its own
@@ -73,5 +91,6 @@ Swift backend. This is a learning project, see the README.
 - Документы на русском: дизайн, архитектура, API, деплой, инфраструктура.
 - Справочник по новому стеку iOS с курсом на 40 дней на примере этого приложения.
 
-[Unreleased]: https://github.com/disavle/buzz/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/disavle/buzz/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/disavle/buzz/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/disavle/buzz/releases/tag/v0.1.0
