@@ -1,316 +1,262 @@
-# Учебный план: современный iOS-стек + серверный Swift
+# План обучения на Buzz: руками и без выгорания
 
-Для кого: iOS-разработчик с опытом UIKit, DiffableDataSource и CompositionalLayout.
-Цель: освоить современный Swift и SwiftUI, а заодно написать своё мини-приложение: SwiftUI-клиент и бэкенд на Vapor.
-Ориентир по версиям: Xcode 26, Swift 6.2, iOS 26, Vapor 4.
+Цель: разобраться во всём новом, что есть в Buzz, так, чтобы потом собрать похожее приложение с нуля самому, без Claude и без подсказок.
 
-Идея и название приложения обсуждаются в ветке «Идея и название приложения». Пока они не выбраны, упражнения ниже описаны для условной сущности `Item` (заметка, задача, запись — что угодно со списком и деталями). Когда идея появится, просто подставьте свои модели.
+Код Buzz написал Claude, и это нормально: это учебник, а не экзамен. Но чтение чужого кода почти не запоминается. Запоминается то, что ты написал руками, сломал и починил. Поэтому план построен по совету Михаила:
 
-## Как пользоваться планом
+1. **Перепиши экран руками, без AI.** Открыл готовый экран, понял, закрыл, написал заново в пустом файле. Подглядывать можно, копировать нельзя.
+2. **Ломай и чини сам.** Сознательно сломай что-то (миграцию SwiftData, изоляцию актора, идентичность в списке), посмотри на ошибку или краш и почини без AI. Лучшее место для старта — миграции SwiftData.
 
-- Темы идут в порядке зависимостей: каждая опирается на предыдущие.
-- Ориентир по времени: 8–10 недель по 5–7 часов в неделю. Это не жёсткий график.
-- В каждой теме: **зачем**, **что изучить**, **упражнение**. Упражнения складываются в одно приложение, поэтому к концу плана у вас будет рабочий клиент и сервер.
-- Сессии WWDC ищутся по названию на [developer.apple.com/videos](https://developer.apple.com/videos/) или в приложении Developer.
+Справочник по каждой технологии уже есть: [handbook.md](handbook.md). План ниже говорит, *что делать руками и в каком порядке*, а за теорией ходи в справочник.
+
+---
+
+## Правила, чтобы не выгореть
+
+- **Короткие сессии.** 45–90 минут, 3–4 раза в неделю. Минимальная сессия — 20 минут: прочитать один файл и записать три мысли. Это тоже засчитывается.
+- **Одна сессия = одна маленькая законченная вещь.** Не «изучить SwiftData», а «добавить поле `note` в `EntryModel` и увидеть, что данные не потерялись».
+- **Останавливайся, пока идёт хорошо.** Заканчивай на середине понятного шага и запиши, что делать дальше. Начинать следующую сессию будет легко.
+- **Дни без AI.** Сессии «руками» проходят с выключенным Copilot и без Claude. Можно документацию Apple, Vapor, WWDC и `handbook.md`. Claude можно звать *после*, чтобы сравнить своё решение с его.
+- **Застрял на 25 минут — сделай шаг назад.** Запиши вопрос в журнал и переходи к следующему пункту. Возвращайся на следующей сессии со свежей головой.
+- **Пропустил неделю — ничего страшного.** План без дат. Продолжаешь с того места, где остановился, без «догонять».
+- **Одна выходная неделя каждые 5–6 недель.** Без кода вообще.
+- **Журнал.** Файл `docs/learning/journal.md` в репозитории или страница в Notion. После каждой сессии 3 строки: что сделал, что сломал, что понял. Через месяц это лучший конспект и готовый материал для резюме и собеседований.
+
+## Как устроен каждый блок
+
+Каждый блок проходит по одной и той же петле из четырёх шагов:
+
+| Шаг | Что делать | AI |
+|---|---|---|
+| **Прочитай** | Прочитай указанные файлы Buzz и раздел справочника. Нарисуй на бумаге, кто кого вызывает. | Можно спросить Claude |
+| **Перепиши** | Создай ветку `learn/<тема>`, удали файл (или создай рядом пустой) и напиши заново по памяти. | Нельзя |
+| **Сломай** | Выполни упражнения «сломай и почини». Сначала угадай, что будет, потом проверь. | Нельзя |
+| **Объясни** | Ответь вслух или в журнале на вопросы самопроверки. Если не получается — вернись к шагу 1. | Можно сверить ответы |
+
+Учебные ветки `learn/*` не обязательно мержить. Их задача — научить, а не улучшить Buzz.
+
+---
+
+## Зачем в проекте столько таргетов
+
+Коротко: **фича-модулей всего пять, по одному на экран. Остальное — слои и тесты.** Для соло-проекта такого размера это больше, чем нужно, но здесь это сделано осознанно, чтобы потренировать модульность и Tuist.
+
+Откуда берётся число. В [`iOS/Project.swift`](https://github.com/disavle/buzz/blob/main/iOS/Project.swift) описано 10 модулей, и хелпер [`Module`](https://github.com/disavle/buzz/blob/main/iOS/Tuist/ProjectDescriptionHelpers/Module.swift) для каждого создаёт **два таргета**: сам модуль (static framework) и его тесты. Плюс приложение и его тесты, плюс пакет `Shared` из SPM. Итого 10 × 2 + 2 + 1 = **23 таргета**.
+
+| Группа | Модули | Зачем отдельно |
+|---|---|---|
+| Фичи (экраны) | `TodayFeature`, `AddEntryFeature`, `CatalogFeature`, `StatsFeature`, `SettingsFeature` | Один экран = один модуль. Фичи не знают друг о друге, их связывают координаторы в `App` |
+| Ядро | `Domain` | Модели и протоколы репозиториев. Все зависят от него, он ни от кого |
+| Данные | `Persistence`, `Networking`, `Sync` | SwiftData живёт только в `Persistence`, сеть только в `Networking`. Фича физически не может импортировать SwiftData |
+| UI-кит | `DesignSystem` | Цвета, шрифты, общие компоненты |
+| Общий с сервером код | `Shared` | DTO, которые используют и приложение, и Vapor |
+| Тесты | `<Модуль>Tests` × 10 + `BuzzTests` | У каждого модуля свои тесты, они гоняются быстро и по отдельности |
+
+**Что это даёт.**
+- Границы проверяет компилятор: фича не может случайно залезть в SwiftData или в соседний экран. Без модулей это держится только на договорённостях.
+- Быстрая инкрементальная сборка и превью: правка в `StatsFeature` пересобирает только её.
+- Тесты модуля запускаются за секунды и не тянут всё приложение.
+- Это то, что спрашивают на собеседованиях в больших командах: «как бы вы модуляризовали приложение».
+
+**Чем платишь.**
+- Много `public` в коде, у каждого модуля свой `Bundle.module` для ресурсов и строк.
+- Больше церемоний при добавлении нового экрана.
+- На 7 тысячах строк выигрыш в скорости сборки почти незаметен.
+
+**Нужно ли так.** Для Buzz как продукта хватило бы 4–5 таргетов: `App`, `Core` (Domain + Persistence + Networking + Sync), `DesignSystem`, `Features` и одного таргета тестов. Для Buzz как учебника текущая разбивка полезна, потому что на ней тренируется то, что встречается в больших проектах. Рекомендация: **оставить как есть**, а в блоке 1 руками сделать упражнение «склей два модуля и разведи обратно», чтобы прочувствовать разницу.
+
+---
 
 ## Карта плана
 
-| # | Тема | Неделя | Результат в мини-приложении |
-|---|------|--------|-----------------------------|
-| 0 | Подготовка проекта | 1 | Пустой SwiftUI-проект, Swift 6, git |
-| 1 | Swift Concurrency и Swift 6 | 1–2 | Сетевой слой на async/await и actor |
-| 2 | Observation (`@Observable`) | 2 | Модели экранов без Combine |
-| 3 | SwiftUI: основы и мышление | 3 | Список и экран деталей |
-| 4 | SwiftUI: навигация, состояние, архитектура | 4 | NavigationStack, формы, ошибки |
-| 5 | SwiftUI и UIKit вместе | 5 | Интеграция в старый проект, ячейки на SwiftUI |
-| 6 | SwiftData | 5–6 | Локальный кэш и офлайн-режим |
-| 7 | Swift Testing | 6 | Тесты на модели и сетевой слой |
-| 8 | Макросы | 7 | Понимание `@Observable`/`@Model`, свой простой макрос |
-| 9 | Серверный Swift на Vapor | 7–9 | REST API, Fluent, база данных |
-| 10 | Связка клиента и сервера | 9–10 | Общие модели, синхронизация, деплой |
+Ориентир: 3–4 сессии в неделю, около 4 месяцев. Блоки можно переставлять, кроме нулевого.
+
+| # | Блок | Сессий | Главное упражнение руками |
+|---|---|---|---|
+| 0 | Собрать проект | 2–4 | Починить первую сборку самому |
+| 1 | Tuist, mise и модули | 3 | Добавить модуль руками, склеить два модуля |
+| 2 | SwiftUI и Observation | 6 | Переписать экран «Каталог» с нуля |
+| 3 | Навигация и UIKit-мост | 3 | Новый диплинк и координатор руками |
+| 4 | SwiftData и миграции | 5 | Сломать и починить миграцию схемы |
+| 5 | Swift Concurrency и Swift 6 | 5 | Переписать `SyncEngine`, поймать гонку |
+| 6 | Swift Testing | 3 | Тесты к `StatsCalculator` с нуля |
+| 7 | Swift Charts | 2 | Переписать график на экране «Статистика» |
+| 8 | Архитектуры: MVVM, Clean, Redux | 4 | Переписать «Настройки» с Redux на MVVM |
+| 9 | Vapor и Fluent | 6 | Новый эндпоинт и миграция на сервере |
+| 10 | Синхронизация целиком, CI и деплой | 3 | Пройти путь записи от экрана до Postgres |
+| 11 | Финал: своё приложение с нуля | 8–10 | Маленькое приложение без AI вообще |
 
 ---
 
-## 0. Подготовка
+## 0. Собрать проект
 
-**Зачем.** Начать сразу в правильных настройках, чтобы не мигрировать потом.
+Первая версия Buzz писалась без Xcode, поэтому первая сборка, скорее всего, упадёт. Это не помеха, а первый урок: чинить чужой код по ошибкам компилятора — главный навык.
 
-**Что сделать.**
-- Создать проект в Xcode 26 (шаблон App, интерфейс SwiftUI, хранилище None, SwiftData добавим позже руками).
-- В Build Settings убедиться, что Swift Language Version = Swift 6.
-- Посмотреть, включены ли настройки «Approachable Concurrency» и «Default Actor Isolation = MainActor» (в новых проектах Xcode 26 они включены). Разберитесь, что они значат, в теме 1.
-- Создать монорепозиторий: `App/` (Xcode-проект), `Server/` (Vapor), `Shared/` (Swift Package с общими моделями, появится в теме 10).
+**Сделай.**
+- `mise run generate`, `mise run open`, собери схему `Buzz`.
+- Чини ошибки сам, по одной. На каждую запиши в журнал: что за ошибка, в каком модуле, как починил.
+- Запусти приложение с `BUZZ_MOCK_API = 1` (см. README), потом с локальным бэкендом `mise run backend:run`.
+- Запусти на своём iPhone: Team ID в `mise.local.toml`, `mise run generate`. Телефон по умолчанию ходит на сервер в Render, симулятор на `localhost` (справочник C7, `docs/infra/SETUP.md`, шаг 6).
+- `mise run generate` заодно включил git-хуки: попробуй закоммитить код с лишним пробелом и прочитай, что ответил линтер (справочник H5).
+- Изменения от Claude приходят патчем в `/mnt/project-files/review/`. Примени один сам: `git apply --stat`, `git apply --check`, `git am` (справочник H7).
 
----
+**Объясни.** Какие ошибки были про Swift 6 concurrency, а какие про модули и видимость (`public`)?
 
-## 1. Swift Concurrency и Swift 6 strict concurrency
+## 1. Tuist, mise и модули
 
-**Зачем.** Это фундамент всего остального: SwiftUI, SwiftData и Vapor написаны вокруг async/await и акторов. В Swift 6 проверка гонок данных стала ошибкой компиляции, а не предупреждением. Если вы привыкли к GCD, completion handlers и `DispatchQueue.main.async`, здесь главный сдвиг мышления: изоляция описывается в типах, а компилятор её проверяет.
+**Прочитай.** `iOS/Project.swift`, `iOS/Tuist/ProjectDescriptionHelpers/Module.swift`, `iOS/Tuist/Package.swift`, `mise.toml`. Запусти `mise run graph` и рассмотри картинку.
 
-**Ключевые понятия.**
-- `async`/`await`, `Task`, отмена задач, `Task.checkCancellation()`.
-- Structured concurrency: `async let`, `withTaskGroup`, `withThrowingTaskGroup`.
-- `actor`, `@MainActor`, глобальные акторы, изоляция.
-- `Sendable`, `@Sendable`-замыкания, `sending`, почему `class` не Sendable по умолчанию.
-- `AsyncSequence`, `AsyncStream` (замена многим сценариям Combine).
-- Swift 6.2: изоляция на MainActor по умолчанию, `nonisolated(nonsending)` по умолчанию для async-функций, атрибут `@concurrent` для явного ухода с актора.
-- Мост со старым кодом: `withCheckedThrowingContinuation`.
+**Перепиши.** Добавь руками новый модуль `ProfileFeature` с одним пустым экраном: папка, строка в `Project.swift`, зависимости, координатор в `App`.
 
-**Что изучить.**
-- WWDC21 «Meet async/await in Swift»
-- WWDC21 «Protect mutable state with Swift actors»
-- WWDC21 «Swift concurrency: Behind the scenes»
-- WWDC22 «Eliminate data races using Swift Concurrency»
-- WWDC23 «Beyond the basics of structured concurrency»
-- WWDC24 «Migrate your app to Swift 6»
-- WWDC25 «Embracing Swift concurrency» — главное видео про модель Swift 6.2
-- WWDC25 «Code-along: Elevate an app with Swift concurrency»
-- [The Swift Programming Language: Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)
-- [Swift 6 migration guide](https://www.swift.org/migration/documentation/migrationguide/)
+**Сломай и почини.**
+- Импортируй `Persistence` прямо из `TodayFeature`. Сборка пройдёт? Что скажет `tuist inspect implicit-imports`?
+- Удали `public` у типа в `Domain`. Где и какая ошибка?
+- Склей `Sync` и `Persistence` в один модуль, собери, потом разведи обратно. Что стало проще и что хуже?
 
-**Упражнение.**
-1. Написать `APIClient` на `URLSession` с `async throws`-методами `fetchItems()`, `fetchItem(id:)`, `create(_:)`. Пока бэкенда нет, отдавать JSON из бандла или с публичного мок-API.
-2. Сделать `actor ImageCache`, который не скачивает одну и ту же картинку дважды при параллельных запросах (храните `Task` в словаре).
-3. Загрузить три независимых ресурса параллельно через `async let` и сравнить с последовательной загрузкой.
-4. Если есть свой UIKit-проект: включить в одном модуле `-strict-concurrency=complete` и разобрать первые 10 предупреждений. Это лучший способ понять, где в старом коде гонки.
+**Объясни.** Зачем `Domain` не зависит ни от чего? Почему фича видит только `Domain` и `DesignSystem`?
 
----
+## 2. SwiftUI и Observation
 
-## 2. Observation (`@Observable`)
+Самый большой блок. Здесь меняется мышление: никаких `reloadData` и снапшотов, UI считается из состояния.
 
-**Зачем.** Начиная с iOS 17 это основной способ сделать модель, за которой следит UI. Он заменяет `ObservableObject` + `@Published` + Combine и работает точнее: представление перерисовывается только при изменении тех свойств, которые оно реально прочитало. В iOS 26 UIKit тоже умеет автоматически отслеживать `@Observable`-модели, так что это полезно и в старом коде.
+**Прочитай.** `CatalogFeature`: `CatalogView.swift`, `CatalogViewModel.swift`, `DrinkDetailView.swift`, `CustomDrinkForm.swift`. Потом `TodayFeature/TodayView.swift` и `Domain/EntryStore.swift`. Справочник: B1–B7, B11, A8.
 
-**Ключевые понятия.**
-- Макрос `@Observable`, `@ObservationIgnored`.
-- `@State` для владения моделью, `@Bindable` для привязок, `@Environment` для внедрения.
-- Отличия от `ObservableObject`: нет `@Published`, нет `objectWillChange`, отслеживание на уровне свойств.
-- `withObservationTracking` и автоматическое отслеживание в UIKit (`viewWillLayoutSubviews`, `updateProperties()` в iOS 26).
+**Combine рядом с async/await.** Поиск в каталоге сделан на Combine (`CatalogViewModel`: `PassthroughSubject` → `debounce` → `removeDuplicates` → `sink`), а такой же debounce на экране «Добавить банку» сделан через `.task(id:)` (`AddEntryView`). Combine есть почти в каждом рабочем проекте и часто встречается на собеседованиях, поэтому разбери оба варианта.
 
-**Что изучить.**
-- WWDC23 «Discover Observation in SwiftUI»
-- [Migrating from the ObservableObject protocol to the Observable macro](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro)
-- [Документация Observation](https://developer.apple.com/documentation/observation)
-- WWDC25 «What's new in UIKit» (раздел про автоматическое отслеживание Observation)
+**Перепиши.** В ветке `learn/swiftui` удали `CatalogView.swift` и `CatalogViewModel.swift` и напиши заново: список напитков с поиском (`searchable`), экран деталей, состояние «пусто» (`ContentUnavailableView`), превью для каждого состояния. Потом так же форму `CustomDrinkForm`.
 
-**Упражнение.**
-Сделать `@MainActor @Observable final class ItemListModel` с полями `items`, `isLoading`, `error` и методом `func load() async`, который вызывает `APIClient` из темы 1. Пока без UI: проверить в превью или в тесте, что состояние меняется правильно.
+**Сломай и почини.**
+- Убери `@State` у модели экрана и создавай её прямо в `body`. Что происходит с данными при перерисовке?
+- Сделай в `ForEach` `id: \.self` или новый `UUID()` на каждый рендер. Как ведут себя анимации и выделение? Сравни с проблемой `id = UUID()` во `viewData` из рабочего проекта: причина та же.
+- Перенеси `.task` выше и ниже по иерархии и посмотри, когда он перезапускается. Поменяй на `.task(id:)`.
+- Combine: не сохраняй результат `sink` в `subscription`. Почему поиск перестал работать? Потом убери `removeDuplicates` и `searchTask?.cancel()` и найди, что сломалось (подсказка: медленный старый ответ).
+- Перепиши debounce в `AddEntryView` на Combine, а в каталоге наоборот на `.task(id:)`. Что короче и что проще тестировать?
 
----
+**Объясни.** Чем `@Observable` отличается от `ObservableObject`? Когда `@State`, когда `@Bindable`, когда `@Environment`? Когда в новом коде ты взял бы Combine, а когда `AsyncStream` или `.task(id:)`?
 
-## 3. SwiftUI: основы и мышление
+## 3. Навигация и мост с UIKit
 
-**Зачем.** Главное отличие от UIKit не в синтаксисе, а в модели: UI — это функция от состояния. Нет `reloadData`, `apply(snapshot)` и ручного обновления ячеек: вы меняете данные, SwiftUI сам считает разницу. Опыт с DiffableDataSource здесь помогает: идея идентичности элементов та же самая, только применена ко всему интерфейсу.
+В Buzz экраны на SwiftUI живут внутри UIKit-координаторов. Это ровно то, как SwiftUI попадает в большие старые проекты.
 
-**Ключевые понятия.**
-- `View` как значение, `body`, модификаторы и почему важен их порядок.
-- Идентичность, время жизни и зависимости представления (структурная и явная идентичность, `id`).
-- Компоновка: `VStack`/`HStack`/`ZStack`, `Grid`, `LazyVStack`, `LazyVGrid`, `Layout`-протокол. `List` и `LazyVGrid` здесь заменяют CompositionalLayout для большинства экранов.
-- Превью (`#Preview`) как основной инструмент итерации.
-- `task(id:)` вместо `viewDidLoad` + ручной отмены.
-- Liquid Glass в iOS 26: что меняется в стандартных контролах автоматически.
+**Прочитай.** `App/Sources/Coordinators/*`, `SceneDelegate.swift`, `AppDependencies.swift`. Справочник: B8, B12.
 
-**Что изучить.**
-- WWDC24 «SwiftUI essentials» — лучший вход для тех, кто пришёл из UIKit
-- WWDC21 «Demystify SwiftUI» — идентичность и время жизни
-- WWDC23 «Demystify SwiftUI performance»
-- WWDC24 «Demystify SwiftUI containers»
-- WWDC25 «What's new in SwiftUI»
-- [Туториалы SwiftUI от Apple](https://developer.apple.com/tutorials/swiftui)
+**Перепиши.** Добавь диплинк `buzz://catalog/<id>`, который открывает детали напитка: разбор URL, метод координатора, `UIHostingController`.
 
-**Упражнение.**
-Экран списка `Item` на `List` с секциями, pull-to-refresh (`refreshable`), состоянием загрузки и пустым состоянием (`ContentUnavailableView`). Данные берёт `ItemListModel` из темы 2 через `.task { await model.load() }`. Отдельно сделать экран деталей. Для каждого экрана написать несколько `#Preview` с разными состояниями.
+**Сломай и почини.**
+- Создавай `UIHostingController` заново при каждом показе таба. Что теряется?
+- Попробуй навигацию внутри таба сделать через `NavigationStack` вместо `UINavigationController`. Что придётся поменять в координаторе?
 
----
+**Объясни.** Где в Buzz проходит граница между UIKit и SwiftUI и почему именно там?
 
-## 4. SwiftUI: навигация, состояние, архитектура
+## 4. SwiftData и миграции
 
-**Зачем.** Здесь большинство вопросов «а как это сделать правильно» у UIKit-разработчиков: где живёт навигация, как передавать зависимости, нужен ли MVVM.
+С этого Михаил советует начинать «сломай-почини»: миграции ломаются быстро, наглядно и безопасно, а в реальном проекте ошибка здесь стоит пользователям данных.
 
-**Ключевые понятия.**
-- `NavigationStack` с `NavigationPath` и `navigationDestination(for:)`, навигация на данных вместо координаторов.
-- `NavigationSplitView` для iPad.
-- `sheet`, `fullScreenCover`, `alert`, `confirmationDialog` через состояние.
-- Поток данных: `@State`, `@Binding`, `@Bindable`, `@Environment`, свои ключи окружения (макрос `@Entry`).
-- Формы и ввод: `Form`, `TextField`, `@FocusState`, валидация.
-- Архитектура: «модель на экран» как разумный дефолт; когда не нужна отдельная ViewModel.
-- Анимации и переходы: `withAnimation`, `matchedGeometryEffect`, `navigationTransition(.zoom)`.
+**Прочитай.** `Persistence/Sources/PersistenceContainer.swift`, `Models/EntryModel.swift`, `Models/DrinkModel.swift`, `SwiftDataEntryRepository.swift`. Справочник: C2, C3. Сейчас в Buzz **нет** `VersionedSchema` и плана миграций — его ты и напишешь.
 
-**Что изучить.**
-- WWDC22 «The SwiftUI cookbook for navigation»
-- WWDC20 «Data Essentials in SwiftUI» (основы потока данных, по-прежнему актуальны)
-- WWDC23 «Explore SwiftUI animation», WWDC23 «Wind your way through advanced animations in SwiftUI»
-- WWDC25 «Explore concurrency in SwiftUI»
-- [Документация по навигации](https://developer.apple.com/documentation/swiftui/navigation)
+**Сломай и почини (по порядку, на симуляторе с реальными записями).**
+1. Добавь в `EntryModel` поле `note: String?`. Запусти: записи на месте? Это лёгкая (автоматическая) миграция.
+2. Добавь обязательное поле `mood: Int` без значения по умолчанию. Что случилось при запуске?
+3. Переименуй `drinkName` в `title`. Куда делись данные? Почини через `@Attribute(originalName:)`.
+4. Оформи схему как `SchemaV1` и `SchemaV2` (`VersionedSchema`) и напиши `SchemaMigrationPlan` с кастомной стадией: например, разбей `brand` и `drinkName` иначе или заполни новое поле вычисленным значением.
+5. Повесь `@Attribute(.unique)` на поле, где уже есть дубликаты. Что будет?
 
-**Упражнение.**
-1. Экран создания и редактирования `Item` на `Form` с валидацией и сохранением через `APIClient`.
-2. Навигация через `NavigationPath`: список → детали → редактирование, плюс открытие экрана деталей по диплинку (`onOpenURL`).
-3. Внедрить `APIClient` через `@Environment` и подменять его на мок в превью.
+**Перепиши.** `SwiftDataEntryRepository` руками через `@ModelActor`.
 
----
+**Объясни.** Почему `@Model`-объекты нельзя передавать между акторами и что передают вместо них? Зачем Buzz прячет SwiftData за протоколом репозитория?
 
-## 5. SwiftUI и UIKit вместе
+## 5. Swift Concurrency и Swift 6
 
-**Зачем.** В реальных проектах переписать всё сразу нельзя. Нужно уметь встраивать SwiftUI в UIKit и наоборот, и знать, где переход оправдан.
+**Прочитай.** `Sync/Sources/SyncEngine.swift`, `SyncStore.swift`, `Domain/Sources/Broadcaster.swift`, `Networking/Sources/APIClient.swift`. Справочник: A1–A6.
 
-**Ключевые понятия.**
-- `UIHostingController` для встраивания SwiftUI-экрана в UIKit-навигацию.
-- `UIHostingConfiguration` для ячеек в `UICollectionView`: можно оставить DiffableDataSource и CompositionalLayout, а содержимое ячеек писать на SwiftUI. Это самый мягкий первый шаг миграции.
-- `UIViewRepresentable` и `UIViewControllerRepresentable` (+ `Coordinator`) для использования UIKit-компонентов в SwiftUI.
-- `@Observable`-модели, общие для UIKit и SwiftUI-частей.
-- Стратегия миграции: новые экраны на SwiftUI, затем листовые экраны, затем ячейки, а сложные коллекции в последнюю очередь (или никогда).
+**Перепиши.** `SyncEngine` с нуля как `actor`: очередь `pending`, отправка, повтор при ошибке.
 
-**Что изучить.**
-- WWDC22 «Use SwiftUI with UIKit»
-- WWDC19/22 материалы по `UIViewRepresentable`: [документация](https://developer.apple.com/documentation/swiftui/uiviewrepresentable)
-- WWDC25 «What's new in UIKit»
-- [UIHostingConfiguration](https://developer.apple.com/documentation/swiftui/uihostingconfiguration)
+**Сломай и почини.**
+- Замени `actor` на `final class`. Сколько ошибок даст Swift 6 и о чём они?
+- Создай реентерабельность: два вызова `sync()` подряд, `await` посередине. Отправится ли запись дважды? Почини флагом или сохранённым `Task`.
+- Пометь `@MainActor` тяжёлую функцию и посмотри на подвисания в Instruments. Перенеси её с главного актора.
+- Забудь отменять `Task` в `AsyncStream`. Что утечёт?
+- Повтори реальный баг Buzz (PR #9): передай в `syncEngine.start(changes:)` общий сигнал `changes` вместо `localEdits` (`AppDependencies.swift`). Статус синхронизации начнёт мигать каждые ~2 секунды. Найди цикл сам, потом сравни с исправлением (справочник C4).
 
-**Упражнение.**
-1. В мини-приложении: обернуть один UIKit-компонент (например, экран с `UICollectionView` на CompositionalLayout для галереи) через `UIViewControllerRepresentable`.
-2. В своём рабочем UIKit-проекте (или в отдельной песочнице): переписать одну ячейку на `UIHostingConfiguration`, не трогая DiffableDataSource. Сравнить объём кода.
+**Объясни.** Что такое `Sendable` простыми словами? Что гарантирует `actor` и чего он не гарантирует (реентерабельность)?
 
----
+## 6. Swift Testing
 
-## 6. SwiftData
+**Прочитай.** `StatsFeature/Tests/StatsCalculatorTests.swift`, `Sync/Tests/SyncEngineTests.swift`. Справочник: раздел про Swift Testing.
 
-**Зачем.** Современная замена Core Data с объявлением моделей прямо в Swift-коде. Для мини-приложения это локальный кэш: приложение открывается мгновенно и работает без сети, а с сервером синхронизируется в фоне.
+**Перепиши.** Удали `StatsCalculatorTests.swift` и напиши тесты заново: `@Test`, `#expect`, параметризованный тест на лимит кофеина (ниже, ровно, выше 400 мг).
 
-**Ключевые понятия.**
-- `@Model`, `@Attribute(.unique)`, `@Relationship` и правила удаления.
-- `ModelContainer`, `ModelContext`, `@Query` с сортировкой и `#Predicate`.
-- Миграции схемы: `VersionedSchema`, `SchemaMigrationPlan`.
-- Работа в фоне: `@ModelActor`, почему `@Model`-объекты нельзя передавать между акторами и что передавать вместо них (`PersistentIdentifier`).
-- Наследование моделей (iOS 26), `#Index`, `#Unique`.
-- Ограничения и когда Core Data всё ещё уместнее.
+**Сломай.** Сломай `StatsCalculator` на единицу и проверь, что тест это поймал. Если не поймал — тест плохой.
 
-**Что изучить.**
-- WWDC23 «Meet SwiftData»
-- WWDC23 «Model your schema with SwiftData»
-- WWDC23 «Dive deeper into SwiftData»
-- WWDC24 «What's new in SwiftData»
-- WWDC24 «Create a custom data store with SwiftData»
-- WWDC25 «SwiftData: Dive into inheritance and schema migration»
-- [Документация SwiftData](https://developer.apple.com/documentation/swiftdata)
+**Объясни.** Чем `#require` отличается от `#expect`? Почему тесты в Swift Testing по умолчанию идут параллельно и что из этого следует?
 
-**Упражнение.**
-1. Описать `@Model class CachedItem` и показывать список через `@Query`.
-2. Написать `@ModelActor actor SyncService`, который загружает данные с сервера через `APIClient` и сохраняет их в базу в фоне. UI обновится сам через `@Query`.
-3. Добавить новое поле в модель и сделать явную миграцию через `SchemaMigrationPlan`.
+## 7. Swift Charts
+
+**Прочитай.** `StatsFeature/Sources/StatsView.swift`, `StatsViewModel.swift`. Справочник: B10.
+
+**Перепиши.** График кофеина по дням (`BarMark`) с линией лимита (`RuleMark`) с нуля. Потом добавь свой график: траты по брендам (`SectorMark`).
+
+**Объясни.** Чем Swift Charts отличается от рисования графика руками в `UIView`?
+
+## 8. Архитектуры: MVVM, Clean, Redux
+
+В Buzz три архитектуры на одном приложении специально, чтобы сравнить.
+
+**Прочитай.** `TodayFeature` (MVVM), `AddEntryFeature/Sources/Domain/UseCases.swift` (Clean), `SettingsFeature/Sources/Redux/Store.swift` и `SettingsReducer.swift` (Redux). Документ `docs/client/architecture-experiments.md`.
+
+**Перепиши.** Экран «Настройки» с Redux на обычный MVVM с `@Observable`. Сравни объём кода и тесты.
+
+**Объясни.** Какую архитектуру ты взял бы для своего следующего проекта и почему? Запиши ответ в журнал: это готовый ответ для собеседования.
+
+## 9. Vapor и Fluent
+
+**Прочитай.** `Backend/Sources/App/configure.swift`, `routes.swift`, `Controllers/EntryController.swift`, `Models/Entry.swift`, `Migrations/*`, `Errors/*`. Документы `docs/backend/STEPS.md`, `docs/backend/API.md`.
+
+**Перепиши.** Удали `DrinkController.swift` и напиши заново: `GET /drinks` и `POST /drinks`. Потом добавь эндпоинты, которых ещё нет: `GET /drinks/:id` и, например, `GET /stats/brands` с суммой трат по брендам.
+
+**Сломай и почини.**
+- Поменяй порядок миграций в `configure.swift` так, чтобы `CreateEntry` шла раньше `CreateUser`, и запусти на Postgres в Docker. Что он скажет про внешний ключ? А локальный SQLite?
+- Добавь поле в модель `Entry` без новой миграции. Что упадёт и где?
+- Убери middleware авторизации у `/entries`. Напиши тест, который это ловит.
+
+**Объясни.** Как запрос проходит путь от `routes.swift` до базы? Зачем DTO в `Shared` отдельно от Fluent-моделей?
+
+## 10. Синхронизация целиком, CI и деплой
+
+**Сделай.**
+- Пройди отладчиком путь одной записи: нажатие «Добавить» → `EntryStore` → SwiftData (`pending`) → `SyncEngine` → `APIClient` → Vapor → Postgres → ответ → `synced`. Нарисуй схему руками.
+- Выключи сеть в симуляторе, добавь три банки, включи. Всё доехало?
+- Прочитай `.github/workflows/ci.yml` и `docs/infra/HANDS-ON.md`. Сломай линт специально и посмотри, как CI краснеет.
+- Деплой: прочитай `Backend/Dockerfile`, job `deploy` в `ci.yml` и `docs/backend/DEPLOY.md` (справочник G9). Собери образ локально `docker build -f Backend/Dockerfile .` из корня репо и запусти с `DATABASE_URL` от бесплатной базы Neon.
+- Измени только документацию и запушь: деплой не должен запуститься. Потом измени `Backend/` и проверь, что сервер на Render перевыкатился.
+
+**Объясни.** Что будет, если одну и ту же запись изменить на двух устройствах офлайн? Почему в Docker-образе две стадии и почему настройки сервера приходят из переменных окружения?
+
+## 11. Финал: своё приложение с нуля
+
+Главная проверка, что всё отложилось. Маленькое приложение, **полностью без AI**, в новом пустом репозитории. Пример: трекер воды, привычек или книг.
+
+- 2 экрана на SwiftUI, модель на `@Observable`.
+- Хранение в SwiftData с одной миграцией.
+- Маленький бэкенд на Vapor с одной моделью и CRUD.
+- 5–10 тестов на Swift Testing.
+- Один модуль, без Tuist, или два-три модуля через SPM, если хочется.
+
+Застрял — смотри Buzz и справочник, но не копируй. Когда закончишь, попроси Claude сделать ревью и сравни с тем, как это сделано в Buzz.
 
 ---
 
-## 7. Swift Testing
+## Чек-лист
 
-**Зачем.** Новый фреймворк тестирования, встроенный в Xcode 16+. Короче XCTest, параметризованные тесты из коробки, нормальная поддержка async и параллельный запуск по умолчанию. Работает и в приложении, и в Vapor.
-
-**Ключевые понятия.**
-- `@Test`, `@Suite`, `#expect`, `#require`.
-- Параметризованные тесты: `@Test(arguments:)`.
-- Трейты: `.tags`, `.disabled`, `.timeLimit`, `.serialized`, `.bug`.
-- Тесты async-кода, `confirmation` вместо `XCTestExpectation`.
-- Сосуществование с XCTest в одном таргете, что пока остаётся в XCTest (UI-тесты, измерение производительности).
-- Exit tests и attachments (Swift 6.2).
-
-**Что изучить.**
-- WWDC24 «Meet Swift Testing»
-- WWDC24 «Go further with Swift Testing»
-- [Документация Swift Testing](https://developer.apple.com/documentation/testing)
-- [Migrating a test from XCTest](https://developer.apple.com/documentation/testing/migratingfromxctest)
-
-**Упражнение.**
-1. Тесты на `ItemListModel`: загрузка, ошибка, пустой список, с мок-`APIClient`.
-2. Параметризованный тест валидации формы создания `Item` (пустое имя, слишком длинное, корректное).
-3. Тест `ImageCache` из темы 1: при 10 параллельных запросах одной картинки загрузка происходит один раз.
-
----
-
-## 8. Макросы
-
-**Зачем.** `@Observable`, `@Model`, `#Predicate`, `#Preview`, `@Test`, `#expect`, `@Entry` — всё это макросы. Писать свои приходится редко, но понимать, во что они разворачиваются, нужно, чтобы читать ошибки компилятора и не удивляться поведению.
-
-**Ключевые понятия.**
-- Freestanding (`#…`) и attached (`@…`) макросы, их роли: `member`, `peer`, `accessor`, `extension`, `expression`.
-- SwiftSyntax, пакет с макросом, тестирование макросов.
-- Команда Xcode «Expand Macro», чтобы увидеть развёрнутый код.
-
-**Что изучить.**
-- WWDC23 «Expand on Swift macros»
-- WWDC23 «Write Swift macros»
-- [The Swift Programming Language: Macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/)
-- [swift-syntax на GitHub](https://github.com/swiftlang/swift-syntax)
-
-**Упражнение.**
-1. Развернуть через «Expand Macro» `@Observable` на `ItemListModel` и `@Model` на `CachedItem`, разобраться, что сгенерировано.
-2. Написать простой макрос `#URL("https://…")`, который проверяет строку на этапе компиляции и возвращает неопциональный `URL`. Использовать его в `APIClient` для базового адреса.
-
----
-
-## 9. Серверный Swift на Vapor
-
-**Зачем.** Свой бэкенд на том же языке: общие модели, общие знания о Concurrency, никакого переключения контекста. Vapor 4 полностью поддерживает async/await.
-
-**Ключевые понятия.**
-- Структура проекта Vapor, `configure.swift`, `routes.swift`, запуск через `swift run` и из Xcode.
-- Маршруты, контроллеры (`RouteCollection`), `Content` для JSON.
-- Fluent: модели, миграции, связи, запросы. Начать с SQLite, потом PostgreSQL в Docker.
-- Валидация запросов (`Validatable`), обработка ошибок (`Abort`), middleware.
-- Аутентификация: простой токен или JWT (`vapor/jwt`), Sign in with Apple как дальнейший шаг.
-- Тестирование через `XCTVapor` / `VaporTesting` (с Swift Testing).
-- Конфигурация через переменные окружения, логирование.
-- Деплой: Docker-образ из шаблона Vapor, запуск на любом VPS или Fly.io/Railway.
-
-**Что изучить.**
-- [Документация Vapor](https://docs.vapor.codes) (есть разделы Getting Started, Fluent, Testing, Deploy)
-- [Vapor Toolbox](https://docs.vapor.codes/install/macos/) для создания проекта: `vapor new Server`
-- [swift.org: Server](https://www.swift.org/documentation/server/) — обзор серверной экосистемы
-- WWDC23 «Meet Swift OpenAPI Generator» (пригодится в теме 10)
-- Книга «Server-Side Swift with Vapor» (Kodeco) для системного прохода
-
-**Упражнение.**
-1. `vapor new Server` с Fluent и SQLite. Модель `Item` + миграция.
-2. CRUD-эндпоинты: `GET /items`, `GET /items/:id`, `POST /items`, `PUT /items/:id`, `DELETE /items/:id`. Валидация входных данных и корректные HTTP-коды ошибок.
-3. Пагинация и фильтр по дате изменения (`GET /items?updatedSince=…`), это понадобится для синхронизации.
-4. Тесты эндпоинтов на Swift Testing.
-5. Простая аутентификация по токену, чтобы у каждого пользователя были свои `Item`.
-6. Перейти на PostgreSQL в Docker (`docker compose up`).
-
----
-
-## 10. Связка клиента и сервера
-
-**Зачем.** Собрать всё вместе в работающий продукт и прочувствовать полный цикл.
-
-**Ключевые понятия.**
-- Общий Swift Package `Shared` с DTO (Codable-структуры), используемый и приложением, и сервером.
-- Альтернатива: описать API в OpenAPI и генерировать клиент и серверные заглушки через Swift OpenAPI Generator (есть интеграция с Vapor).
-- Синхронизация: сервер как источник истины, SwiftData как кэш, `updatedSince` для инкрементальных обновлений, обработка конфликтов «последняя запись побеждает».
-- Хранение токена в Keychain.
-- Деплой сервера и сборка приложения в TestFlight.
-
-**Что изучить.**
-- WWDC23 «Meet Swift OpenAPI Generator»
-- [swift-openapi-generator](https://github.com/apple/swift-openapi-generator) и [swift-openapi-vapor](https://github.com/swift-server/swift-openapi-vapor)
-- [Документация Vapor: Deploy → Docker](https://docs.vapor.codes/deploy/docker/)
-
-**Упражнение.**
-1. Вынести DTO в `Shared` и подключить пакет к обоим проектам.
-2. Переключить `APIClient` с моков на локальный Vapor-сервер.
-3. Довести `SyncService`: офлайн-создание `Item` с последующей отправкой на сервер.
-4. Задеплоить сервер и собрать приложение в TestFlight.
-
----
-
-## Чек-лист прогресса
-
-- [ ] 0. Проект создан, Swift 6 включён
-- [ ] 1. `APIClient` на async/await, `ImageCache` на actor
-- [ ] 2. `ItemListModel` на `@Observable`
-- [ ] 3. Список и детали на SwiftUI с превью
-- [ ] 4. Навигация, форма, зависимости через Environment
-- [ ] 5. UIKit-компонент в SwiftUI и ячейка на `UIHostingConfiguration`
-- [ ] 6. Кэш на SwiftData с фоновой синхронизацией
-- [ ] 7. Тесты на Swift Testing
-- [ ] 8. Свой макрос `#URL`
-- [ ] 9. Vapor API с Fluent, тестами и аутентификацией
-- [ ] 10. Общие модели, синхронизация, деплой
+- [ ] 0. Проект собран, ошибки первой сборки записаны в журнал
+- [ ] 1. Модуль `ProfileFeature` добавлен руками, упражнение со склейкой модулей сделано
+- [ ] 2. «Каталог» переписан с нуля, поломки воспроизведены, debounce сделан и на Combine, и на `.task(id:)`
+- [ ] 3. Диплинк `buzz://catalog/<id>` работает
+- [ ] 4. Пять поломок SwiftData пройдены, есть `SchemaMigrationPlan`
+- [ ] 5. `SyncEngine` переписан, гонка поймана и исправлена, баг с мигающей синхронизацией повторён
+- [ ] 6. Тесты `StatsCalculator` написаны с нуля
+- [ ] 7. Графики переписаны, добавлен `SectorMark`
+- [ ] 8. «Настройки» переписаны на MVVM, выводы в журнале
+- [ ] 9. `DrinkController` переписан, новый эндпоинт добавлен
+- [ ] 10. Путь записи нарисован, офлайн-сценарий проверен, образ бэкенда собран локально
+- [ ] 11. Своё приложение без AI готово
