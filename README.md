@@ -20,7 +20,7 @@ Because of that:
 - **The code has a lot of comments.** They are in simple English and explain *what* the code does and *why* it is written this way, often compared with the old UIKit way. In a production app many of them would be too much; here they are the point.
 - **Different parts use different architectures on purpose**, to compare them on one app: most features are MVVM on `@Observable`, the "Add" sheet is Clean Architecture, and Settings is a small hand-written Redux.
 - **The code was written with [Claude Code](https://claude.com/claude-code) in Claude Code Projects.** The plan, design, docs and code were made together with Claude; I study and change the code by hand afterwards.
-- **The first version was not compiled yet.** It was written in a cloud environment without Xcode or Swift, so the first `mise run generate` and build may need small fixes. Those fixes are part of the learning.
+- **The first version was written in a cloud environment without Xcode or Swift.** The first build on a Mac needed small fixes; they were part of the learning. Since 0.1.0 the app builds and runs on a real iPhone. What changed in each version is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Tech stack
 
