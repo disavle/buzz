@@ -1,0 +1,49 @@
+# Creates a GitHub release when a version tag is pushed.
+#
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# The release text is the section of CHANGELOG.md for that version
+# (from "## [0.1.0]" to the next "## ["). The release is created as a DRAFT:
+# open Releases on GitHub, check the text and press "Publish release".
+#
+# The tag is `v*`, not `ios-v*`: `ios-v*` is a different tag that sends a build
+# to TestFlight (see ci.yml). So a GitHub release never uploads anything to Apple.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # needed to create a release
+
+jobs:
+  release:
+    name: Draft release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Take this version's notes from CHANGELOG.md
+        run: |
+          version="${GITHUB_REF_NAME#v}"   # v0.1.0 -> 0.1.0
+          # Print the lines after "## [0.1.0]" until the next "## [" heading.
+          awk -v header="## [$version]" '
+            index($0, header) == 1 { found = 1; next }
+            found && /^## \[/      { exit }
+            found                  { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then
+            echo "::error::No section for $version in CHANGELOG.md"
+            exit 1
+          fi
+
+      - name: Create a draft release
+        env:
+          GH_TOKEN: ${{ github.token }} # the gh CLI is already installed on GitHub runners
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --draft \
+            --title "Buzz $GITHUB_REF_NAME" \
+            --notes-file notes.md \
+            --verify-tag
