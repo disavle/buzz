@@ -22,7 +22,7 @@ jobs:
     name: Draft release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Take this version's notes from CHANGELOG.md
         run: |
