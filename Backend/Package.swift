@@ -5,11 +5,11 @@ let package = Package(
     name: "BuzzBackend",
     platforms: [.macOS(.v13)],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.115.0"),
-        .package(url: "https://github.com/vapor/fluent.git", from: "4.12.0"),
-        .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.8.0"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.122.3"),
+        .package(url: "https://github.com/vapor/fluent.git", from: "4.13.0"),
+        .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.9.0"),
         // Postgres for the deployed server (Neon); SQLite stays for local runs and tests
-        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.10.0"),
+        .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.14.0"),
         // DTOs shared with the iOS client
         .package(path: "../Shared"),
     ],
