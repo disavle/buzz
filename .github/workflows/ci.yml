@@ -61,7 +61,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
-      - uses: jdx/mise-action@v3     # installs tuist, ruby and swiftlint from mise.toml and caches them
+      - uses: jdx/mise-action@v5     # installs tuist, ruby and swiftlint from mise.toml and caches them
       - name: Linters
         run: mise run lint && mise run lint:imports
       - name: Tests
@@ -146,7 +146,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v5
       - name: TestFlight
         run: |
           mise run setup:gems
